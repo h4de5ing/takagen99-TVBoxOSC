@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@drawable/shape_dialog_filter_bg"
-        android:gravity="center_vertical"
+        android:background="@drawable/shape_play_bottom"
+        android:gravity="center|center_horizontal"
         android:orientation="vertical"
         android:paddingLeft="@dimen/vs_20"
         android:paddingTop="@dimen/vs_20"
@@ -23,29 +23,64 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
             android:layout_marginBottom="@dimen/vs_10"
+            android:gravity="left"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_info_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:ellipsize="end"
+                android:gravity="left"
+                android:maxLines="1"
+                android:padding="@dimen/vs_15"
+                android:shadowColor="#000000"
+                android:shadowDx="10"
+                android:shadowDy="10"
+                android:text="TvInfo"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/ts_24"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/vs_10"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:paddingRight="@dimen/vs_10"
-                android:text="播放"
-                android:textColor="@color/color_CC000000"
+                android:text="Play"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/ts_24" />
 
             <TextView
                 android:id="@+id/play_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:background="@drawable/button_dialog_main"
                 android:focusable="true"
                 android:padding="@dimen/vs_10"
-                android:text="下一集"
+                android:text="Next"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ts_24" />
 
@@ -53,12 +88,13 @@
                 android:id="@+id/play_pre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:background="@drawable/button_dialog_main"
                 android:focusable="true"
                 android:padding="@dimen/vs_10"
-                android:text="上一集"
+                android:text="Prev"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ts_24" />
 
@@ -66,12 +102,13 @@
                 android:id="@+id/play_retry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:background="@drawable/button_dialog_main"
                 android:focusable="true"
                 android:padding="@dimen/vs_10"
-                android:text="重播本集"
+                android:text="Replay"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ts_24" />
 
@@ -79,6 +116,7 @@
                 android:id="@+id/play_scale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:background="@drawable/button_dialog_main"
@@ -92,6 +130,7 @@
                 android:id="@+id/play_speed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:background="@drawable/button_dialog_main"
@@ -105,6 +144,7 @@
                 android:id="@+id/play_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:background="@drawable/button_dialog_main"
@@ -118,6 +158,7 @@
                 android:id="@+id/play_ijk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:background="@drawable/button_dialog_main"
@@ -130,17 +171,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:padding="@dimen/vs_10"
-                android:text="片头片尾"
-                android:textColor="@color/color_CC000000"
+                android:text="Skip"
+                android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/ts_24" />
 
             <TextView
                 android:id="@+id/play_time_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:background="@drawable/button_dialog_main"
@@ -154,6 +197,7 @@
                 android:id="@+id/play_time_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:background="@drawable/button_dialog_main"
@@ -167,6 +211,7 @@
                 android:id="@+id/play_time_step"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/vs_5"
                 android:layout_marginRight="@dimen/vs_5"
                 android:background="@drawable/button_dialog_main"
@@ -221,11 +266,12 @@
                 android:id="@+id/curr_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/ts_100"
                 android:paddingEnd="@dimen/vs_10"
                 android:paddingRight="@dimen/vs_10"
                 android:text="00:00"
-                android:textColor="@color/color_CC000000"
-                android:textSize="@dimen/ts_24" />
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/ts_20" />
 
             <SeekBar
                 android:id="@+id/seekBar"
@@ -237,12 +283,12 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:max="1000"
-                android:maxHeight="@dimen/vs_6"
-                android:minHeight="@dimen/vs_6"
+                android:maxHeight="@dimen/vs_3"
+                android:minHeight="@dimen/vs_3"
                 android:padding="@dimen/vs_0"
                 android:paddingStart="@dimen/vs_0"
                 android:paddingEnd="@dimen/vs_0"
-                android:progressDrawable="@drawable/shape_player_control_vod_seek"
+                android:progressDrawable="@color/color_CCFFFFFF"
                 android:thumb="@drawable/shape_player_control_vod_seek_thumb"
                 android:thumbOffset="@dimen/vs_0" />
 
@@ -252,9 +298,10 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/vs_10"
                 android:paddingLeft="@dimen/vs_10"
+                android:paddingRight="@dimen/ts_100"
                 android:text="00:00"
-                android:textColor="@color/color_CC000000"
-                android:textSize="@dimen/ts_24" />
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/ts_20" />
         </LinearLayout>
 
 
@@ -264,21 +311,10 @@
         android:id="@+id/tv_pause_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/box_controller_top_bg"
         android:tag="vod_control_pause"
         android:visibility="gone"
         tools:visibility="visible">
-
-        <TextView
-            android:id="@+id/tv_info_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:padding="@dimen/vs_20"
-            android:text="http://"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/ts_24" />
 
         <LinearLayout
             android:layout_width="@dimen/vs_280"
