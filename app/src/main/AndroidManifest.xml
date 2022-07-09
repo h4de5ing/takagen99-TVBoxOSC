@@ -44,7 +44,10 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".ui.activity.PlayActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:supportsPictureInPicture="true"
+            android:configChanges=
+                "screenSize|smallestScreenSize|screenLayout|orientation">
         <activity
             android:name=".ui.activity.PushActivity"
             android:screenOrientation="landscape" />
