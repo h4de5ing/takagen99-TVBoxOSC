@@ -2,6 +2,7 @@ package com.github.tvbox.osc.ui.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.PictureInPictureParams;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -360,6 +361,17 @@ public class PlayActivity extends BaseActivity {
         mController.setPlayerConfig(mVodPlayerCfg);
     }
 
+    // takagen99
+    public boolean supportsPiPMode() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+    }
+    @Override
+    public void onUserLeaveHint () {
+        if (supportsPiPMode()) {
+            enterPictureInPictureMode();
+        }
+    }
+
     @Override
     public void onBackPressed() {
         if (mController.onBackPressed()) {
@@ -386,12 +398,22 @@ public class PlayActivity extends BaseActivity {
         }
     }
 
-
+    // takagen99
     @Override
     protected void onPause() {
         super.onPause();
         if (mVideoView != null) {
-            mVideoView.pause();
+            if (supportsPiPMode()) {
+                if (isInPictureInPictureMode()) {
+                    // Continue playback
+                    mVideoView.resume();
+                } else {
+                    // Pause playback
+                    mVideoView.pause();
+                }
+            } else {
+                mVideoView.pause();
+            }
         }
     }
 
@@ -458,7 +480,7 @@ public class PlayActivity extends BaseActivity {
         VodInfo.VodSeries vs = mVodInfo.seriesMap.get(mVodInfo.playFlag).get(mVodInfo.playIndex);
         EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_REFRESH, mVodInfo.playIndex));
         setTip("正在获取播放信息", true, false);
-        String playTitleInfo = mVodInfo.name + " " + vs.name;
+        String playTitleInfo = mVodInfo.name + " : " + vs.name;
         mController.setTitle(playTitleInfo);
 
         playUrl(null, null);
