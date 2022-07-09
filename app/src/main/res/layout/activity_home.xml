@@ -43,8 +43,9 @@
             android:gravity="right|center_vertical"
             android:textAlignment="gravity"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/ts_28"
-            tools:text="111111111111111" />
+            android:textSize="@dimen/ts_20"
+            android:textStyle="bold"
+            tools:text="DateTime" />
     </LinearLayout>
 
     <LinearLayout

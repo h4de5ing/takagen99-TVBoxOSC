@@ -43,11 +43,13 @@
     <dimen name="vs_45">45mm</dimen>
     <dimen name="vs_48">48mm</dimen>
     <dimen name="vs_50">50mm</dimen>
+    <dimen name="vs_55">55mm</dimen>
     <dimen name="vs_60">60mm</dimen>
     <dimen name="vs_70">70mm</dimen>
     <dimen name="vs_76">76mm</dimen>
     <dimen name="vs_80">80mm</dimen>
     <dimen name="vs_90">90mm</dimen>
+    <dimen name="vs_95">95mm</dimen>
     <dimen name="vs_100">100mm</dimen>
     <dimen name="vs_108">108mm</dimen>
     <dimen name="vs_120">120mm</dimen>
