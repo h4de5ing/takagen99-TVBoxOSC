@@ -48,7 +48,8 @@ public class DefaultConfig {
             }
         }
         if (withMy)
-            data.add(0, new MovieSort.SortData("my0", "我的"));
+            // takagen99: data.add(0, new MovieSort.SortData("my0", "我的"));
+            data.add(0, new MovieSort.SortData("my0", "Home"));
         Collections.sort(data);
         return data;
     }
