@@ -16,6 +16,14 @@
         android:paddingRight="@dimen/vs_50"
         android:paddingBottom="@dimen/vs_20">
 
+        <View
+            android:layout_width="4dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/vs_10"
+            android:layout_marginRight="@dimen/vs_10"
+            android:background="@drawable/button_detail_collect" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/vs_50"

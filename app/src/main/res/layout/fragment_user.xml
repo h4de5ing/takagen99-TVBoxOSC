@@ -6,7 +6,10 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:orientation="vertical"
-    android:padding="@dimen/vs_40">
+    android:paddingLeft="@dimen/vs_40"
+    android:paddingTop="@dimen/vs_30"
+    android:paddingRight="@dimen/vs_40"
+    android:paddingBottom="@dimen/vs_40">
 
     <LinearLayout
         android:id="@+id/tvUserHome"
@@ -20,11 +23,12 @@
 
         <LinearLayout
             android:id="@+id/tvHistory"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/vs_145"
             android:layout_height="@dimen/vs_100"
             android:layout_gravity="center"
             android:layout_margin="@dimen/vs_5"
-            android:background="@drawable/shape_user_focus"
+            android:background="@drawable/shape_user_home"
+            android:clickable="false"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:focusable="true"
@@ -36,34 +40,36 @@
 
 
             <ImageView
-                android:layout_width="@dimen/vs_50"
-                android:layout_height="@dimen/vs_50"
+                android:id="@+id/hm_history"
+                android:layout_width="@dimen/vs_40"
+                android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/vs_5"
                 android:alpha="0.75"
-                android:src="@drawable/icon_history" />
+                android:src="@drawable/hm_history" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/vs_10"
+                android:layout_margin="@dimen/vs_5"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:gravity="center"
+                android:gravity="center|start"
                 android:text="历史"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_CCFFFFFF"
-                android:textSize="@dimen/ts_40" />
+                android:textSize="@dimen/ts_26" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/tvLive"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/vs_145"
             android:layout_height="@dimen/vs_100"
             android:layout_gravity="center"
             android:layout_margin="@dimen/vs_5"
-            android:background="@drawable/shape_user_focus"
+            android:background="@drawable/shape_user_home"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:focusable="true"
@@ -75,34 +81,38 @@
 
 
             <ImageView
-                android:layout_width="@dimen/vs_50"
-                android:layout_height="@dimen/vs_50"
+                android:id="@+id/hm_live"
+                android:layout_width="@dimen/vs_40"
+                android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/vs_5"
                 android:alpha="0.75"
-                android:src="@drawable/icon_live" />
+                android:src="@drawable/hm_live" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/vs_10"
+                android:layout_margin="@dimen/vs_5"
+                android:layout_marginStart="@dimen/vs_4"
+                android:layout_marginLeft="@dimen/vs_4"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
                 android:text="直播"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_CCFFFFFF"
-                android:textSize="@dimen/ts_40" />
+                android:textSize="@dimen/ts_26" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/tvSearch"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/vs_145"
             android:layout_height="@dimen/vs_100"
             android:layout_gravity="center"
             android:layout_margin="@dimen/vs_5"
-            android:background="@drawable/shape_user_focus"
+            android:background="@drawable/shape_user_home"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:focusable="true"
@@ -114,35 +124,37 @@
 
 
             <ImageView
-                android:layout_width="@dimen/vs_50"
-                android:layout_height="@dimen/vs_50"
+                android:id="@+id/hm_search"
+                android:layout_width="@dimen/vs_40"
+                android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/vs_5"
                 android:alpha="0.75"
-                android:src="@drawable/icon_search" />
+                android:src="@drawable/hm_search" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/vs_10"
+                android:layout_margin="@dimen/vs_5"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
                 android:text="搜索"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_CCFFFFFF"
-                android:textSize="@dimen/ts_40" />
+                android:textSize="@dimen/ts_26" />
 
         </LinearLayout>
 
 
         <LinearLayout
             android:id="@+id/tvPush"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/vs_145"
             android:layout_height="@dimen/vs_100"
             android:layout_gravity="center"
             android:layout_margin="@dimen/vs_5"
-            android:background="@drawable/shape_user_focus"
+            android:background="@drawable/shape_user_home"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:focusable="true"
@@ -154,34 +166,36 @@
 
 
             <ImageView
-                android:layout_width="@dimen/vs_50"
-                android:layout_height="@dimen/vs_50"
+                android:id="@+id/hm_push"
+                android:layout_width="@dimen/vs_40"
+                android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/vs_5"
                 android:alpha="0.75"
-                android:src="@drawable/icon_push" />
+                android:src="@drawable/hm_push" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/vs_10"
+                android:layout_margin="@dimen/vs_5"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
                 android:text="推送"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_CCFFFFFF"
-                android:textSize="@dimen/ts_40" />
+                android:textSize="@dimen/ts_26" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/tvFavorite"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/vs_145"
             android:layout_height="@dimen/vs_100"
             android:layout_gravity="center"
             android:layout_margin="@dimen/vs_5"
-            android:background="@drawable/shape_user_focus"
+            android:background="@drawable/shape_user_home"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:focusable="true"
@@ -193,35 +207,37 @@
 
 
             <ImageView
-                android:layout_width="@dimen/vs_50"
-                android:layout_height="@dimen/vs_50"
+                android:id="@+id/hm_fav"
+                android:layout_width="@dimen/vs_40"
+                android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/vs_5"
                 android:alpha="0.75"
-                android:src="@drawable/icon_collect" />
+                android:src="@drawable/hm_fav" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/vs_10"
+                android:layout_margin="@dimen/vs_5"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
                 android:text="收藏"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_CCFFFFFF"
-                android:textSize="@dimen/ts_40" />
+                android:textSize="@dimen/ts_26" />
 
         </LinearLayout>
 
 
         <LinearLayout
             android:id="@+id/tvSetting"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/vs_145"
             android:layout_height="@dimen/vs_100"
             android:layout_gravity="center"
             android:layout_margin="@dimen/vs_5"
-            android:background="@drawable/shape_user_focus"
+            android:background="@drawable/shape_user_home"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:focusable="true"
@@ -233,24 +249,26 @@
 
 
             <ImageView
-                android:layout_width="@dimen/vs_50"
-                android:layout_height="@dimen/vs_50"
+                android:id="@+id/hm_settings"
+                android:layout_width="@dimen/vs_40"
+                android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/vs_5"
                 android:alpha="0.75"
-                android:src="@drawable/icon_setting" />
+                android:src="@drawable/hm_settings" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/vs_10"
+                android:layout_margin="@dimen/vs_5"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
                 android:text="设置"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_CCFFFFFF"
-                android:textSize="@dimen/ts_40" />
+                android:textSize="@dimen/ts_26" />
 
         </LinearLayout>
 
