@@ -1,6 +1,7 @@
 package com.github.tvbox.osc.player.controller;
 
 import android.content.Context;
+import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -544,10 +545,18 @@ public class VodController extends BaseController {
                     togglePlay();
                     return true;
                 }
-            } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-            } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+//            } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {   // takagen99 : Up to show
+            } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN || keyCode == KeyEvent.KEYCODE_DPAD_UP) {
                 if (!isBottomVisible()) {
                     showBottom();
+
+                    // takagen99 : Hide after 10 seconds
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideBottom();
+                        }
+                    }, 10000);
                 }
             }
         } else if (action == KeyEvent.ACTION_UP) {
@@ -565,6 +574,15 @@ public class VodController extends BaseController {
     public boolean onSingleTapConfirmed(MotionEvent e) {
         if (!isBottomVisible()) {
             showBottom();
+
+            // takagen99 : Hide after 10 seconds
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    hideBottom();
+                }
+            }, 10000);
+
         } else {
             hideBottom();
         }

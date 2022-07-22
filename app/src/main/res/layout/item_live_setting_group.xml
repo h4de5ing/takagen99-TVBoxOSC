@@ -18,7 +18,11 @@
         android:ellipsize="marquee"
         android:gravity="center"
         android:marqueeRepeatLimit="marquee_forever"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="2"
         android:singleLine="true"
         android:textColor="@android:color/white"
-        android:textSize="22mm" />
+        android:textSize="22mm"
+        android:textStyle="bold" />
 </LinearLayout>

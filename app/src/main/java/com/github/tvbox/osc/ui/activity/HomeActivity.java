@@ -27,10 +27,7 @@ import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.base.BaseLazyFragment;
 import com.github.tvbox.osc.bean.AbsSortXml;
-import com.github.tvbox.osc.bean.Movie;
 import com.github.tvbox.osc.bean.MovieSort;
-import com.github.tvbox.osc.bean.VodInfo;
-import com.github.tvbox.osc.cache.RoomDataManger;
 import com.github.tvbox.osc.event.RefreshEvent;
 import com.github.tvbox.osc.server.ControlManager;
 import com.github.tvbox.osc.ui.adapter.HomePageAdapter;
@@ -242,7 +239,7 @@ public class HomeActivity extends BaseActivity {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(HomeActivity.this, "Load Failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(HomeActivity.this, "Load Fail", Toast.LENGTH_SHORT).show();
                                 initData();
                             }
                         });
@@ -295,7 +292,7 @@ public class HomeActivity extends BaseActivity {
                     @Override
                     public void run() {
                         if (dialog == null)
-                            dialog = new TipDialog(HomeActivity.this, msg, "重试", "取消", new TipDialog.OnListener() {
+                            dialog = new TipDialog(HomeActivity.this, msg, "Retry", "Cancel", new TipDialog.OnListener() {
                                 @Override
                                 public void left() {
                                     mHandler.post(new Runnable() {

@@ -3,6 +3,9 @@ package com.github.tvbox.osc.ui.activity;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.PictureInPictureParams;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -403,12 +406,20 @@ public class PlayActivity extends BaseActivity {
         return super.dispatchKeyEvent(event);
     }
 
+    // takagen99 : Use onStopCalled to track close activity
+    private boolean onStopCalled;
     @Override
     protected void onResume() {
         super.onResume();
         if (mVideoView != null) {
+            onStopCalled = false;
             mVideoView.resume();
         }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        onStopCalled = true;
     }
 
     // takagen99
@@ -426,6 +437,19 @@ public class PlayActivity extends BaseActivity {
                 }
             } else {
                 mVideoView.pause();
+            }
+        }
+    }
+    // takagen99 : PIP fix to close video when close window
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+        if (supportsPiPMode()) {
+            if (!isInPictureInPictureMode()) {
+                // Closed playback
+                if (onStopCalled) {
+                    mVideoView.release();
+                }
             }
         }
     }
@@ -451,13 +475,21 @@ public class PlayActivity extends BaseActivity {
         if (mVodInfo == null || mVodInfo.seriesMap.get(mVodInfo.playFlag) == null) {
             hasNext = false;
         } else {
-            hasNext = mVodInfo.playIndex + 1 < mVodInfo.seriesMap.get(mVodInfo.playFlag).size();
+            if (mVodInfo.reverseSort){
+                hasNext = mVodInfo.playIndex - 1 >= 0;
+            } else {
+                hasNext = mVodInfo.playIndex + 1 < mVodInfo.seriesMap.get(mVodInfo.playFlag).size();
+            }
         }
         if (!hasNext) {
             Toast.makeText(this, "已经是最后一集了!", Toast.LENGTH_SHORT).show();
             return;
         }
-        mVodInfo.playIndex++;
+        if (mVodInfo.reverseSort){
+            mVodInfo.playIndex--;
+        } else {
+            mVodInfo.playIndex++;
+        }
         play();
     }
 
@@ -466,13 +498,21 @@ public class PlayActivity extends BaseActivity {
         if (mVodInfo == null || mVodInfo.seriesMap.get(mVodInfo.playFlag) == null) {
             hasPre = false;
         } else {
-            hasPre = mVodInfo.playIndex - 1 >= 0;
+            if (mVodInfo.reverseSort){
+                hasPre = mVodInfo.playIndex + 1 < mVodInfo.seriesMap.get(mVodInfo.playFlag).size();
+            } else {
+                hasPre = mVodInfo.playIndex - 1 >= 0;
+            }
         }
         if (!hasPre) {
             Toast.makeText(this, "已经是第一集了!", Toast.LENGTH_SHORT).show();
             return;
         }
-        mVodInfo.playIndex--;
+        if (mVodInfo.reverseSort){
+            mVodInfo.playIndex++;
+        } else {
+            mVodInfo.playIndex--;
+        }
         play();
     }
 

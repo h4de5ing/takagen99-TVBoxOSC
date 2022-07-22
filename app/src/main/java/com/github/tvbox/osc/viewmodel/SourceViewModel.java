@@ -605,12 +605,13 @@ public class SourceViewModel extends ViewModel {
                         }
                         List<Movie.Video.UrlBean.UrlInfo.InfoBean> infoBeanList = new ArrayList<>();
                         for (String s : str) {
-                            if (s.contains("$")) {
-                                String[] ss = s.split("\\$");
-                                if (ss.length >= 2) {
+                            String[] ss = s.split("\\$");
+                            if (ss.length > 0) {
+                                if (ss.length == 2) {
                                     infoBeanList.add(new Movie.Video.UrlBean.UrlInfo.InfoBean(ss[0], ss[1]));
+                                } else if (ss.length == 1) {
+                                    infoBeanList.add(new Movie.Video.UrlBean.UrlInfo.InfoBean((infoBeanList.size() + 1) + "", ss[0]));
                                 }
-                                //infoBeanList.add(new Movie.Video.UrlBean.UrlInfo.InfoBean(s.substring(0, s.indexOf("$")), s.substring(s.indexOf("$") + 1)));
                             }
                         }
                         urlInfo.beanList = infoBeanList;
