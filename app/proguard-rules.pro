@@ -199,3 +199,6 @@
 }
 
 -keep class com.github.catvod.crawler.*{*;}
+
+# magnet：解决模拟器推送 磁力链接 闪退
+-keep class com.xunlei.downloadlib.** {*;}
