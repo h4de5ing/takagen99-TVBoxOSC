@@ -3,6 +3,58 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/drawable-xhdpi/box_controller_bottom_bg.xml" value="0.141" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/drawable/button_dialog_main.xml" value="0.141" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/drawable/shape_play_bottom.xml" value="0.141" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/drawable/shape_player_control_vod_seek.xml" value="0.141" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/drawable/shape_player_control_vod_seek_thumb.xml" value="0.141" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/drawable/shape_player_control_vod_seek_thumb_normal.xml" value="0.141" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/drawable/shape_player_control_vod_seek_thumb_press.xml" value="0.141" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/activity_collect.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/activity_detail.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/activity_history.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/activity_home.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/activity_live_play.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/activity_play.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/activity_push.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/activity_search.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/activity_setting.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/box_vod_control_view.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/dialog_about.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/dialog_api.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/dialog_grid_filter.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/dialog_live_password.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/dialog_quick_search.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/dialog_remote.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/dialog_select.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/dialog_tip.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/dialog_xwalk.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/fragment_grid.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/fragment_model.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/fragment_user.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_dialog_api_history.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_dialog_backup.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_dialog_select.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_grid.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_grid_filter.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_grid_filter_value.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_home_sort.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_keyboard.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_quick_search_lite.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_search.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_search_lite.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_search_word_hot.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_search_word_split.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_series.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_series_flag.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_setting_menu.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_user_hot_vod.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/item_view_load_more.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/layout_keyborad.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/loadsir_empty_layout.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/loadsir_loading_layout.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/player_live_control_view.xml" value="0.21164021164021163" />
+        <entry key="..\:/Users/takkie/AndroidStudioProjects/github/TVBox/app/src/main/res/layout/player_vod_control_view.xml" value="0.21164021164021163" />
         <entry key="..\:/android/repository/TVBoxOSC/app/src/main/res/layout/activity_live_play.xml" value="0.1" />
         <entry key="..\:/android/repository/TVBoxOSC/app/src/main/res/layout/item_channel_group_layout.xml" value="0.22826086956521738" />
         <entry key="..\:/android/repository/TVBoxOSC/app/src/main/res/layout/item_live_channel_layout.xml" value="0.22826086956521738" />
@@ -10,7 +62,7 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

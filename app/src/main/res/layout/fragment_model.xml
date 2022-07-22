@@ -81,7 +81,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="首页数据源"
+                    android:text="Home Source Page"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/ts_24" />
 
@@ -124,7 +124,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="配置地址"
+                    android:text="Video Source URL"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/ts_24" />
 
@@ -176,7 +176,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="首页推荐"
+                        android:text="Choose Home View"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -219,7 +219,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="搜索展示"
+                        android:text="Search Display Mode"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -270,7 +270,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="播放器"
+                        android:text="Player Type"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -313,7 +313,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="IJK解码方式"
+                        android:text="IJK Render Type"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -365,7 +365,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="渲染方式"
+                        android:text="Render"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -408,7 +408,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="画面缩放"
+                        android:text="Screen Scale"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -504,7 +504,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="安全DNS"
+                        android:text="DNS"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -546,7 +546,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="数据备份还原"
+                    android:text="Backup / Restore"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/ts_24" />
 
@@ -580,7 +580,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="关于"
+                    android:text="About"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/ts_24" />
 
