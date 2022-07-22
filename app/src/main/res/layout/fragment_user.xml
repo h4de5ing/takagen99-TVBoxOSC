@@ -12,7 +12,6 @@
     android:paddingBottom="@dimen/vs_40">
 
     <LinearLayout
-        android:id="@+id/tvUserHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clipChildren="false"
@@ -23,7 +22,7 @@
 
         <LinearLayout
             android:id="@+id/tvHistory"
-            android:layout_width="@dimen/vs_145"
+            android:layout_width="@dimen/vs_180"
             android:layout_height="@dimen/vs_100"
             android:layout_gravity="center"
             android:layout_margin="@dimen/vs_5"
@@ -40,7 +39,6 @@
 
 
             <ImageView
-                android:id="@+id/hm_history"
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
@@ -56,7 +54,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center|start"
-                android:text="历史"
+                android:text="History"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_CCFFFFFF"
                 android:textSize="@dimen/ts_26" />
@@ -65,7 +63,7 @@
 
         <LinearLayout
             android:id="@+id/tvLive"
-            android:layout_width="@dimen/vs_145"
+            android:layout_width="@dimen/vs_180"
             android:layout_height="@dimen/vs_100"
             android:layout_gravity="center"
             android:layout_margin="@dimen/vs_5"
@@ -81,7 +79,6 @@
 
 
             <ImageView
-                android:id="@+id/hm_live"
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
@@ -99,7 +96,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
-                android:text="直播"
+                android:text="Live TV"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_CCFFFFFF"
                 android:textSize="@dimen/ts_26" />
@@ -108,7 +105,7 @@
 
         <LinearLayout
             android:id="@+id/tvSearch"
-            android:layout_width="@dimen/vs_145"
+            android:layout_width="@dimen/vs_180"
             android:layout_height="@dimen/vs_100"
             android:layout_gravity="center"
             android:layout_margin="@dimen/vs_5"
@@ -124,7 +121,6 @@
 
 
             <ImageView
-                android:id="@+id/hm_search"
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
@@ -140,7 +136,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
-                android:text="搜索"
+                android:text="Search"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_CCFFFFFF"
                 android:textSize="@dimen/ts_26" />
@@ -162,11 +158,11 @@
             android:paddingLeft="@dimen/vs_15"
             android:paddingTop="@dimen/vs_15"
             android:paddingRight="@dimen/vs_15"
-            android:paddingBottom="@dimen/vs_15">
+            android:paddingBottom="@dimen/vs_15"
+            android:visibility="gone">
 
 
             <ImageView
-                android:id="@+id/hm_push"
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
@@ -191,7 +187,7 @@
 
         <LinearLayout
             android:id="@+id/tvFavorite"
-            android:layout_width="@dimen/vs_145"
+            android:layout_width="@dimen/vs_190"
             android:layout_height="@dimen/vs_100"
             android:layout_gravity="center"
             android:layout_margin="@dimen/vs_5"
@@ -207,7 +203,6 @@
 
 
             <ImageView
-                android:id="@+id/hm_fav"
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
@@ -223,7 +218,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
-                android:text="收藏"
+                android:text="Favorite"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_CCFFFFFF"
                 android:textSize="@dimen/ts_26" />
@@ -233,7 +228,7 @@
 
         <LinearLayout
             android:id="@+id/tvSetting"
-            android:layout_width="@dimen/vs_145"
+            android:layout_width="@dimen/vs_190"
             android:layout_height="@dimen/vs_100"
             android:layout_gravity="center"
             android:layout_margin="@dimen/vs_5"
@@ -249,7 +244,6 @@
 
 
             <ImageView
-                android:id="@+id/hm_settings"
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="@dimen/vs_40"
                 android:layout_gravity="center"
@@ -265,7 +259,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
-                android:text="设置"
+                android:text="Settings"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_CCFFFFFF"
                 android:textSize="@dimen/ts_26" />

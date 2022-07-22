@@ -349,7 +349,6 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/tv_pause_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/box_controller_top_bg"
@@ -376,7 +375,6 @@
                 android:src="@drawable/icon_play" />
 
             <TextView
-                android:id="@+id/tv_pause_progress_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -392,7 +390,6 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/tv_slide_progress_text"
         android:layout_width="@dimen/vs_200"
         android:layout_height="@dimen/vs_100"
         android:layout_gravity="center"
