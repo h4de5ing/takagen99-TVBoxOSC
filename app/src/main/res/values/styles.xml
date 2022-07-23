@@ -6,7 +6,17 @@
         <item name="colorPrimaryDark">@color/color_6632364E</item>
         <item name="colorAccent">@color/color_FF0057</item>
     </style>
-
+    <style name="AppTheme.ActionBar">
+        <item name="android:windowActionBar">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">true</item>
+        <item name="android:windowFullscreen">true</item>//全屏即无通知栏
+        <item name="android:windowContentOverlay">@null</item>//是否有遮盖
+        <item name="windowNoTitle">true</item>
+        <item name="android:keepScreenOn">true</item>
+        <!--        <item name="android:windowBackground">@drawable/main_bg</item>-->
+        <item name="android:windowBackground">@drawable/app_bg</item>
+    </style>
     <style name="AppTheme.NoActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
