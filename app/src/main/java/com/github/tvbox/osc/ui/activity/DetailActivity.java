@@ -3,6 +3,7 @@ package com.github.tvbox.osc.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
@@ -652,6 +653,17 @@ public class DetailActivity extends BaseActivity {
         OkGo.getInstance().cancelTag("detail");
         OkGo.getInstance().cancelTag("quick_search");
         EventBus.getDefault().unregister(this);
+    }
+
+    // takagen99
+    public boolean supportsPiPMode() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+    }
+    @Override
+    public void onUserLeaveHint () {
+        if (fullWindows && supportsPiPMode()) {
+            enterPictureInPictureMode();
+        }
     }
 
     @Override
