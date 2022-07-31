@@ -131,6 +131,17 @@ public class LivePlayActivity extends BaseActivity {
         initLiveSettingGroupList();
     }
 
+    // takagen99
+    public boolean supportsPiPMode() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+    }
+    @Override
+    public void onUserLeaveHint () {
+        if (supportsPiPMode()) {
+            enterPictureInPictureMode();
+        }
+    }
+
     @Override
     public void onBackPressed() {
         if (tvLeftChannelListLayout.getVisibility() == View.VISIBLE) {
@@ -186,6 +197,8 @@ public class LivePlayActivity extends BaseActivity {
         return super.dispatchKeyEvent(event);
     }
 
+    // takagen99 : Use onStopCalled to track close activity
+    private boolean onStopCalled;
     @Override
     protected void onResume() {
         super.onResume();
@@ -193,13 +206,41 @@ public class LivePlayActivity extends BaseActivity {
             mVideoView.resume();
         }
     }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        onStopCalled = true;
+    }
 
-
+    // takagen99
     @Override
     protected void onPause() {
         super.onPause();
         if (mVideoView != null) {
-            mVideoView.pause();
+            if (supportsPiPMode()) {
+                if (isInPictureInPictureMode()) {
+                    // Continue playback
+                    mVideoView.resume();
+                } else {
+                    // Pause playback
+                    mVideoView.pause();
+                }
+            } else {
+                mVideoView.pause();
+            }
+        }
+    }
+    // takagen99 : PIP fix to close video when close window
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+        if (supportsPiPMode()) {
+            if (!isInPictureInPictureMode()) {
+                // Closed playback
+                if (onStopCalled) {
+                    mVideoView.release();
+                }
+            }
         }
     }
 

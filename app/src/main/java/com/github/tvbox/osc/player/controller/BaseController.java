@@ -341,7 +341,7 @@ public abstract class BaseController extends BaseVideoController implements Gest
         }
         Message msg = Message.obtain();
         msg.what = 100;
-        msg.obj = "亮度" + percent + "%";
+        msg.obj = "亮度 " + percent + "%";
         mHandler.sendMessage(msg);
         mHandler.removeMessages(101);
         mHandler.sendEmptyMessageDelayed(101, 1000);
@@ -364,7 +364,7 @@ public abstract class BaseController extends BaseVideoController implements Gest
         }
         Message msg = Message.obtain();
         msg.what = 100;
-        msg.obj = "音量" + percent + "%";
+        msg.obj = "音量 " + percent + "%";
         mHandler.sendMessage(msg);
         mHandler.removeMessages(101);
         mHandler.sendEmptyMessageDelayed(101, 1000);
