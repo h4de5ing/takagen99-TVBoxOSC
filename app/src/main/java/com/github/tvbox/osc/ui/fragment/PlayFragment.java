@@ -84,11 +84,6 @@ import xyz.doikki.videoplayer.player.ProgressManager;
 import xyz.doikki.videoplayer.player.VideoView;
 
 public class PlayFragment extends BaseLazyFragment {
-
-    interface OnPictureInPictureModeChanged {
-        void onPictureInPictureModeChanged(boolean isInPictureInPictureMode);
-    }
-
     private VideoView mVideoView;
     private TextView mPlayLoadTip;
     private ImageView mPlayLoadErr;

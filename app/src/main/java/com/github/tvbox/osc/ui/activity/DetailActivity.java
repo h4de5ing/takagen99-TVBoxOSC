@@ -659,10 +659,16 @@ public class DetailActivity extends BaseActivity {
     public boolean supportsPiPMode() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
     }
+
     @Override
-    public void onUserLeaveHint () {
-        if (fullWindows && supportsPiPMode()) {
-            enterPictureInPictureMode();
+    public void onUserLeaveHint() {
+        if (supportsPiPMode() && showPreview) {
+            if (fullWindows) {
+                enterPictureInPictureMode();
+            } else {
+                toggleFullPreview();
+                enterPictureInPictureMode();
+            }
         }
     }
 
@@ -672,6 +678,17 @@ public class DetailActivity extends BaseActivity {
             if (playFragment.onBackPressed())
                 return;
             toggleFullPreview();
+            // takagen99 : Show Nav Bar
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
+                uiOptions &= ~View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+                uiOptions &= ~View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+                uiOptions &= ~View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+                uiOptions &= ~View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+                uiOptions &= ~View.SYSTEM_UI_FLAG_FULLSCREEN;
+                uiOptions &= ~View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+                getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+            }
             return;
         }
         if (seriesSelect) {
@@ -737,6 +754,17 @@ public class DetailActivity extends BaseActivity {
             playerParent.removeView(playerRoot);
             ((ViewGroup) getWindow().getDecorView()).addView(playerRoot);
             llLayoutParent.removeView(llLayout);
+            // takagen99 : Hide only when video playing
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
+                uiOptions |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+                uiOptions |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+                uiOptions |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+                uiOptions |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+                uiOptions |= View.SYSTEM_UI_FLAG_FULLSCREEN;
+                uiOptions |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+                getWindow().getDecorView().setSystemUiVisibility(uiOptions);
+            }
         } else {
             ((ViewGroup) getWindow().getDecorView()).removeView(playerRoot);
             playerParent.addView(playerRoot);
