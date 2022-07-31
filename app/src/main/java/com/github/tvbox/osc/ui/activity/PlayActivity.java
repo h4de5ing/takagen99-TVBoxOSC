@@ -2,10 +2,6 @@ package com.github.tvbox.osc.ui.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.PictureInPictureParams;
-import android.content.BroadcastReceiver;
-import android.content.IntentFilter;
-import android.content.res.Configuration;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -195,9 +191,9 @@ public class PlayActivity extends BaseActivity {
             }
 
             @Override
-            public void replay() {
+            public void replay(boolean replay) {
                 autoRetryCount = 0;
-                play();
+                play(replay);
             }
 
             @Override
@@ -249,7 +245,7 @@ public class PlayActivity extends BaseActivity {
                             int playerType = mVodPlayerCfg.getInt("pl");
                             if (playerType >= 10) {
                                 VodInfo.VodSeries vs = mVodInfo.seriesMap.get(mVodInfo.playFlag).get(mVodInfo.playIndex);
-                                String playTitle = mVodInfo.name + " " + vs.name;
+                                String playTitle = mVodInfo.name + " : " + vs.name;
                                 setTip("调用外部播放器" + PlayerHelper.getPlayerName(playerType) + "进行播放", true, false);
                                 boolean callResult = false;
                                 switch (playerType) {
@@ -339,7 +335,7 @@ public class PlayActivity extends BaseActivity {
             sourceKey = bundle.getString("sourceKey");
             sourceBean = ApiConfig.get().getSource(sourceKey);
             initPlayerCfg();
-            play();
+            play(false);
         }
     }
 
@@ -490,7 +486,7 @@ public class PlayActivity extends BaseActivity {
         } else {
             mVodInfo.playIndex++;
         }
-        play();
+        play(false);
     }
 
     private void playPrevious() {
@@ -513,7 +509,7 @@ public class PlayActivity extends BaseActivity {
         } else {
             mVodInfo.playIndex--;
         }
-        play();
+        play(false);
     }
 
     private int autoRetryCount = 0;
@@ -521,7 +517,7 @@ public class PlayActivity extends BaseActivity {
     boolean autoRetry() {
         if (autoRetryCount < 3) {
             autoRetryCount++;
-            play();
+            play(false);
             return true;
         } else {
             autoRetryCount = 0;
@@ -529,7 +525,7 @@ public class PlayActivity extends BaseActivity {
         }
     }
 
-    public void play() {
+    public void play(boolean reset) {
         VodInfo.VodSeries vs = mVodInfo.seriesMap.get(mVodInfo.playFlag).get(mVodInfo.playIndex);
         EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_REFRESH, mVodInfo.playIndex));
         setTip("正在获取播放信息", true, false);
@@ -538,6 +534,7 @@ public class PlayActivity extends BaseActivity {
 
         playUrl(null, null);
         String progressKey = mVodInfo.sourceKey + mVodInfo.id + mVodInfo.playFlag + mVodInfo.playIndex;
+        if (reset) {CacheManager.delete(MD5.string2MD5(progressKey), 0);}
         if (Thunder.play(vs.url, new Thunder.ThunderCallback() {
             @Override
             public void status(int code, String info) {

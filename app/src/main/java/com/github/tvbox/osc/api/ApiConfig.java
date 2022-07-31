@@ -55,6 +55,7 @@ public class ApiConfig {
     private List<String> vipParseFlags;
     private List<IJKCode> ijkCodes;
     private String spider = null;
+    public String wallpaper = "";
 
     private SourceBean emptyHome = new SourceBean();
 
@@ -226,6 +227,8 @@ public class ApiConfig {
         JsonObject infoJson = new Gson().fromJson(jsonStr, JsonObject.class);
         // spider
         spider = DefaultConfig.safeJsonString(infoJson, "spider", "");
+        // wallpaper
+        wallpaper = DefaultConfig.safeJsonString(infoJson, "wallpaper", "");
         // 远端站点源
         SourceBean firstSite = null;
         for (JsonElement opt : infoJson.get("sites").getAsJsonArray()) {
@@ -241,6 +244,7 @@ public class ApiConfig {
             sb.setFilterable(DefaultConfig.safeJsonInt(obj, "filterable", 1));
             sb.setPlayerUrl(DefaultConfig.safeJsonString(obj, "playUrl", ""));
             sb.setExt(DefaultConfig.safeJsonString(obj, "ext", ""));
+            sb.setJar(DefaultConfig.safeJsonString(obj, "jar", ""));
             sb.setCategories(DefaultConfig.safeJsonStringList(obj, "categories"));
             if (firstSite == null)
                 firstSite = sb;
@@ -391,7 +395,7 @@ public class ApiConfig {
     }
 
     public Spider getCSP(SourceBean sourceBean) {
-        return jarLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt());
+        return jarLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt(), sourceBean.getJar());
     }
 
     public Object[] proxyLocal(Map param) {

@@ -26,6 +26,7 @@
     <dimen name="vs_15">15mm</dimen>
     <dimen name="vs_20">20mm</dimen>
     <dimen name="vs_30">30mm</dimen>
+    <dimen name="vs_35">35mm</dimen>
     <dimen name="vs_40">40mm</dimen>
     <dimen name="vs_45">45mm</dimen>
     <dimen name="vs_50">50mm</dimen>

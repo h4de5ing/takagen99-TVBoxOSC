@@ -79,6 +79,12 @@ public class RoomDataManger {
     }
 
     public static List<VodInfo> getAllVodRecord(int limit) {
+        // 历史记录超过60条时, 删除最旧的数据 只保留50条.
+        int count = AppDataManager.get().getVodRecordDao().getCount();
+        if ( count > 60 ) {
+            AppDataManager.get().getVodRecordDao().reserver(50);
+        }
+
         List<VodRecord> recordList = AppDataManager.get().getVodRecordDao().getAll(limit);
         List<VodInfo> vodInfoList = new ArrayList<>();
         if (recordList != null) {
@@ -121,6 +127,17 @@ public class RoomDataManger {
         AppDataManager.get().getVodCollectDao().delete(id);
     }
 
+    public static void deleteVodCollect(String sourceKey, VodInfo vodInfo) {
+        VodCollect record = AppDataManager.get().getVodCollectDao().getVodCollect(sourceKey, vodInfo.id);
+        if (record != null) {
+            AppDataManager.get().getVodCollectDao().delete(record);
+        }
+    }
+
+    public static boolean isVodCollect(String sourceKey, String vodId) {
+        VodCollect record = AppDataManager.get().getVodCollectDao().getVodCollect(sourceKey, vodId);
+        return record != null;
+    }
     public static List<VodCollect> getAllVodCollect() {
         return AppDataManager.get().getVodCollectDao().getAll();
     }

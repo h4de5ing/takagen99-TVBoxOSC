@@ -111,6 +111,37 @@ public class VodInfo implements Serializable {
         }
     }
 
+    //takagen99
+    public boolean isSeriesEmpty(){
+        return seriesMap == null ? true : seriesMap.isEmpty();
+    }
+
+    public List<VodSeries> getFlagSeries(String playFlag){
+        List<VodSeries> list = null;
+        if(!isSeriesEmpty()){
+            list = seriesMap.get(playFlag);
+        }else{
+            list = new ArrayList<>();
+        }
+        return list;
+    }
+
+    public boolean isFlagSeriesEmpty(String playFlag){
+        List<VodSeries> list = getFlagSeries(playFlag);
+        return list.isEmpty();
+    }
+
+    public VodSeries getVodSeries(String playFlag, int playIndex){
+        VodSeries vodSeries = null;
+        List<VodSeries> list = getFlagSeries(playFlag);
+        if(list != null && !list.isEmpty()){
+            if(playIndex >= 0 && playIndex < list.size()){
+                vodSeries = list.get(playIndex);
+            }
+        }
+        return vodSeries;
+    }
+
     public static class VodSeriesFlag implements Serializable {
 
         public String name;

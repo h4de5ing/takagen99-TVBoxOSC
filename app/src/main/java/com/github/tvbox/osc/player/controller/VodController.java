@@ -55,6 +55,7 @@ public class VodController extends BaseController {
                     }
                     case 1002: { // 显示底部菜单
                         mBottomRoot.setVisibility(VISIBLE);
+                        mBottomRoot.requestFocus();
                         break;
                     }
                     case 1003: { // 隐藏底部菜单
@@ -177,7 +178,7 @@ public class VodController extends BaseController {
         mPlayerRetry.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.replay();
+                listener.replay(true);
                 hideBottom();
             }
         });
@@ -251,7 +252,8 @@ public class VodController extends BaseController {
                     mPlayerConfig.put("pl", playerType);
                     updatePlayerCfgView();
                     listener.updatePlayerCfg();
-                    listener.replay();
+                    listener.replay(false);
+                    view.requestFocus();
                     // hideBottom();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -277,8 +279,9 @@ public class VodController extends BaseController {
                     mPlayerConfig.put("ijk", ijk);
                     updatePlayerCfgView();
                     listener.updatePlayerCfg();
-                    listener.replay();
-                    hideBottom();
+                    listener.replay(false);
+                    view.requestFocus();
+                    // hideBottom();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -389,7 +392,7 @@ public class VodController extends BaseController {
 
         void updatePlayerCfg();
 
-        void replay();
+        void replay(boolean replay);
 
         void errReplay();
     }
@@ -473,9 +476,9 @@ public class VodController extends BaseController {
     protected void updateSeekUI(int curr, int seekTo, int duration) {
         super.updateSeekUI(curr, seekTo, duration);
         if (seekTo > curr) {
-            mProgressIcon.setImageResource(R.drawable.icon_pre);
+            mProgressIcon.setImageResource(R.drawable.play_ffwd);
         } else {
-            mProgressIcon.setImageResource(R.drawable.icon_back);
+            mProgressIcon.setImageResource(R.drawable.play_rewind);
         }
         mProgressText.setText(PlayerUtils.stringForTime(seekTo) + " / " + PlayerUtils.stringForTime(duration));
         mHandler.sendEmptyMessage(1000);
@@ -525,15 +528,16 @@ public class VodController extends BaseController {
 
     @Override
     public boolean onKeyEvent(KeyEvent event) {
+        int keyCode = event.getKeyCode();
+        int action = event.getAction();
+        boolean isInPlayback = isInPlaybackState();
+
         if (super.onKeyEvent(event)) {
             return true;
         }
         if (isBottomVisible()) {
             return super.dispatchKeyEvent(event);
         }
-        boolean isInPlayback = isInPlaybackState();
-        int keyCode = event.getKeyCode();
-        int action = event.getAction();
         if (action == KeyEvent.ACTION_DOWN) {
             if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT || keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
                 if (isInPlayback) {
@@ -551,12 +555,14 @@ public class VodController extends BaseController {
                     showBottom();
 
                     // takagen99 : Hide after 10 seconds
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            hideBottom();
-                        }
-                    }, 10000);
+                    //new Handler().postDelayed(new Runnable() {
+                    //    @Override
+                    //    public void run() {
+                    //        hideBottom();
+                    //    }
+                    //}, 10000);
+
+                    return true;
                 }
             }
         } else if (action == KeyEvent.ACTION_UP) {
@@ -576,12 +582,12 @@ public class VodController extends BaseController {
             showBottom();
 
             // takagen99 : Hide after 10 seconds
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    hideBottom();
-                }
-            }, 10000);
+            //new Handler().postDelayed(new Runnable() {
+            //    @Override
+            //    public void run() {
+            //        hideBottom();
+            //    }
+            //}, 10000);
 
         } else {
             hideBottom();

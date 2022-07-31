@@ -1,5 +1,7 @@
 package com.github.tvbox.osc.util;
 
+import com.orhanobut.hawk.Hawk;
+
 /**
  * @author pj567
  * @date :2020/12/23
@@ -7,6 +9,7 @@ package com.github.tvbox.osc.util;
  */
 public class HawkConfig {
     public static final String API_URL = "api_url";
+    public static final String SHOW_PREVIEW = "show_preview";
     public static final String API_HISTORY = "api_history";
     public static final String HOME_API = "home_api";
     public static final String DEFAULT_PARSE = "parse_default";
@@ -26,4 +29,8 @@ public class HawkConfig {
     public static final String LIVE_CONNECT_TIMEOUT = "live_connect_timeout";
     public static final String LIVE_SHOW_NET_SPEED = "live_show_net_speed";
     public static final String LIVE_SHOW_TIME = "live_show_time";
+
+    public static boolean isDebug(){
+        return Hawk.get(DEBUG_OPEN, false);
+    }
 }
