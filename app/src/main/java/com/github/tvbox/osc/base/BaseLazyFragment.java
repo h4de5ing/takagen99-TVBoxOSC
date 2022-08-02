@@ -278,6 +278,11 @@ public abstract class BaseLazyFragment extends Fragment implements CustomAdapt {
         startActivity(intent);
     }
 
+    /**
+     * 跳转页面.
+     * @param clazz
+     * @param bundle
+     */
     public void jumpActivity(Class<? extends BaseActivity> clazz, Bundle bundle) {
         Intent intent = new Intent(mContext, clazz);
         intent.putExtras(bundle);
@@ -298,5 +303,6 @@ public abstract class BaseLazyFragment extends Fragment implements CustomAdapt {
         return true;
     }
 
+    public void scrollTop(){}
 
 }

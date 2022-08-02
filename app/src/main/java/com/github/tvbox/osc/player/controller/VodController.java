@@ -6,6 +6,7 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -55,10 +56,26 @@ public class VodController extends BaseController {
                     }
                     case 1002: { // 显示底部菜单
                         mBottomRoot.setVisibility(VISIBLE);
+                        TranslateAnimation animate = new TranslateAnimation(
+                                0,                // fromXDelta
+                                0,                  // toXDelta
+                                mBottomRoot.getHeight(),    // fromYDelta
+                                0);                 // toYDelta
+                        animate.setDuration(400);
+                        animate.setFillAfter(true);
+                        mBottomRoot.startAnimation(animate);
                         mBottomRoot.requestFocus();
                         break;
                     }
                     case 1003: { // 隐藏底部菜单
+                        TranslateAnimation animate = new TranslateAnimation(
+                                0,                 // fromXDelta
+                                0,                   // toXDelta
+                                0,                 // fromYDelta
+                                mBottomRoot.getHeight());    // toYDelta
+                        animate.setDuration(400);
+                        animate.setFillAfter(true);
+                        mBottomRoot.startAnimation(animate);
                         mBottomRoot.setVisibility(GONE);
                         break;
                     }
@@ -124,6 +141,8 @@ public class VodController extends BaseController {
         mPlayerTimeStartBtn = findViewById(R.id.play_time_start);
         mPlayerTimeSkipBtn = findViewById(R.id.play_time_end);
         mPlayerTimeStepBtn = findViewById(R.id.play_time_step);
+
+        mBottomRoot.setVisibility(INVISIBLE);
 
         mGridView.setLayoutManager(new V7LinearLayoutManager(getContext(), 0, false));
         ParseAdapter parseAdapter = new ParseAdapter();

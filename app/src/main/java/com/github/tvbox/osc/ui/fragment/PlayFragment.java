@@ -381,7 +381,7 @@ public class PlayFragment extends BaseLazyFragment {
     @Override
     public void onStop() {
         super.onStop();
-        mVideoView.release();
+        mVideoView.pause();
     }
     @Override
     public void onPause() {
