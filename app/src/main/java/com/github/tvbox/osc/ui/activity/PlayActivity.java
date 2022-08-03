@@ -205,10 +205,15 @@ public class PlayActivity extends BaseActivity {
     }
 
     void setTip(String msg, boolean loading, boolean err) {
-        mPlayLoadTip.setText(msg);
-        mPlayLoadTip.setVisibility(View.VISIBLE);
-        mPlayLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
-        mPlayLoadErr.setVisibility(err ? View.VISIBLE : View.GONE);
+        runOnUiThread(new Runnable() {//影魔 解决解析偶发闪退
+            @Override
+            public void run() {
+                mPlayLoadTip.setText(msg);
+                mPlayLoadTip.setVisibility(View.VISIBLE);
+                mPlayLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
+                mPlayLoadErr.setVisibility(err ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     void hideTip() {
@@ -534,6 +539,7 @@ public class PlayActivity extends BaseActivity {
 
         playUrl(null, null);
         String progressKey = mVodInfo.sourceKey + mVodInfo.id + mVodInfo.playFlag + mVodInfo.playIndex;
+        //重新播放清除现有进度
         if (reset) {CacheManager.delete(MD5.string2MD5(progressKey), 0);}
         if (Thunder.play(vs.url, new Thunder.ThunderCallback() {
             @Override
@@ -598,7 +604,12 @@ public class PlayActivity extends BaseActivity {
 
     JSONObject jsonParse(String input, String json) throws JSONException {
         JSONObject jsonPlayData = new JSONObject(json);
-        String url = jsonPlayData.getString("url");
+        String url;
+        if (jsonPlayData.has("data")) {
+            url = jsonPlayData.getJSONObject("data").getString("url");
+        } else {
+            url = jsonPlayData.getString("url");
+        }
         String msg = jsonPlayData.optString("msg", "");
         if (url.startsWith("//")) {
             url = "https:" + url;

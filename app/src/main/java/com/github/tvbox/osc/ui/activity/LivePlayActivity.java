@@ -187,10 +187,6 @@ public class LivePlayActivity extends BaseActivity {
                         break;
                     case KeyEvent.KEYCODE_DPAD_CENTER:
                     case KeyEvent.KEYCODE_ENTER:
-                        // takagen99 : Show right menu on Menu button press
-                    case KeyEvent.KEYCODE_MENU:
-                        showSettingGroup();
-                        break;
                     case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
                         showChannelList();
                         break;
