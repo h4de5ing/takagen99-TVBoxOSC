@@ -22,6 +22,7 @@ public class HawkConfig {
     public static final String PLAY_TIME_STEP = "play_time_step"; //0 texture 2
     public static final String DOH_URL = "doh_url";
     public static final String HOME_REC = "home_rec"; // 0 豆瓣热播 1 数据源推荐 2 历史
+    public static final String HOME_NUM = "home_num"; // No. of History
     public static final String SEARCH_VIEW = "search_view"; // 0 列表 1 缩略图
     public static final String LIVE_CHANNEL = "last_live_channel_name";
     public static final String LIVE_CHANNEL_REVERSE = "live_channel_reverse";
@@ -29,6 +30,7 @@ public class HawkConfig {
     public static final String LIVE_CONNECT_TIMEOUT = "live_connect_timeout";
     public static final String LIVE_SHOW_NET_SPEED = "live_show_net_speed";
     public static final String LIVE_SHOW_TIME = "live_show_time";
+
 
     public static boolean isDebug(){
         return Hawk.get(DEBUG_OPEN, false);
