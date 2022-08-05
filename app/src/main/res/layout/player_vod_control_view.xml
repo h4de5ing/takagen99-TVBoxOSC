@@ -384,7 +384,7 @@
 
         <LinearLayout
             android:layout_width="@dimen/vs_240"
-            android:layout_height="@dimen/vs_200"
+            android:layout_height="@dimen/vs_160"
             android:layout_gravity="center"
             android:background="@drawable/shape_user_pause"
             android:focusable="false"
@@ -445,7 +445,7 @@
     <LinearLayout
         android:id="@+id/tv_progress_container"
         android:layout_width="@dimen/vs_240"
-        android:layout_height="@dimen/vs_200"
+        android:layout_height="@dimen/vs_160"
         android:layout_gravity="center"
         android:background="@drawable/shape_user_pause"
         android:focusable="false"
