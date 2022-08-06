@@ -249,7 +249,7 @@ public class VodController extends BaseController {
                     if (speed > 3)
                         speed = 0.5f;
                     if (speed == 1)
-                        mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dFFwd,null,null,null);
+                        mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dFFwd, null, null, null);
                     mPlayerConfig.put("sp", speed);
                     updatePlayerCfgView();
                     listener.updatePlayerCfg();
@@ -264,7 +264,7 @@ public class VodController extends BaseController {
             @Override
             public boolean onLongClick(View view) {
                 try {
-                    mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dFFwd,null,null,null);
+                    mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dFFwd, null, null, null);
                     mPlayerConfig.put("sp", 1.0f);
                     updatePlayerCfgView();
                     listener.updatePlayerCfg();
@@ -419,12 +419,12 @@ public class VodController extends BaseController {
         mPlayerFFwd.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ( mSpeed == 5.0f ) {
+                if (mSpeed == 5.0f) {
                     mSpeed = 1.0f;
-                    mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dFFwd,null,null,null);
+                    mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dFFwd, null, null, null);
                 } else {
                     mSpeed = 5.0f;
-                    mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dPlay,null,null,null);
+                    mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dPlay, null, null, null);
                 }
                 ;
                 try {
@@ -624,11 +624,20 @@ public class VodController extends BaseController {
     void showBottom() {
         mHandler.removeMessages(1003);
         mHandler.sendEmptyMessage(1002);
+        mHandler.postDelayed(mHideBottomRunnable, 10000);
     }
+
+    Runnable mHideBottomRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideBottom();
+        }
+    };
 
     void hideBottom() {
         mHandler.removeMessages(1002);
         mHandler.sendEmptyMessage(1003);
+        mHandler.removeCallbacks(mHideBottomRunnable);
     }
 
     @Override
@@ -641,6 +650,8 @@ public class VodController extends BaseController {
             return true;
         }
         if (isBottomVisible()) {
+            mHandler.removeCallbacks(mHideBottomRunnable);
+            mHandler.postDelayed(mHideBottomRunnable, 10000);
             return super.dispatchKeyEvent(event);
         }
         if (action == KeyEvent.ACTION_DOWN) {
@@ -658,15 +669,6 @@ public class VodController extends BaseController {
             } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN || keyCode == KeyEvent.KEYCODE_DPAD_UP) {
                 if (!isBottomVisible()) {
                     showBottom();
-
-                    // takagen99 : Hide after 10 seconds
-                    //new Handler().postDelayed(new Runnable() {
-                    //    @Override
-                    //    public void run() {
-                    //        hideBottom();
-                    //    }
-                    //}, 10000);
-
                     return true;
                 }
             }
@@ -685,15 +687,6 @@ public class VodController extends BaseController {
     public boolean onSingleTapConfirmed(MotionEvent e) {
         if (!isBottomVisible()) {
             showBottom();
-
-            // takagen99 : Hide after 10 seconds
-            //new Handler().postDelayed(new Runnable() {
-            //    @Override
-            //    public void run() {
-            //        hideBottom();
-            //    }
-            //}, 10000);
-
         } else {
             hideBottom();
         }
