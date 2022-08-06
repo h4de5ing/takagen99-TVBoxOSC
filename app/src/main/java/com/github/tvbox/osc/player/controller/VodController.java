@@ -1,6 +1,7 @@
 package com.github.tvbox.osc.player.controller;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
@@ -118,6 +119,12 @@ public class VodController extends BaseController {
     TextView mPlayerTimeSkipBtn;
     TextView mPlayerTimeStepBtn;
 
+    // takagen99 : Added for Fast Forward Button
+    TextView mPlayerFFwd;
+    float mSpeed;
+    Drawable dPlay = getResources().getDrawable(R.drawable.play_play);
+    Drawable dFFwd = getResources().getDrawable(R.drawable.play_ffwd);
+
     @Override
     protected void initView() {
         super.initView();
@@ -141,6 +148,7 @@ public class VodController extends BaseController {
         mPlayerTimeStartBtn = findViewById(R.id.play_time_start);
         mPlayerTimeSkipBtn = findViewById(R.id.play_time_end);
         mPlayerTimeStepBtn = findViewById(R.id.play_time_step);
+        mPlayerFFwd = findViewById(R.id.play_ff);
 
         mBottomRoot.setVisibility(INVISIBLE);
 
@@ -240,6 +248,8 @@ public class VodController extends BaseController {
                     speed += 0.25f;
                     if (speed > 3)
                         speed = 0.5f;
+                    if (speed == 1)
+                        mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dFFwd,null,null,null);
                     mPlayerConfig.put("sp", speed);
                     updatePlayerCfgView();
                     listener.updatePlayerCfg();
@@ -254,6 +264,7 @@ public class VodController extends BaseController {
             @Override
             public boolean onLongClick(View view) {
                 try {
+                    mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dFFwd,null,null,null);
                     mPlayerConfig.put("sp", 1.0f);
                     updatePlayerCfgView();
                     listener.updatePlayerCfg();
@@ -395,7 +406,40 @@ public class VodController extends BaseController {
                 updatePlayerCfgView();
             }
         });
+        // takagen99: Add long press to reset counter
+        mPlayerTimeStepBtn.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Hawk.put(HawkConfig.PLAY_TIME_STEP, 5);
+                updatePlayerCfgView();
+                return true;
+            }
+        });
+
+        mPlayerFFwd.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ( mSpeed == 5.0f ) {
+                    mSpeed = 1.0f;
+                    mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dFFwd,null,null,null);
+                } else {
+                    mSpeed = 5.0f;
+                    mPlayerFFwd.setCompoundDrawablesWithIntrinsicBounds(dPlay,null,null,null);
+                }
+                ;
+                try {
+                    mPlayerConfig.put("sp", mSpeed);
+                    updatePlayerCfgView();
+                    listener.updatePlayerCfg();
+                    mControlWrapper.setSpeed(mSpeed);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.player_vod_control_view;
