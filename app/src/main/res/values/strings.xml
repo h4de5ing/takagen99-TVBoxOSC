@@ -1,3 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TVBox</string>
+    <string name="app_home">Home</string>
+    <string name="app_source"></string>
+
+    <string name="hm_ok">Load Complete</string>
+    <string name="hm_notok">Load Fail</string>
+    <string name="hm_retry">Retry</string>
+    <string name="hm_cancel">Cancel</string>
+    <string name="hm_exit">Press BACK again to EXIT</string>
+
+    <string name="det_play">Play</string>
+    <string name="det_expand">Expand</string>
+    <string name="det_search">Search</string>
+    <string name="det_sort">Sort</string>
+    <string name="det_fav">Favorite</string>
+    <string name="det_fav_add">Added to Favorite</string>
+    <string name="det_fav_del">Removed from Favorite</string>
+    <string name="det_fav_star">★ Favorite</string>
+    <string name="det_fav_unstar">☆ Favorite</string>
+
+    <string name="set_home">Home Source</string>
+
 </resources>

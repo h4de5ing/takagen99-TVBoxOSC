@@ -154,7 +154,7 @@ public class DetailActivity extends BaseActivity {
             playFragment = new PlayFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.previewPlayer, playFragment).commit();
             getSupportFragmentManager().beginTransaction().show(playFragment).commitAllowingStateLoss();
-            tvPlay.setText("Expand");
+            tvPlay.setText(getString(R.string.det_expand));
         }
         tvPlay.requestFocus();
         tvSort.setOnClickListener(new View.OnClickListener() {
@@ -214,14 +214,14 @@ public class DetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String text = tvCollect.getText().toString();
-                if ("☆ Favorite".equals(text)) {
+                if (getString(R.string.det_fav_unstar).equals(text)) {
                     RoomDataManger.insertVodCollect(sourceKey, vodInfo);
-                    Toast.makeText(DetailActivity.this, "Added to Favorite", Toast.LENGTH_SHORT).show();
-                    tvCollect.setText("★ Favorite");
+                    Toast.makeText(DetailActivity.this, getString(R.string.det_fav_add), Toast.LENGTH_SHORT).show();
+                    tvCollect.setText(getString(R.string.det_fav_star));
                 } else {
                     RoomDataManger.deleteVodCollect(sourceKey, vodInfo);
-                    Toast.makeText(DetailActivity.this, "Removed from Favorite", Toast.LENGTH_SHORT).show();
-                    tvCollect.setText("☆ Favorite");
+                    Toast.makeText(DetailActivity.this, getString(R.string.det_fav_del), Toast.LENGTH_SHORT).show();
+                    tvCollect.setText(getString(R.string.det_fav_unstar));
                 }
             }
         });
@@ -481,9 +481,9 @@ public class DetailActivity extends BaseActivity {
 
             boolean isVodCollect = RoomDataManger.isVodCollect(sourceKey, vodId);
             if (isVodCollect) {
-                tvCollect.setText("★ Favorite");
+                tvCollect.setText(getString(R.string.det_fav_star));
             } else {
-                tvCollect.setText("☆ Favorite");
+                tvCollect.setText(getString(R.string.det_fav_unstar));
             }
         }
     }

@@ -168,7 +168,7 @@
                         android:background="@drawable/button_detail_all"
                         android:focusable="true"
                         android:gravity="center"
-                        android:text="Play"
+                        android:text="@string/det_play"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/vs_20" />
 
@@ -181,7 +181,7 @@
                         android:background="@drawable/button_detail_all"
                         android:focusable="true"
                         android:gravity="center"
-                        android:text="Search"
+                        android:text="@string/det_search"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/vs_20" />
 
@@ -194,7 +194,7 @@
                         android:background="@drawable/button_detail_all"
                         android:focusable="true"
                         android:gravity="center"
-                        android:text="Sort"
+                        android:text="@string/det_sort"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/vs_20" />
 
@@ -205,7 +205,7 @@
                         android:background="@drawable/button_detail_all"
                         android:focusable="true"
                         android:gravity="center"
-                        android:text="Favorite"
+                        android:text="@string/det_fav"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/vs_20" />
                 </LinearLayout>
