@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="ts_10">10mm</dimen>
     <dimen name="ts_16">16mm</dimen>
     <dimen name="ts_20">20mm</dimen>
     <dimen name="ts_22">22mm</dimen>
@@ -32,6 +33,7 @@
     <dimen name="vs_50">50mm</dimen>
     <dimen name="vs_60">60mm</dimen>
     <dimen name="vs_70">70mm</dimen>
+    <dimen name="vs_80">80mm</dimen>
     <dimen name="vs_95">95mm</dimen>
     <dimen name="vs_98">98mm</dimen>
     <dimen name="vs_100">100mm</dimen>
@@ -57,4 +59,5 @@
     <dimen name="vs_480">480mm</dimen>
     <dimen name="vs_600">600mm</dimen>
     <dimen name="vs_720">720mm</dimen>
+    <dimen name="vs_960">960mm</dimen>
 </resources>

@@ -255,6 +255,10 @@ public class DetailActivity extends BaseActivity {
                     }
                     VodInfo.VodSeriesFlag flag = vodInfo.seriesFlags.get(position);
                     flag.selected = true;
+                    // clean pre flag select status
+                    if (vodInfo.seriesMap.get(vodInfo.playFlag).size() > vodInfo.playIndex) {
+                        vodInfo.seriesMap.get(vodInfo.playFlag).get(vodInfo.playIndex).selected = false;
+                    }
                     vodInfo.playFlag = newFlag;
                     seriesFlagAdapter.notifyItemChanged(position);
                     refreshList();
@@ -693,6 +697,7 @@ public class DetailActivity extends BaseActivity {
                 uiOptions &= ~View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
                 getWindow().getDecorView().setSystemUiVisibility(uiOptions);
             }
+            mGridView.requestFocus();
             return;
         }
         if (seriesSelect) {

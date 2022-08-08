@@ -45,7 +45,8 @@ public class AppDataManager {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             try {
-                database.execSQL("ALTER TABLE sourceState ADD COLUMN tidSort TEXT");
+                //database.execSQL("ALTER TABLE sourceState ADD COLUMN tidSort TEXT");
+                database.execSQL("CREATE TABLE IF NOT EXISTS `storageDrive` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `type` INTEGER NOT NULL, `configJson` TEXT)");
             } catch (SQLiteException e) {
                 e.printStackTrace();
             }
@@ -117,7 +118,7 @@ public class AppDataManager {
         if (dbInstance == null)
             dbInstance = Room.databaseBuilder(App.getInstance(), AppDataBase.class, dbPath())
                     .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
-                    //.addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_1_2)
                     //.addMigrations(MIGRATION_2_3)
                     //.addMigrations(MIGRATION_3_4)
                     //.addMigrations(MIGRATION_4_5)

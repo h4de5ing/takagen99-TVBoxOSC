@@ -55,6 +55,9 @@ import com.github.tvbox.osc.util.PlayerHelper;
 import com.github.tvbox.osc.util.XWalkUtils;
 import com.github.tvbox.osc.util.thunder.Thunder;
 import com.github.tvbox.osc.viewmodel.SourceViewModel;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.HttpHeaders;
@@ -170,7 +173,7 @@ public class PlayActivity extends BaseActivity {
                 String preProgressKey = progressKey;
                 PlayActivity.this.playNext();
                 if (rmProgress && preProgressKey != null)
-                    CacheManager.delete(MD5.string2MD5(preProgressKey), 0);
+                    CacheManager.delete(MD5.string2MD5(preProgressKey));
             }
 
             @Override
@@ -205,15 +208,13 @@ public class PlayActivity extends BaseActivity {
     }
 
     void setTip(String msg, boolean loading, boolean err) {
-        runOnUiThread(new Runnable() {//影魔 解决解析偶发闪退
-            @Override
-            public void run() {
-                mPlayLoadTip.setText(msg);
-                mPlayLoadTip.setVisibility(View.VISIBLE);
-                mPlayLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
-                mPlayLoadErr.setVisibility(err ? View.VISIBLE : View.GONE);
-            }
-        });
+        try {
+            mPlayLoadTip.setText(msg);
+            mPlayLoadTip.setVisibility(View.VISIBLE);
+            mPlayLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
+            mPlayLoadErr.setVisibility(err ? View.VISIBLE : View.GONE);
+        } catch (Exception ignore) {
+        }
     }
 
     void hideTip() {
@@ -540,7 +541,23 @@ public class PlayActivity extends BaseActivity {
         playUrl(null, null);
         String progressKey = mVodInfo.sourceKey + mVodInfo.id + mVodInfo.playFlag + mVodInfo.playIndex;
         //重新播放清除现有进度
-        if (reset) {CacheManager.delete(MD5.string2MD5(progressKey), 0);}
+        if (reset) {CacheManager.delete(MD5.string2MD5(progressKey));}
+        if(vs.url.startsWith("tvbox-drive://")) {
+            mController.showParse(false);
+            HashMap<String, String> headers = null;
+            if(mVodInfo.playerCfg != null && mVodInfo.playerCfg.length() > 0) {
+                JsonObject playerConfig = JsonParser.parseString(mVodInfo.playerCfg).getAsJsonObject();
+                if(playerConfig.has("headers")) {
+                    headers = new HashMap<>();
+                    for (JsonElement headerEl: playerConfig.getAsJsonArray("headers")) {
+                        JsonObject headerJson = headerEl.getAsJsonObject();
+                        headers.put(headerJson.get("name").getAsString(), headerJson.get("value").getAsString());
+                    }
+                }
+            }
+            playUrl(vs.url.replace("tvbox-drive://", ""), headers);
+            return;
+        }
         if (Thunder.play(vs.url, new Thunder.ThunderCallback() {
             @Override
             public void status(int code, String info) {

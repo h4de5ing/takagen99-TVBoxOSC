@@ -73,8 +73,10 @@ public class VodController extends BaseController {
                                 0,                 // fromXDelta
                                 0,                   // toXDelta
                                 0,                 // fromYDelta
-                                mBottomRoot.getHeight());    // toYDelta
-                        animate.setDuration(400);
+                                //mBottomRoot.getHeight());  // toYDelta
+                                // takagen99: Quick fix VOD controller shows after PIP
+                                1200);
+                        animate.setDuration(800);
                         animate.setFillAfter(true);
                         mBottomRoot.startAnimation(animate);
                         mBottomRoot.setVisibility(GONE);

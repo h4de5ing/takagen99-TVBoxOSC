@@ -24,6 +24,7 @@ public class HawkConfig {
     public static final String HOME_REC = "home_rec"; // 0 豆瓣热播 1 数据源推荐 2 历史
     public static final String HOME_NUM = "home_num"; // No. of History
     public static final String SEARCH_VIEW = "search_view"; // 0 列表 1 缩略图
+    public static final String STORAGE_DRIVE_SORT = "storage_drive_sort";
     public static final String LIVE_CHANNEL = "last_live_channel_name";
     public static final String LIVE_CHANNEL_REVERSE = "live_channel_reverse";
     public static final String LIVE_CROSS_GROUP = "live_cross_group";

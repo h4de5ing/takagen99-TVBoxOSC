@@ -35,8 +35,8 @@ public interface CacheDao {
     Cache getCache(String key);
 
     //只能传递对象昂,删除时根据Cache中的主键 来比对的
-    @Delete
-    int delete(Cache cache);
+    @Query("delete from storageDrive where `id`=:key")
+    int delete(String key);
 
     //只能传递对象昂,删除时根据Cache中的主键 来比对的
     @Update(onConflict = OnConflictStrategy.REPLACE)

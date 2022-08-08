@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mSortLayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/vs_60"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/mItemLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/shape_setting_model_focus"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="start|center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/vs_10">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center_vertical"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="@dimen/vs_60"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imgItem"
+                    android:layout_width="@dimen/vs_40"
+                    android:layout_height="@dimen/vs_40"
+                    android:layout_marginStart="@dimen/vs_10"
+                    android:layout_marginLeft="@dimen/vs_10"
+                    android:layout_marginEnd="@dimen/vs_10"
+                    android:layout_marginRight="@dimen/vs_10"
+                    app:srcCompat="@drawable/icon_drive" />
+
+                <TextView
+                    android:id="@+id/txtMediaName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="@dimen/vs_2"
+                    android:layout_marginRight="@dimen/vs_2"
+                    android:background="@color/color_CC000000"
+                    android:maxWidth="@dimen/vs_60"
+                    android:padding="@dimen/vs_1"
+                    android:singleLine="true"
+                    android:textColor="@color/color_FFFFFF"
+                    android:textSize="@dimen/ts_10"
+                    tools:visibility="gone" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/txtItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:focusable="false"
+                android:gravity="center|left|center_vertical"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingLeft="@dimen/vs_15"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/ts_22" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtModifiedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginEnd="@dimen/vs_10"
+            android:layout_marginRight="@dimen/vs_10"
+            android:text="MM/dd/yyyy"
+            android:textColor="@color/color_BBFFFFFF"
+            android:textSize="@dimen/ts_16"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/delDrive"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center_vertical"
+            android:visibility="gone"
+            app:srcCompat="@drawable/icon_delete" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgConfig"
+        android:layout_width="@dimen/vs_80"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center_vertical|end"
+        android:layout_marginStart="@dimen/vs_10"
+        android:layout_marginLeft="@dimen/vs_10"
+        android:background="@drawable/shape_setting_model_focus"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/vs_10"
+        app:srcCompat="@drawable/icon_setting"
+        tools:visibility="gone" />
+
+
+</LinearLayout>

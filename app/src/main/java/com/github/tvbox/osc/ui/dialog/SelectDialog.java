@@ -16,6 +16,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class SelectDialog<T> extends BaseDialog {
+
+    private boolean muteCheck = false;
+
     public SelectDialog(@NonNull @NotNull Context context) {
         super(context);
         setContentView(R.layout.dialog_select);
@@ -24,6 +27,10 @@ public class SelectDialog<T> extends BaseDialog {
     public SelectDialog(@NonNull @NotNull Context context, int resId) {
         super(context);
         setContentView(resId);
+    }
+
+    public void setItemCheckDisplay(boolean shouldShowCheck) {
+        muteCheck = !shouldShowCheck;
     }
 
     @Override
@@ -36,7 +43,7 @@ public class SelectDialog<T> extends BaseDialog {
     }
 
     public void setAdapter(SelectDialogAdapter.SelectDialogInterface<T> sourceBeanSelectDialogInterface, DiffUtil.ItemCallback<T> sourceBeanItemCallback, List<T> data, int select) {
-        SelectDialogAdapter<T> adapter = new SelectDialogAdapter(sourceBeanSelectDialogInterface, sourceBeanItemCallback);
+        SelectDialogAdapter<T> adapter = new SelectDialogAdapter(sourceBeanSelectDialogInterface, sourceBeanItemCallback, muteCheck);
         adapter.setData(data, select);
         TvRecyclerView tvRecyclerView = ((TvRecyclerView) findViewById(R.id.list));
         tvRecyclerView.setAdapter(adapter);
