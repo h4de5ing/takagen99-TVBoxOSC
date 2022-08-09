@@ -20,6 +20,7 @@ import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.callback.EmptyCallback;
 import com.github.tvbox.osc.callback.LoadingCallback;
 import com.github.tvbox.osc.util.AppManager;
+import com.github.tvbox.osc.util.LocaleHelper;
 import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
@@ -41,10 +42,23 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
     protected Context mContext;
     private LoadService mLoadService;
 
+    // takagen : Language Changer : WIP
+    //Context lContext;
+    //Resources lRresources;
+    //@Override
+    //protected void attachBaseContext(Context base) {
+    //    super.attachBaseContext(LocaleHelper.onAttach(base, "zh"));
+    //}
+
     private static float screenRatio = -100.0f;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        // takagen : Language Changer : WIP
+        // lContext = LocaleHelper.setLocale(this, "zh");
+        // lRresources = lContext.getResources();
+
         try {
             if (screenRatio < 0) {
                 DisplayMetrics dm = new DisplayMetrics();

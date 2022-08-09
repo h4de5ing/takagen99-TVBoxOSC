@@ -9,6 +9,8 @@
     <string name="hm_retry">重试</string>
     <string name="hm_cancel">取消</string>
     <string name="hm_exit">再按一次返回键退出应用</string>
+    <string name="hm_date1">yyyy年 MM月 dd日</string>
+    <string name="hm_date2">EE hh:mm aa</string>
 
     <string name="det_play">播放</string>
     <string name="det_expand">全屏</string>
@@ -21,5 +23,17 @@
     <string name="det_fav_unstar">☆ 收藏</string>
 
     <string name="set_home">首页数据源</string>
+
+    <string name="set_bkup_ok">备份成功!</string>
+    <string name="set_bkup_fail">备份失败!</string>
+    <string name="set_bkup_fail_hk">备份Hawk失败!</string>
+    <string name="set_bkup_fail_db">DB文件不存在!</string>
+    <string name="set_rest_ok">恢复成功,请重启应用!</string>
+    <string name="set_rest_fail">Restore Fail</string>
+    <string name="set_rest_fail_hk">Hawk恢复失败!</string>
+    <string name="set_rest_fail_db">DB文件恢复失败!</string>
+    <string name="set_permission_ok">已获得存储权限</string>
+    <string name="set_permission_fail1">获取存储权限失败</string>
+    <string name="set_permission_fail2">获取存储权限失败,请在系统设置中开启</string>
 
 </resources>

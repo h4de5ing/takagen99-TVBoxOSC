@@ -9,6 +9,8 @@
     <string name="hm_retry">Retry</string>
     <string name="hm_cancel">Cancel</string>
     <string name="hm_exit">Press BACK again to EXIT</string>
+    <string name="hm_date1">dd MMM yyyy</string>
+    <string name="hm_date2">EE hh:mm aa</string>
 
     <string name="det_play">Play</string>
     <string name="det_expand">Expand</string>
@@ -21,5 +23,17 @@
     <string name="det_fav_unstar">☆ Favorite</string>
 
     <string name="set_home">Home Source</string>
+
+    <string name="set_bkup_ok">Backup Success</string>
+    <string name="set_bkup_fail">Backup Fail</string>
+    <string name="set_bkup_fail_hk">Backup Fail (Hawk)</string>
+    <string name="set_bkup_fail_db">Backup Fail (DB)</string>
+    <string name="set_rest_ok">Restore Success, please Restart</string>
+    <string name="set_rest_fail">Restore Fail</string>
+    <string name="set_rest_fail_hk">Restore Fail (Hawk)</string>
+    <string name="set_rest_fail_db">Restore Fail (DB)</string>
+    <string name="set_permission_ok">Write Permission Granted</string>
+    <string name="set_permission_fail1">Failed to get Permission</string>
+    <string name="set_permission_fail2">Failed to get Permission, please grant in Settings</string>
 
 </resources>

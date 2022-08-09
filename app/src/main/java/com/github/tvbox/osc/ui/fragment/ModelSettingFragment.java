@@ -61,6 +61,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
     private TextView tvHomeNum;
     private TextView tvSearchView;
     private TextView tvShowPreviewText;
+    private TextView tvHomeShow;
 
     public static ModelSettingFragment newInstance() {
         return new ModelSettingFragment().setArguments();
@@ -77,6 +78,8 @@ public class ModelSettingFragment extends BaseLazyFragment {
 
     @Override
     protected void init() {
+        tvHomeShow = findViewById(R.id.tvHomeShow);
+        tvHomeShow.setText(Hawk.get(HawkConfig.HOME_SHOW_SOURCE, false) ? "开启" : "关闭");
         tvShowPreviewText = findViewById(R.id.showPreviewText);
         tvShowPreviewText.setText(Hawk.get(HawkConfig.SHOW_PREVIEW, true) ? "开启" : "关闭");
         tvDebugOpen = findViewById(R.id.tvDebugOpen);
@@ -555,6 +558,16 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 FastClickCheckUtil.check(v);
                 Hawk.put(HawkConfig.SHOW_PREVIEW, !Hawk.get(HawkConfig.SHOW_PREVIEW, true));
                 tvShowPreviewText.setText(Hawk.get(HawkConfig.SHOW_PREVIEW, true) ? "开启" : "关闭");
+            }
+        });
+
+        // takagen99 : switch to show / hide source header
+        findViewById(R.id.llHomeShow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FastClickCheckUtil.check(v);
+                Hawk.put(HawkConfig.HOME_SHOW_SOURCE, !Hawk.get(HawkConfig.HOME_SHOW_SOURCE, false));
+                tvHomeShow.setText(Hawk.get(HawkConfig.HOME_SHOW_SOURCE, true) ? "开启" : "关闭");
             }
         });
     }

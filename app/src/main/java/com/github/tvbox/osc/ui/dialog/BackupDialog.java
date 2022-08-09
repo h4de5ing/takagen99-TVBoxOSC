@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.base.App;
 import com.github.tvbox.osc.data.AppDataManager;
+import com.github.tvbox.osc.ui.activity.HomeActivity;
 import com.github.tvbox.osc.ui.adapter.BackupAdapter;
 import com.github.tvbox.osc.util.FileUtils;
 import com.hjq.permissions.OnPermissionCallback;
@@ -60,7 +61,7 @@ public class BackupDialog extends BaseDialog {
             @Override
             public void onClick(View v) {
                 if (XXPermissions.isGranted(getContext(), Permission.Group.STORAGE)) {
-                    Toast.makeText(getContext(), "已获得存储权限", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_ok), Toast.LENGTH_SHORT).show();
                 } else {
                     XXPermissions.with(getContext())
                             .permission(Permission.Group.STORAGE)
@@ -69,17 +70,17 @@ public class BackupDialog extends BaseDialog {
                                 public void onGranted(List<String> permissions, boolean all) {
                                     if (all) {
                                         adapter.setNewData(allBackup());
-                                        Toast.makeText(getContext(), "已获得存储权限", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_ok), Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
                                 @Override
                                 public void onDenied(List<String> permissions, boolean never) {
                                     if (never) {
-                                        Toast.makeText(getContext(), "获取存储权限失败,请在系统设置中开启", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_fail2), Toast.LENGTH_SHORT).show();
                                         XXPermissions.startPermissionActivity((Activity) getContext(), permissions);
                                     } else {
-                                        Toast.makeText(getContext(), "获取存储权限失败", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_fail1), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -140,12 +141,12 @@ public class BackupDialog extends BaseDialog {
                                 sharedPreferences.edit().putString(key, value).commit();
                             }
                         }
-                        Toast.makeText(getContext(), "恢复成功,请重启应用!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_rest_ok), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getContext(), "Hawk恢复失败!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_rest_fail_hk), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getContext(), "DB文件恢复失败!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_rest_fail_db), Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (Throwable e) {
@@ -176,17 +177,17 @@ public class BackupDialog extends BaseDialog {
                 }
                 if (!FileUtils.writeSimple(jsonObject.toString().getBytes("UTF-8"), new File(backup, "hawk"))) {
                     backup.delete();
-                    Toast.makeText(getContext(), "备份Hawk失败!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_bkup_fail_hk), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(), "备份成功!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_bkup_ok), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getContext(), "DB文件不存在!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_bkup_fail_db), Toast.LENGTH_SHORT).show();
                 backup.delete();
             }
         } catch (Throwable e) {
             e.printStackTrace();
-            Toast.makeText(getContext(), "备份失败!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_bkup_fail), Toast.LENGTH_SHORT).show();
         }
     }
 }

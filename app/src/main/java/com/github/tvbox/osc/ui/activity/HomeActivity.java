@@ -96,7 +96,7 @@ public class HomeActivity extends BaseActivity {
         public void run() {
             Date date = new Date();
             @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat timeFormat = new SimpleDateFormat("dd MMM yyyy" + ", " + "EE hh:mm aa");
+            SimpleDateFormat timeFormat = new SimpleDateFormat(getString(R.string.hm_date1) + " , " + getString(R.string.hm_date2));
             tvDate.setText(timeFormat.format(date));
             mHandler.postDelayed(this, 1000);
         }
@@ -224,10 +224,17 @@ public class HomeActivity extends BaseActivity {
     private boolean dataInitOk = false;
     private boolean jarInitOk = false;
 
+    // takagen99 : Switch to show / hide source title
+    boolean HomeShow = Hawk.get(HawkConfig.HOME_SHOW_SOURCE, false);
     private void initData() {
         SourceBean home = ApiConfig.get().getHomeSourceBean();
-        if (home != null && home.getName() != null && !home.getName().isEmpty())
-            tvName.setText(home.getName());
+
+        // takagen99 : Switch to show / hide source title
+        if (HomeShow) {
+            if (home != null && home.getName() != null && !home.getName().isEmpty())
+                tvName.setText(home.getName());
+        }
+
         if (dataInitOk && jarInitOk) {
             showLoading();
             sourceViewModel.getSort(ApiConfig.get().getHomeSourceBean().getKey());
@@ -549,6 +556,7 @@ public class HomeActivity extends BaseActivity {
         ControlManager.get().stopServer();
     }
 
+    // Site Switch on Home Button
     void showSiteSwitch() {
         List<SourceBean> sites = ApiConfig.get().getSourceBeanList();
         if (sites.size() > 0) {
