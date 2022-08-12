@@ -81,7 +81,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="配置地址"
+                    android:text="@string/mn_config"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/ts_24" />
 
@@ -133,7 +133,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="首页数据源"
+                        android:text="@string/mn_home"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -178,7 +178,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="首页源显示"
+                        android:text="@string/mn_home_show"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -239,7 +239,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="首页推荐"
+                            android:text="@string/mn_home_type"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
@@ -282,7 +282,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="历史条数"
+                            android:text="@string/mn_history_num"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
@@ -336,7 +336,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="换张壁纸"
+                            android:text="@string/mn_wall_change"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
@@ -372,7 +372,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="重置壁纸"
+                            android:text="@string/mn_wall_reset"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
@@ -426,7 +426,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="播放器"
+                            android:text="@string/mn_play_type"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
@@ -469,7 +469,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="IJK解码"
+                            android:text="@string/mn_play_decode"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
@@ -514,7 +514,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="搜索展示"
+                        android:text="@string/mn_search"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -567,7 +567,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="画面缩放"
+                        android:text="@string/mn_ratio"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -610,7 +610,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="窗口预览"
+                        android:text="@string/mn_preview"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -663,7 +663,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="嗅探Webview"
+                        android:text="@string/mn_webview"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -714,7 +714,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="渲染方式"
+                            android:text="@string/mn_render"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
@@ -769,7 +769,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="数据备份还原"
+                        android:text="@string/mn_backup"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
@@ -789,46 +789,99 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/llDns"
                     android:layout_width="@dimen/vs_0"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/vs_5"
                     android:layout_marginLeft="@dimen/vs_5"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_setting_model_focus"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/vs_20"
-                    android:paddingRight="@dimen/vs_20">
+                    android:focusable="false"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="安全DNS"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/ts_24" />
+                    <LinearLayout
+                        android:id="@+id/llDns"
+                        android:layout_width="@dimen/vs_0"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/vs_5"
+                        android:layout_marginRight="@dimen/vs_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_setting_model_focus"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/vs_20"
+                        android:paddingRight="@dimen/vs_20">
 
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mn_dns"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
 
-                    <TextView
-                        android:id="@+id/tvDns"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/ts_24" />
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/vs_10"
-                        android:layout_marginLeft="@dimen/vs_10"
-                        android:text=">"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/ts_30" />
+                        <TextView
+                            android:id="@+id/tvDns"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/vs_10"
+                            android:layout_marginLeft="@dimen/vs_10"
+                            android:text=">"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_30" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llLocale"
+                        android:layout_width="@dimen/vs_0"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/vs_5"
+                        android:layout_marginLeft="@dimen/vs_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_setting_model_focus"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/vs_20"
+                        android:paddingRight="@dimen/vs_20">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mn_locale"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tvLocale"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/vs_10"
+                            android:layout_marginLeft="@dimen/vs_10"
+                            android:text=">"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_30" />
+                    </LinearLayout>
                 </LinearLayout>
 
 
@@ -849,7 +902,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="关于"
+                    android:text="@string/mn_about"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/ts_24" />
 

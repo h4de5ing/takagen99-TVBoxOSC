@@ -226,6 +226,7 @@ public class HomeActivity extends BaseActivity {
 
     // takagen99 : Switch to show / hide source title
     boolean HomeShow = Hawk.get(HawkConfig.HOME_SHOW_SOURCE, false);
+
     private void initData() {
         SourceBean home = ApiConfig.get().getHomeSourceBean();
 
