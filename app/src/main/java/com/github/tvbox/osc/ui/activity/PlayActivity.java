@@ -249,6 +249,8 @@ public class PlayActivity extends BaseActivity {
                     if (url != null) {
                         try {
                             int playerType = mVodPlayerCfg.getInt("pl");
+                            // takagen99: Check for External Player
+                            extPlay = false;
                             if (playerType >= 10) {
                                 VodInfo.VodSeries vs = mVodInfo.seriesMap.get(mVodInfo.playFlag).get(mVodInfo.playIndex);
                                 String playTitle = mVodInfo.name + " : " + vs.name;
@@ -256,10 +258,12 @@ public class PlayActivity extends BaseActivity {
                                 boolean callResult = false;
                                 switch (playerType) {
                                     case 10: {
+                                        extPlay = true;
                                         callResult = MXPlayer.run(PlayActivity.this, url, playTitle, playSubtitle, headers);
                                         break;
                                     }
                                     case 11: {
+                                        extPlay = true;
                                         callResult = ReexPlayer.run(PlayActivity.this, url, playTitle, playSubtitle, headers);
                                         break;
                                     }
@@ -379,13 +383,14 @@ public class PlayActivity extends BaseActivity {
         mController.setPlayerConfig(mVodPlayerCfg);
     }
 
-    // takagen99
+    // takagen99 : Add check for external players not enter PIP
+    private boolean extPlay = false;
     public boolean supportsPiPMode() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
     }
     @Override
     public void onUserLeaveHint () {
-        if (supportsPiPMode()) {
+        if (supportsPiPMode() && !extPlay) {
             enterPictureInPictureMode();
         }
     }

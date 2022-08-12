@@ -233,6 +233,8 @@ public class PlayFragment extends BaseLazyFragment {
                     if (url != null) {
                         try {
                             int playerType = mVodPlayerCfg.getInt("pl");
+                            // takagen99: Check for External Player
+                            extPlay = false;
                             if (playerType >= 10) {
                                 VodInfo.VodSeries vs = mVodInfo.seriesMap.get(mVodInfo.playFlag).get(mVodInfo.playIndex);
                                 String playTitle = mVodInfo.name + " : " + vs.name;
@@ -240,10 +242,12 @@ public class PlayFragment extends BaseLazyFragment {
                                 boolean callResult = false;
                                 switch (playerType) {
                                     case 10: {
+                                        extPlay = true;
                                         callResult = MXPlayer.run(requireActivity(), url, playTitle, playSubtitle, headers);
                                         break;
                                     }
                                     case 11: {
+                                        extPlay = true;
                                         callResult = ReexPlayer.run(requireActivity(), url, playTitle, playSubtitle, headers);
                                         break;
                                     }
@@ -383,6 +387,7 @@ public class PlayFragment extends BaseLazyFragment {
     }
 
     // takagen99 : Picture-in-Picture support
+    public boolean extPlay;
     @Override
     public void onStop() {
         super.onStop();

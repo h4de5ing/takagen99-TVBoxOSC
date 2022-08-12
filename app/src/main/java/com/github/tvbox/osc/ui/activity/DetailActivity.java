@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -300,7 +299,7 @@ public class DetailActivity extends BaseActivity {
                         reload = true;
                     }
                     //解决当前集不刷新的BUG
-                    if(!vodInfo.playFlag.equals(preFlag)) {
+                    if (!vodInfo.playFlag.equals(preFlag)) {
                         reload = true;
                     }
                     //选集全屏 想选集不全屏的注释下面一行
@@ -314,7 +313,8 @@ public class DetailActivity extends BaseActivity {
 
     private List<Runnable> pauseRunnable = null;
 
-    private String preFlag="";
+    private String preFlag = "";
+
     private void jumpToPlay() {
         if (vodInfo != null && vodInfo.seriesMap.get(vodInfo.playFlag).size() > 0) {
             preFlag = vodInfo.playFlag;
@@ -702,7 +702,8 @@ public class DetailActivity extends BaseActivity {
 
     @Override
     public void onUserLeaveHint() {
-        if (supportsPiPMode() && showPreview) {
+        // takagen99 : Additional check for external player
+        if (supportsPiPMode() && showPreview && !playFragment.extPlay) {
             if (fullWindows) {
                 enterPictureInPictureMode();
             } else {
