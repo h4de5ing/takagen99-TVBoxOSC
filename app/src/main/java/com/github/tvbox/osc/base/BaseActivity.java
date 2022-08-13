@@ -20,10 +20,12 @@ import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.callback.EmptyCallback;
 import com.github.tvbox.osc.callback.LoadingCallback;
 import com.github.tvbox.osc.util.AppManager;
+import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.LocaleHelper;
 import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
+import com.orhanobut.hawk.Hawk;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -44,6 +46,16 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
     private LoadService mLoadService;
 
     private static float screenRatio = -100.0f;
+
+    // takagen99 : Fix for Locale change not persist on higher Android version
+    @Override
+    protected void attachBaseContext(Context base) {
+        if (Hawk.get(HawkConfig.HOME_LOCALE, 0) == 0) {
+            super.attachBaseContext(LocaleHelper.onAttach(base, "zh"));
+        } else {
+            super.attachBaseContext(LocaleHelper.onAttach(base, ""));
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
