@@ -564,7 +564,7 @@ public class HomeActivity extends BaseActivity {
         if (sites.size() > 0) {
             String homeSourceKey = ApiConfig.get().getHomeSourceBean().getKey();
             SelectDialog<SourceBean> dialog = new SelectDialog<>(HomeActivity.this);
-            dialog.setTip("请选择首页数据源");
+            dialog.setTip(getString(R.string.dia_source));
             dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<SourceBean>() {
                 @Override
                 public void click(SourceBean value, int pos) {

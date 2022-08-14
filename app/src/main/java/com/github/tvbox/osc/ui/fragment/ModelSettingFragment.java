@@ -100,7 +100,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
         tvHomeNum = findViewById(R.id.tvHomeNum);
         tvSearchView = findViewById(R.id.tvSearchView);
         tvMediaCodec.setText(Hawk.get(HawkConfig.IJK_CODEC, ""));
-        tvDebugOpen.setText(Hawk.get(HawkConfig.DEBUG_OPEN, false) ? "已打开" : "已关闭");
+        tvDebugOpen.setText(Hawk.get(HawkConfig.DEBUG_OPEN, false) ? "打开" : "关闭");
         tvParseWebView.setText(Hawk.get(HawkConfig.PARSE_WEBVIEW, true) ? "系统自带" : "XWalkView");
         tvApi.setText(Hawk.get(HawkConfig.API_URL, ""));
         tvDns.setText(OkGoHelper.dnsHttpsList.get(Hawk.get(HawkConfig.DOH_URL, 0)));
@@ -120,7 +120,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
                 Hawk.put(HawkConfig.DEBUG_OPEN, !Hawk.get(HawkConfig.DEBUG_OPEN, false));
-                tvDebugOpen.setText(Hawk.get(HawkConfig.DEBUG_OPEN, false) ? "已打开" : "已关闭");
+                tvDebugOpen.setText(Hawk.get(HawkConfig.DEBUG_OPEN, false) ? "打开" : "关闭");
             }
         });
         findViewById(R.id.llHomeNum).setOnClickListener(new View.OnClickListener() {
@@ -136,7 +136,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 types.add(4);
 
                 SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
-                dialog.setTip("历史条数保留");
+                dialog.setTip(getString(R.string.dia_history));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
                     @Override
                     public void click(Integer value, int pos) {
@@ -202,6 +202,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
                 if (!ApiConfig.get().wallpaper.isEmpty())
+                    Toast.makeText(mContext, getString(R.string.mn_wall_load), Toast.LENGTH_SHORT).show();
                     OkGo.<File>get(ApiConfig.get().wallpaper).execute(new FileCallback(requireActivity().getFilesDir().getAbsolutePath(), "wp") {
                         @Override
                         public void onSuccess(Response<File> response) {
@@ -237,7 +238,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 List<SourceBean> sites = ApiConfig.get().getSourceBeanList();
                 if (sites.size() > 0) {
                     SelectDialog<SourceBean> dialog = new SelectDialog<>(mActivity);
-                    dialog.setTip("请选择首页数据源");
+                    dialog.setTip(getString(R.string.dia_source));
                     dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<SourceBean>() {
                         @Override
                         public void click(SourceBean value, int pos) {
@@ -271,7 +272,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 int dohUrl = Hawk.get(HawkConfig.DOH_URL, 0);
 
                 SelectDialog<String> dialog = new SelectDialog<>(mActivity);
-                dialog.setTip("请选择安全DNS");
+                dialog.setTip(getString(R.string.dia_dns));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<String>() {
                     @Override
                     public void click(String value, int pos) {
@@ -341,7 +342,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 }
 
                 SelectDialog<IJKCode> dialog = new SelectDialog<>(mActivity);
-                dialog.setTip("请选择IJK解码");
+                dialog.setTip(getString(R.string.dia_decode));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<IJKCode>() {
                     @Override
                     public void click(IJKCode value, int pos) {
@@ -380,7 +381,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 players.add(4);
                 players.add(5);
                 SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
-                dialog.setTip("请选择默认画面缩放");
+                dialog.setTip(getString(R.string.dia_ratio));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
                     @Override
                     public void click(Integer value, int pos) {
@@ -416,7 +417,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 players.add(1);
                 players.add(2);
                 SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
-                dialog.setTip("请选择默认播放器");
+                dialog.setTip(getString(R.string.dia_player));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
                     @Override
                     public void click(Integer value, int pos) {
@@ -452,7 +453,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 renders.add(0);
                 renders.add(1);
                 SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
-                dialog.setTip("请选择默认渲染方式");
+                dialog.setTip(getString(R.string.dia_render));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
                     @Override
                     public void click(Integer value, int pos) {
@@ -489,7 +490,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 types.add(1);
                 types.add(2);
                 SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
-                dialog.setTip("请选择首页列表数据");
+                dialog.setTip(getString(R.string.dia_hm_type));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
                     @Override
                     public void click(Integer value, int pos) {
@@ -524,7 +525,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 types.add(0);
                 types.add(1);
                 SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
-                dialog.setTip("请选择搜索视图");
+                dialog.setTip(getString(R.string.dia_search));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
                     @Override
                     public void click(Integer value, int pos) {
@@ -578,6 +579,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
 
         // takagen99 : add choose English / Chinese
         findViewById(R.id.llLocale).setOnClickListener(new View.OnClickListener() {
+            private int chkLang = Hawk.get(HawkConfig.HOME_LOCALE, 0);
             @Override
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
@@ -586,7 +588,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 types.add(0);
                 types.add(1);
                 SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
-                dialog.setTip("请选择系统语言");
+                dialog.setTip(getString(R.string.dia_locale));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
                     @Override
                     public void click(Integer value, int pos) {
@@ -612,15 +614,17 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        Intent intent = getActivity().getApplicationContext().getPackageManager().getLaunchIntentForPackage(getActivity().getApplication().getPackageName());
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean("useCache", true);
-                        intent.putExtras(bundle);
-                        getActivity().getApplicationContext().startActivity(intent);
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        System.exit(0);
+                        if ( chkLang != Hawk.get(HawkConfig.HOME_LOCALE, 0) ) {
+                            Intent intent = getActivity().getApplicationContext().getPackageManager().getLaunchIntentForPackage(getActivity().getApplication().getPackageName());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean("useCache", true);
+                            intent.putExtras(bundle);
+                            getActivity().getApplicationContext().startActivity(intent);
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                            System.exit(0);
+                        }
                     }
                 });
                 dialog.show();
