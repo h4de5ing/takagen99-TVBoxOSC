@@ -1,6 +1,9 @@
 # Box
+Dynamic Wallpaper for sharing :
+https://takagen-wallpaper.herokuapp.com
 
-To change default settings, change at /src/main/java/com/github/tvbox/osc/base/App.java
+App default settings can be set here :
+/src/main/java/com/github/tvbox/osc/base/App.java
 
     private void initParams() {
 
