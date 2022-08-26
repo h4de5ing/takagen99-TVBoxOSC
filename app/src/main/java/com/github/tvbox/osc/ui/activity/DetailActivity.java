@@ -189,6 +189,14 @@ public class DetailActivity extends BaseActivity {
                 }
             }
         });
+        // takagen99 : Added click Image Thummb or Preview Window to play video
+        ivThumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FastClickCheckUtil.check(v);
+                jumpToPlay();
+            }
+        });
         llPlayerFragmentContainerBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
