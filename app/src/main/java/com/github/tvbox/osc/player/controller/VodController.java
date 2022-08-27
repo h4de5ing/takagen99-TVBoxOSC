@@ -262,7 +262,11 @@ public class VodController extends BaseController {
         mNextBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.playNext(false);
+                if (isPaused) {
+                    togglePlay();
+                } else {
+                    listener.playNext(false);
+                }
                 hideBottom();
             }
         });
@@ -665,9 +669,11 @@ public class VodController extends BaseController {
             case VideoView.STATE_IDLE:
                 break;
             case VideoView.STATE_PLAYING:
+                isPaused = false;
                 startProgress();
                 break;
             case VideoView.STATE_PAUSED:
+                isPaused = true;
                 break;
             case VideoView.STATE_ERROR:
                 listener.errReplay();
@@ -708,6 +714,9 @@ public class VodController extends BaseController {
         mHandler.removeCallbacks(mHideBottomRunnable);
     }
 
+    // takagen99 : Check Pause
+    private boolean isPaused = false;
+
     @Override
     public boolean onKeyEvent(KeyEvent event) {
         int keyCode = event.getKeyCode();
@@ -731,8 +740,8 @@ public class VodController extends BaseController {
             } else if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
                 if (isInPlayback) {
                     togglePlay();
-                    if (!isBottomVisible()) {
-                        showBottom(); // onPlayStateChanged(VideoView.STATE_PAUSED)
+                    if (!isBottomVisible() && isPaused) {
+                        showBottom();
                     }
                     return true;
                 }

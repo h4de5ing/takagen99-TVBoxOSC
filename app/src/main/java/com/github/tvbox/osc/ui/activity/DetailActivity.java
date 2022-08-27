@@ -515,7 +515,10 @@ public class DetailActivity extends BaseActivity {
         if (content == null) {
             content = "";
         }
-        return label + ": " + "<font color=\"#FFFFFF\">" + content + "</font>";
+        if (label.length() > 0) {
+            label = label + ": ";
+        }
+        return label + "<font color=\"#FFFFFF\">" + content + "</font>";
     }
 
     private void initData() {
