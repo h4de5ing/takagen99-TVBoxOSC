@@ -106,6 +106,7 @@ public class VodController extends BaseController {
                         animateB.setFillAfter(true);
                         mBottomRoot.startAnimation(animateB);
                         mBottomRoot.setVisibility(GONE);
+                        mBottomRoot.clearAnimation();;
                         break;
                     }
                     case 1004: { // 设置速度
