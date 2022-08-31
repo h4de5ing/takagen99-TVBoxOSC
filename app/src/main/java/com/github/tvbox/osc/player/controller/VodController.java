@@ -90,8 +90,8 @@ public class VodController extends BaseController {
                                 0,                 // fromXDelta
                                 0,                   // toXDelta
                                 0,                 // fromYDelta
-                                -1100);
-                        animateT.setDuration(800);
+                                -mTopRoot.getHeight());
+                        animateT.setDuration(400);
                         animateT.setFillAfter(true);
                         mTopRoot.startAnimation(animateT);
                         mTopRoot.setVisibility(GONE);
@@ -102,8 +102,8 @@ public class VodController extends BaseController {
                                 0,                 // fromYDelta
                                 //mBottomRoot.getHeight());  // toYDelta
                                 // takagen99: Quick fix VOD controller shows after PIP
-                                1200);
-                        animateB.setDuration(800);
+                                mBottomRoot.getHeight());
+                        animateB.setDuration(400);
                         animateB.setFillAfter(true);
                         mBottomRoot.startAnimation(animateB);
                         mBottomRoot.setVisibility(GONE);
@@ -113,7 +113,7 @@ public class VodController extends BaseController {
                             public void run() {
                                 mBottomRoot.clearAnimation();;
                             }
-                        }, 1000);
+                        }, 450);
                         break;
                     }
                     case 1004: { // 设置速度
