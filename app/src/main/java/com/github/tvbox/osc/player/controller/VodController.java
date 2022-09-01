@@ -1,5 +1,7 @@
 package com.github.tvbox.osc.player.controller;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -62,58 +64,106 @@ public class VodController extends BaseController {
                         break;
                     }
                     case 1002: { // 显示底部菜单
+//                        mTopHide.setVisibility(GONE);
+//                        mTopRoot.setVisibility(VISIBLE);
+//                        TranslateAnimation animateT = new TranslateAnimation(
+//                                0,                // fromXDelta
+//                                0,                  // toXDelta
+//                                -mTopRoot.getHeight(),       // fromYDelta
+//                                0);                 // toYDelta
+//                        animateT.setDuration(400);
+//                        animateT.setFillAfter(true);
+//                        mTopRoot.startAnimation(animateT);
+//
+//                        mBottomRoot.setVisibility(VISIBLE);
+//                        TranslateAnimation animateB = new TranslateAnimation(
+//                                0,                // fromXDelta
+//                                0,                  // toXDelta
+//                                mBottomRoot.getHeight(),    // fromYDelta
+//                                0);                 // toYDelta
+//                        animateB.setDuration(400);
+//                        animateB.setFillAfter(true);
+//                        mBottomRoot.startAnimation(animateB);
+//                        mBottomRoot.requestFocus();
+
+                        // takagen99 : Revamp Show & Hide Logic with alpha
                         mTopHide.setVisibility(GONE);
                         mTopRoot.setVisibility(VISIBLE);
-                        TranslateAnimation animateT = new TranslateAnimation(
-                                0,                // fromXDelta
-                                0,                  // toXDelta
-                                -mTopRoot.getHeight(),       // fromYDelta
-                                0);                 // toYDelta
-                        animateT.setDuration(400);
-                        animateT.setFillAfter(true);
-                        mTopRoot.startAnimation(animateT);
+                        mTopRoot.setAlpha(0.0f);
+                        mTopRoot.setTranslationY(-mTopRoot.getHeight());
+                        mTopRoot.animate()
+                                .translationY(0)
+                                .alpha(1.0f)
+                                .setDuration(600)
+                                .setListener(null);
 
                         mBottomRoot.setVisibility(VISIBLE);
-                        TranslateAnimation animateB = new TranslateAnimation(
-                                0,                // fromXDelta
-                                0,                  // toXDelta
-                                mBottomRoot.getHeight(),    // fromYDelta
-                                0);                 // toYDelta
-                        animateB.setDuration(400);
-                        animateB.setFillAfter(true);
-                        mBottomRoot.startAnimation(animateB);
+                        mBottomRoot.setAlpha(0.0f);
+                        mBottomRoot.setTranslationY(mBottomRoot.getHeight());
+                        mBottomRoot.animate()
+                                .translationY(0)
+                                .alpha(1.0f)
+                                .setDuration(600)
+                                .setListener(null);
                         mBottomRoot.requestFocus();
                         break;
                     }
                     case 1003: { // 隐藏底部菜单
-                        TranslateAnimation animateT = new TranslateAnimation(
-                                0,                 // fromXDelta
-                                0,                   // toXDelta
-                                0,                 // fromYDelta
-                                -mTopRoot.getHeight());
-                        animateT.setDuration(400);
-                        animateT.setFillAfter(true);
-                        mTopRoot.startAnimation(animateT);
-                        mTopRoot.setVisibility(GONE);
+//                        TranslateAnimation animateT = new TranslateAnimation(
+//                                0,                 // fromXDelta
+//                                0,                   // toXDelta
+//                                0,                 // fromYDelta
+//                                -mTopRoot.getHeight());
+//                        animateT.setDuration(400);
+//                        animateT.setFillAfter(true);
+//                        mTopRoot.startAnimation(animateT);
+//                        mTopRoot.setVisibility(GONE);
+//
+//                        TranslateAnimation animateB = new TranslateAnimation(
+//                                0,                 // fromXDelta
+//                                0,                   // toXDelta
+//                                0,                 // fromYDelta
+//                                //mBottomRoot.getHeight());  // toYDelta
+//                                // takagen99: Quick fix VOD controller shows after PIP
+//                                mBottomRoot.getHeight());
+//                        animateB.setDuration(400);
+//                        animateB.setFillAfter(true);
+//                        mBottomRoot.startAnimation(animateB);
+//                        mBottomRoot.setVisibility(GONE);
+//
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                mBottomRoot.clearAnimation();
+//                            }
+//                        }, 450);
 
-                        TranslateAnimation animateB = new TranslateAnimation(
-                                0,                 // fromXDelta
-                                0,                   // toXDelta
-                                0,                 // fromYDelta
-                                //mBottomRoot.getHeight());  // toYDelta
-                                // takagen99: Quick fix VOD controller shows after PIP
-                                mBottomRoot.getHeight());
-                        animateB.setDuration(400);
-                        animateB.setFillAfter(true);
-                        mBottomRoot.startAnimation(animateB);
-                        mBottomRoot.setVisibility(GONE);
+                        // takagen99 : Revamp Show & Hide Logic with alpha
+                        mTopRoot.animate()
+                                .translationY(-mTopRoot.getHeight())
+                                .alpha(0.0f)
+                                .setDuration(600)
+                                .setListener(new AnimatorListenerAdapter() {
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        super.onAnimationEnd(animation);
+                                        mTopRoot.setVisibility(View.GONE);
+                                        mTopRoot.clearAnimation();
+                                    }
+                                });
 
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mBottomRoot.clearAnimation();;
-                            }
-                        }, 450);
+                        mBottomRoot.animate()
+                                .translationY(mBottomRoot.getHeight())
+                                .alpha(0.0f)
+                                .setDuration(600)
+                                .setListener(new AnimatorListenerAdapter() {
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        super.onAnimationEnd(animation);
+                                        mBottomRoot.setVisibility(View.GONE);
+                                        mBottomRoot.clearAnimation();
+                                    }
+                                });
                         break;
                     }
                     case 1004: { // 设置速度
