@@ -406,10 +406,6 @@ public class PlayActivity extends BaseActivity {
     // takagen99 : Add check for external players not enter PIP
     private boolean extPlay = false;
 
-    public boolean supportsPiPMode() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-    }
-
     @Override
     public void onUserLeaveHint() {
         if (supportsPiPMode() && !extPlay) {

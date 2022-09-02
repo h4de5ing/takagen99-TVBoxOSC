@@ -94,7 +94,7 @@ public class VodController extends BaseController {
                         mTopRoot.animate()
                                 .translationY(0)
                                 .alpha(1.0f)
-                                .setDuration(600)
+                                .setDuration(500)
                                 .setListener(null);
 
                         mBottomRoot.setVisibility(VISIBLE);
@@ -103,7 +103,7 @@ public class VodController extends BaseController {
                         mBottomRoot.animate()
                                 .translationY(0)
                                 .alpha(1.0f)
-                                .setDuration(600)
+                                .setDuration(500)
                                 .setListener(null);
                         mBottomRoot.requestFocus();
                         break;
@@ -142,7 +142,7 @@ public class VodController extends BaseController {
                         mTopRoot.animate()
                                 .translationY(-mTopRoot.getHeight())
                                 .alpha(0.0f)
-                                .setDuration(600)
+                                .setDuration(500)
                                 .setListener(new AnimatorListenerAdapter() {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
@@ -155,7 +155,7 @@ public class VodController extends BaseController {
                         mBottomRoot.animate()
                                 .translationY(mBottomRoot.getHeight())
                                 .alpha(0.0f)
-                                .setDuration(600)
+                                .setDuration(500)
                                 .setListener(new AnimatorListenerAdapter() {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {

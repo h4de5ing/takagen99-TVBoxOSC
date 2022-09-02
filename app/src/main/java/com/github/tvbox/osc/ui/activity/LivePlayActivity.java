@@ -131,10 +131,7 @@ public class LivePlayActivity extends BaseActivity {
         initLiveSettingGroupList();
     }
 
-    // takagen99
-    public boolean supportsPiPMode() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-    }
+    // takagen99 : Enter PIP if supported
     @Override
     public void onUserLeaveHint () {
         if (supportsPiPMode()) {
