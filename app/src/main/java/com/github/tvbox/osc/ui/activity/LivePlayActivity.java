@@ -177,7 +177,9 @@ public class LivePlayActivity extends BaseActivity {
                             playNext();
                         break;
                     case KeyEvent.KEYCODE_DPAD_LEFT:
-                        playPreSource();
+                        // takagen99 : To cater for newer Android w no Menu button
+                        // playPreSource();
+                        showSettingGroup();
                         break;
                     case KeyEvent.KEYCODE_DPAD_RIGHT:
                         playNextSource();

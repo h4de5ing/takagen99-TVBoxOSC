@@ -5,12 +5,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -94,7 +93,8 @@ public class VodController extends BaseController {
                         mTopRoot.animate()
                                 .translationY(0)
                                 .alpha(1.0f)
-                                .setDuration(500)
+                                .setDuration(400)
+                                .setInterpolator(new DecelerateInterpolator())
                                 .setListener(null);
 
                         mBottomRoot.setVisibility(VISIBLE);
@@ -103,7 +103,8 @@ public class VodController extends BaseController {
                         mBottomRoot.animate()
                                 .translationY(0)
                                 .alpha(1.0f)
-                                .setDuration(500)
+                                .setDuration(400)
+                                .setInterpolator(new DecelerateInterpolator())
                                 .setListener(null);
                         mBottomRoot.requestFocus();
                         break;
@@ -142,7 +143,8 @@ public class VodController extends BaseController {
                         mTopRoot.animate()
                                 .translationY(-mTopRoot.getHeight())
                                 .alpha(0.0f)
-                                .setDuration(500)
+                                .setDuration(400)
+                                .setInterpolator(new DecelerateInterpolator())
                                 .setListener(new AnimatorListenerAdapter() {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
@@ -155,7 +157,8 @@ public class VodController extends BaseController {
                         mBottomRoot.animate()
                                 .translationY(mBottomRoot.getHeight())
                                 .alpha(0.0f)
-                                .setDuration(500)
+                                .setDuration(400)
+                                .setInterpolator(new DecelerateInterpolator())
                                 .setListener(new AnimatorListenerAdapter() {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
@@ -338,6 +341,8 @@ public class VodController extends BaseController {
         mPlayerScaleBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                mHandler.removeCallbacks(mHideBottomRunnable);
+                mHandler.postDelayed(mHideBottomRunnable, 10000);
                 try {
                     int scaleType = mPlayerConfig.getInt("sc");
                     scaleType++;
@@ -355,6 +360,8 @@ public class VodController extends BaseController {
         mPlayerSpeedBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                mHandler.removeCallbacks(mHideBottomRunnable);
+                mHandler.postDelayed(mHideBottomRunnable, 10000);
                 try {
                     float speed = (float) mPlayerConfig.getDouble("sp");
                     speed += 0.25f;
@@ -449,6 +456,8 @@ public class VodController extends BaseController {
         mPlayerTimeStartBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                mHandler.removeCallbacks(mHideBottomRunnable);
+                mHandler.postDelayed(mHideBottomRunnable, 10000);
                 try {
                     int step = Hawk.get(HawkConfig.PLAY_TIME_STEP, 5);
                     int st = mPlayerConfig.getInt("st");
@@ -480,6 +489,8 @@ public class VodController extends BaseController {
         mPlayerTimeSkipBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                mHandler.removeCallbacks(mHideBottomRunnable);
+                mHandler.postDelayed(mHideBottomRunnable, 10000);
                 try {
                     int step = Hawk.get(HawkConfig.PLAY_TIME_STEP, 5);
                     int et = mPlayerConfig.getInt("et");
@@ -645,10 +656,6 @@ public class VodController extends BaseController {
                 listener.playNext(true);
             }
         }
-        // takagen99 : Add Video Resolution
-        if (mControlWrapper.getVideoSize().length >= 2) {
-            mPlayerResolution.setText(mControlWrapper.getVideoSize()[0] + " x " + mControlWrapper.getVideoSize()[1]);
-        }
         // takagen99 : Calculate finish time
         long TimeRemaining = mControlWrapper.getDuration() - mControlWrapper.getCurrentPosition();
         Calendar date = Calendar.getInstance();
@@ -737,6 +744,10 @@ public class VodController extends BaseController {
                 listener.errReplay();
                 break;
             case VideoView.STATE_PREPARED:
+                // takagen99 : Add Video Resolution
+                if (mControlWrapper.getVideoSize().length >= 2) {
+                    mPlayerResolution.setText(mControlWrapper.getVideoSize()[0] + " x " + mControlWrapper.getVideoSize()[1]);
+                }
             case VideoView.STATE_BUFFERED:
                 break;
             case VideoView.STATE_PREPARING:
