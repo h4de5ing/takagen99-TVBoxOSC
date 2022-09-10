@@ -778,7 +778,7 @@ public class VodController extends BaseController {
         }
     };
 
-    void hideBottom() {
+    public void hideBottom() {
         mHandler.removeMessages(1002);
         mHandler.sendEmptyMessage(1003);
         mHandler.removeCallbacks(mHideBottomRunnable);
