@@ -89,7 +89,7 @@ public class VodController extends BaseController {
                         mTopHide.setVisibility(GONE);
                         mTopRoot.setVisibility(VISIBLE);
                         mTopRoot.setAlpha(0.0f);
-                        mTopRoot.setTranslationY(-mTopRoot.getHeight());
+                        mTopRoot.setTranslationY(-mTopRoot.getHeight() / 2);
                         mTopRoot.animate()
                                 .translationY(0)
                                 .alpha(1.0f)
@@ -99,7 +99,7 @@ public class VodController extends BaseController {
 
                         mBottomRoot.setVisibility(VISIBLE);
                         mBottomRoot.setAlpha(0.0f);
-                        mBottomRoot.setTranslationY(mBottomRoot.getHeight());
+                        mBottomRoot.setTranslationY(mBottomRoot.getHeight() / 2);
                         mBottomRoot.animate()
                                 .translationY(0)
                                 .alpha(1.0f)
@@ -141,7 +141,7 @@ public class VodController extends BaseController {
 
                         // takagen99 : Revamp Show & Hide Logic with alpha
                         mTopRoot.animate()
-                                .translationY(-mTopRoot.getHeight())
+                                .translationY(-mTopRoot.getHeight() / 2)
                                 .alpha(0.0f)
                                 .setDuration(400)
                                 .setInterpolator(new DecelerateInterpolator())
@@ -155,7 +155,7 @@ public class VodController extends BaseController {
                                 });
 
                         mBottomRoot.animate()
-                                .translationY(mBottomRoot.getHeight())
+                                .translationY(mBottomRoot.getHeight() / 2)
                                 .alpha(0.0f)
                                 .setDuration(400)
                                 .setInterpolator(new DecelerateInterpolator())

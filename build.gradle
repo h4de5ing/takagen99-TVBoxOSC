@@ -5,7 +5,7 @@ buildscript {
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
-        //maven { url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2' }
+        maven { url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.2"
@@ -21,7 +21,7 @@ allprojects {
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
-        //maven { url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2' }
+        maven { url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2' }
     }
 }
 
