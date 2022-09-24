@@ -107,6 +107,6 @@ public class AudioWaveView extends View {
         canvas.drawRect(rectF6, paint);
         canvas.drawRect(rectF7, paint);
 
-        handler.sendEmptyMessageDelayed(0, 250); //每间隔200毫秒发送消息刷新
+        handler.sendEmptyMessageDelayed(0, 300); //每间隔200毫秒发送消息刷新
     }
 }

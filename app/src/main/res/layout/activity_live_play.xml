@@ -53,7 +53,7 @@
             android:background="@drawable/shape_live_select"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="divLoadEpgLeft"
+            android:onClick="divLoadEpgL"
             android:orientation="vertical"
             android:paddingTop="@dimen/vs_15"
             android:paddingBottom="@dimen/vs_15"
@@ -65,7 +65,6 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:onClick="divLoadEpgLeft"
                 android:paddingBottom="5dp"
                 android:shadowColor="#CC000000"
                 android:shadowDx="0"
@@ -82,7 +81,6 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:onClick="divLoadEpgLeft"
                 android:padding="@dimen/vs_4"
                 android:src="@drawable/scrollviewleft" />
 
@@ -92,7 +90,6 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:onClick="divLoadEpgLeft"
                 android:paddingTop="5dp"
                 android:shadowColor="#CC000000"
                 android:shadowDx="0"
@@ -130,14 +127,14 @@
             android:background="@color/color_3D3D3D" />
 
         <LinearLayout
-            android:id="@+id/divLoadEpg"
+            android:id="@+id/divLoadEpgright"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/shape_live_select"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="divLoadEpgRight"
+            android:onClick="divLoadEpgR"
             android:orientation="vertical"
             android:paddingTop="@dimen/vs_15"
             android:paddingBottom="@dimen/vs_15">
@@ -148,7 +145,6 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:onClick="divLoadEpgRight"
                 android:paddingBottom="5dp"
                 android:shadowColor="#CC000000"
                 android:shadowDx="0"
@@ -165,7 +161,6 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:onClick="divLoadEpgRight"
                 android:padding="@dimen/vs_4"
                 android:src="@drawable/scrollview" />
 
@@ -175,7 +170,6 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:onClick="divLoadEpgRight"
                 android:paddingTop="5dp"
                 android:shadowColor="#CC000000"
                 android:shadowDx="0"
