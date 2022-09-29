@@ -256,7 +256,7 @@ public class PlayFragment extends BaseLazyFragment {
                     public String getDisplay(TrackInfoBean val) {
 //                        return val.index + " : " + val.language;
                         String str = val.name.substring(val.name.substring(0, val.name.indexOf(",")).length() + 1).trim();
-                        return val.index + " : " + str;
+                        return val.index + " : " + val.language + " - " + str;
                     }
                 }, new DiffUtil.ItemCallback<TrackInfoBean>() {
                     @Override
@@ -541,7 +541,8 @@ public class PlayFragment extends BaseLazyFragment {
             hasNext = mVodInfo.playIndex + 1 < mVodInfo.seriesMap.get(mVodInfo.playFlag).size();
         }
         if (!hasNext) {
-            Toast.makeText(requireContext(), "已经是最后一集了!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "已经是最后一集了", Toast.LENGTH_SHORT).show();
+            this.onBackPressed();
             return;
         }
         mVodInfo.playIndex++;
@@ -556,7 +557,7 @@ public class PlayFragment extends BaseLazyFragment {
             hasPre = mVodInfo.playIndex - 1 >= 0;
         }
         if (!hasPre) {
-            Toast.makeText(requireContext(), "已经是第一集了!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "已经是第一集了", Toast.LENGTH_SHORT).show();
             return;
         }
         mVodInfo.playIndex--;

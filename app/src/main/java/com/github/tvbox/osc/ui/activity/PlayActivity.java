@@ -273,7 +273,7 @@ public class PlayActivity extends BaseActivity {
                     public String getDisplay(TrackInfoBean val) {
 //                        return val.index + " : " + val.language;
                         String str = val.name.substring(val.name.substring(0, val.name.indexOf(",")).length() + 1).trim();
-                        return val.index + " : " + str;
+                        return val.index + " : " + val.language + " - " + str;
                     }
                 }, new DiffUtil.ItemCallback<TrackInfoBean>() {
                     @Override
@@ -629,7 +629,8 @@ public class PlayActivity extends BaseActivity {
             }
         }
         if (!hasNext) {
-            Toast.makeText(this, "已经是最后一集了!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "已经是最后一集了", Toast.LENGTH_SHORT).show();
+            this.onBackPressed();
             return;
         }
         if (mVodInfo.reverseSort) {
@@ -652,7 +653,7 @@ public class PlayActivity extends BaseActivity {
             }
         }
         if (!hasPre) {
-            Toast.makeText(this, "已经是第一集了!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "已经是第一集了", Toast.LENGTH_SHORT).show();
             return;
         }
         if (mVodInfo.reverseSort) {
