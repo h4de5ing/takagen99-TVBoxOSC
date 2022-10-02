@@ -6,6 +6,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Message;
 import android.view.KeyEvent;
@@ -214,6 +215,7 @@ public class VodController extends BaseController {
     TextView mPlayerTimeSkipBtn;
     TextView mPlayerTimeStepBtn;
     TextView mPlayerResolution;
+    LinearLayout mSubtitleBtn;
     LinearLayout mAudioTrackBtn;
 
     TextView mTime;
@@ -227,7 +229,7 @@ public class VodController extends BaseController {
     Drawable dFFwd = getResources().getDrawable(R.drawable.vod_ffwd);
 
     // takagen99 : To get system time
-    private Runnable mTimeRunnable = new Runnable() {
+    private final Runnable mTimeRunnable = new Runnable() {
         @Override
         public void run() {
             Date date = new Date();
@@ -270,7 +272,8 @@ public class VodController extends BaseController {
         mPlayerFFwd = findViewById(R.id.play_ff);
         mplayerFFImg = findViewById(R.id.play_ff_img);
         mPlayerResolution = findViewById(R.id.tv_resolution);
-        mAudioTrackBtn = findViewById(R.id.audio_track_select);
+        mSubtitleBtn = findViewById(R.id.play_subtitle);
+        mAudioTrackBtn = findViewById(R.id.play_audio);
 
         mTopRoot.setVisibility(INVISIBLE);
         mBottomRoot.setVisibility(INVISIBLE);
@@ -376,6 +379,19 @@ public class VodController extends BaseController {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+        // takagen99 : Long Press to change orientation
+        mPlayerScaleBtn.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                int checkOrientation = mActivity.getRequestedOrientation();
+                if (checkOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE || checkOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE || checkOrientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
+                    mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+                } else if (checkOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT || checkOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT || checkOrientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT) {
+                    mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                }
+                return true;
             }
         });
         mPlayerSpeedBtn.setOnClickListener(new OnClickListener() {
@@ -586,6 +602,14 @@ public class VodController extends BaseController {
                 }
             }
         });
+//        mSubtitleBtn.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FastClickCheckUtil.check(view);
+//                listener.selectSubtitle();
+//                hideBottom();
+//            }
+//        });
         mAudioTrackBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -916,6 +940,10 @@ public class VodController extends BaseController {
         if (isBottomVisible()) {
             hideBottom();
             return true;
+        }
+        int checkOrientation = mActivity.getRequestedOrientation();
+        if (checkOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT || checkOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT || checkOrientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT) {
+            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         }
         return false;
     }
