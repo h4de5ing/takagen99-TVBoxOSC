@@ -975,23 +975,8 @@
         android:id="@+id/ll_ddtap"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/ll_ddp_left"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_ddtap_right"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"></LinearLayout>
-    </LinearLayout>
+        android:background="@drawable/shape_player_tap"
+        android:orientation="horizontal"
+        android:visibility="invisible"/>
 
 </FrameLayout>
