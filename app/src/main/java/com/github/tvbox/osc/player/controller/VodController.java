@@ -960,7 +960,7 @@ public class VodController extends BaseController {
             mSpeed = 1.0f;
             setPlaySpeed(mSpeed);
         }
-        return true;
+        return super.onTouchEvent(e);
     }
 
     // takagen99 : Added double tap to rewind or fast forward with animation
