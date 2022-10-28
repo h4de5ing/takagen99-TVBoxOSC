@@ -26,7 +26,14 @@ public class MyEpgAdapter extends BaseAdapter {
     private String shiyiDate = null;
     private String currentEpgDate = null;
     private int focusSelection = -1;
+    private boolean source_include_back = false;
     SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    public void CanBack(Boolean source_include_back) {
+        this.source_include_back = source_include_back;
+        // takagen99 : Hardcode to always true temporary
+        this.source_include_back = true;
+    }
 
     public MyEpgAdapter(List<Epginfo> data, Context context, int i, boolean t) {
         this.data = data;
@@ -82,27 +89,28 @@ public class MyEpgAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        Date now = new Date();
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.epglist_item, viewGroup, false);
         }
-        TextView textview = (TextView) view.findViewById(R.id.tv_epg_name);
-        TextView timeview = (TextView) view.findViewById(R.id.tv_epg_time);
-        TextView shiyi = (TextView) view.findViewById(R.id.shiyi);
-        AudioWaveView wqddg_AudioWaveView = (AudioWaveView) view.findViewById(R.id.wqddg_AudioWaveView);
+        TextView textview = view.findViewById(R.id.tv_epg_name);
+        TextView timeview = view.findViewById(R.id.tv_epg_time);
+        TextView shiyi = view.findViewById(R.id.shiyi);
+        AudioWaveView wqddg_AudioWaveView = view.findViewById(R.id.wqddg_AudioWaveView);
         wqddg_AudioWaveView.setVisibility(View.GONE);
         if (i < data.size()) {
             Epginfo info = data.get(i);
-            if (new Date().compareTo(info.startdateTime) >= 0 && new Date().compareTo(info.enddateTime) <= 0) {
+            if (now.compareTo(info.startdateTime) >= 0 && now.compareTo(info.enddateTime) <= 0) {
                 shiyi.setVisibility(View.VISIBLE);
                 shiyi.setBackgroundColor(context.getResources().getColor(R.color.color_32364E));
                 shiyi.setText("直播");
                 shiyi.setTextColor(context.getResources().getColor(R.color.color_FFFFFF));
-            } else if (new Date().compareTo(info.enddateTime) > 0) {
+            } else if (now.compareTo(info.enddateTime) > 0 && source_include_back) {
                 shiyi.setVisibility(View.VISIBLE);
-                shiyi.setBackgroundColor(context.getResources().getColor(R.color.color_353744));
+                shiyi.setBackgroundColor(context.getResources().getColor(R.color.color_32364E_40));
                 shiyi.setTextColor(context.getResources().getColor(R.color.color_FFFFFF));
                 shiyi.setText("回看");
-            } else if (new Date().compareTo(info.startdateTime) < 0) {
+            } else if (now.compareTo(info.startdateTime) < 0 && source_include_back) {
                 shiyi.setVisibility(View.VISIBLE);
                 shiyi.setBackgroundColor(context.getResources().getColor(R.color.color_3D3D3D));
                 shiyi.setTextColor(context.getResources().getColor(R.color.color_FFFFFF));
@@ -116,26 +124,27 @@ public class MyEpgAdapter extends BaseAdapter {
             textview.setTextColor(context.getResources().getColor(R.color.color_FFFFFF));
             timeview.setTextColor(context.getResources().getColor(R.color.color_FFFFFF));
             if (ShiyiSelection == false) {
-                Date now = new Date();
-                if (i == this.defaultSelection) {
+                if (now.compareTo(info.startdateTime) >= 0 && now.compareTo(info.enddateTime) <= 0) {
                     wqddg_AudioWaveView.setVisibility(View.VISIBLE);
                     textview.setTextColor(context.getResources().getColor(R.color.color_FF0057));
                     timeview.setTextColor(context.getResources().getColor(R.color.color_FF0057));
                     textview.setFreezesText(true);
                     timeview.setFreezesText(true);
+                    shiyi.setText("直播中");
                 } else {
                     wqddg_AudioWaveView.setVisibility(View.GONE);
                 }
             } else {
-                if (i == this.defaultSelection || i == this.defaultShiyiSelection) {
+                if (i == this.defaultShiyiSelection && currentEpgDate.equals(shiyiDate)) {
                     wqddg_AudioWaveView.setVisibility(View.VISIBLE);
-                    textview.setTextColor(context.getResources().getColor(R.color.color_FFFFFF));
-                    timeview.setTextColor(context.getResources().getColor(R.color.color_FFFFFF));
+                    textview.setTextColor(context.getResources().getColor(R.color.color_FF0057));
+                    timeview.setTextColor(context.getResources().getColor(R.color.color_FF0057));
                     textview.setFreezesText(true);
                     timeview.setFreezesText(true);
                     shiyi.setText("回看中");
-                    shiyi.setTextColor(context.getResources().getColor(R.color.color_FF0057));
-                    shiyi.setBackgroundColor(context.getResources().getColor(R.color.color_26FFFFF));
+                    if (now.compareTo(info.startdateTime) >= 0 && now.compareTo(info.enddateTime) <= 0) {
+                        shiyi.setText("直播中");
+                    }
                     wqddg_AudioWaveView.setVisibility(View.VISIBLE);
                 } else {
                     wqddg_AudioWaveView.setVisibility(View.GONE);

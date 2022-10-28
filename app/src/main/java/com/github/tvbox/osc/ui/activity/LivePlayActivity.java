@@ -162,6 +162,7 @@ public class LivePlayActivity extends BaseActivity {
         tv_srcinfo = (TextView) findViewById(R.id.tv_source);//线路状态
 
         ll_epg = findViewById(R.id.ll_epg);
+        ll_epg.setVisibility(View.INVISIBLE);
         txtNoEpg = (TextView) findViewById(R.id.txtNoEpg);
 
         mRightEpgList = findViewById(R.id.lv_epg);
@@ -346,6 +347,8 @@ public class LivePlayActivity extends BaseActivity {
     public void divLoadEpgR(View view) {
         mRightEpgList.setVisibility(View.VISIBLE);
         mChannelGroupView.setVisibility(View.GONE);
+        tvLeftChannelListLayout.setVisibility(View.INVISIBLE);
+        showChannelList();
         divEpg.setVisibility(View.VISIBLE);
         divLoadEpgleft.setVisibility(View.VISIBLE);
         divLoadEpgright.setVisibility(View.GONE);
@@ -354,6 +357,8 @@ public class LivePlayActivity extends BaseActivity {
     public void divLoadEpgL(View view) {
         mRightEpgList.setVisibility(View.GONE);
         mChannelGroupView.setVisibility(View.VISIBLE);
+        tvLeftChannelListLayout.setVisibility(View.INVISIBLE);
+        showChannelList();
         divEpg.setVisibility(View.GONE);
         divLoadEpgleft.setVisibility(View.GONE);
         divLoadEpgright.setVisibility(View.VISIBLE);
@@ -456,6 +461,7 @@ public class LivePlayActivity extends BaseActivity {
 
         if (arrayList != null && arrayList.size() > 0) {
             epgdata = arrayList;
+            myAdapter.CanBack(currentLiveChannelItem.getinclude_back());
             myAdapter.updateData(date, epgdata);
             int i = -1;
             int size = epgdata.size() - 1;
@@ -524,6 +530,7 @@ public class LivePlayActivity extends BaseActivity {
                         }
                     }
                 }
+                myAdapter.CanBack(currentLiveChannelItem.getinclude_back());
                 myAdapter.updateData(new Date(), arrayList);
             } else {
                 int selectedIndex = epgDateAdapter.getSelectedIndex();
@@ -551,6 +558,7 @@ public class LivePlayActivity extends BaseActivity {
         if (epgInfo != null && !epgInfo[1].isEmpty()) {
             epgTagName = epgInfo[1];
         }
+        myAdapter.CanBack(currentLiveChannelItem.getinclude_back());
         myAdapter.updateData(date, new ArrayList<>());
         UrlHttpUtil.get("http://epg.51zmt.top:8000/api/diyp/?ch=" + URLEncoder.encode(epgTagName) + "&date=" + timeFormat.format(date), new CallBackUtil.CallBackString() {
             public void onFailure(int i, String str) {
@@ -602,6 +610,11 @@ public class LivePlayActivity extends BaseActivity {
             livePlayerManager.getLiveChannelPlayer(mVideoView, currentLiveChannelItem.getChannelName());
         }
         channel_Name = currentLiveChannelItem;
+        if(currentLiveChannelItem.getUrl().indexOf("PLTV/8888") !=-1){
+            currentLiveChannelItem.setinclude_back(true);
+        }else {
+            currentLiveChannelItem.setinclude_back(false);
+        }
 
         // takagen99 : Moved update of Channel Info here before getting EPG (no dependency on EPG)
         mHandler.post(mTimeRunnable);
@@ -793,7 +806,8 @@ public class LivePlayActivity extends BaseActivity {
         epgDateAdapter = new LiveEpgDateAdapter();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        SimpleDateFormat datePresentFormat = new SimpleDateFormat("dd-MMM", Locale.ENGLISH);
+//        SimpleDateFormat datePresentFormat = new SimpleDateFormat("dd-MMM", Locale.ENGLISH);
+        SimpleDateFormat datePresentFormat = new SimpleDateFormat("EEEE", Locale.SIMPLIFIED_CHINESE);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         for (int i = 0; i < 8; i++) {
             Date dateIns = calendar.getTime();
@@ -1034,7 +1048,7 @@ public class LivePlayActivity extends BaseActivity {
         playChannel(liveChannelGroupAdapter.getSelectedGroupIndex(), position, false);
         if (tvLeftChannelListLayout.getVisibility() == View.VISIBLE) {
             mHandler.removeCallbacks(mHideChannelListRun);
-            mHandler.postDelayed(mHideChannelListRun, 6000);
+            mHandler.postDelayed(mHideChannelListRun, 500);
         }
     }
 
