@@ -8,6 +8,8 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/vs_10"
     android:layout_marginBottom="@dimen/vs_10"
+    android:clickable="true"
+    android:focusable="true"
     android:paddingTop="@dimen/vs_5"
     android:paddingBottom="@dimen/vs_5" >
 
@@ -34,7 +36,6 @@
             android:id="@+id/tv_epg_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:ellipsize="marquee"
             android:gravity="center|left"
             android:marqueeRepeatLimit="marquee_forever"

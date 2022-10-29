@@ -50,11 +50,13 @@ public class LiveEpgDateAdapter extends BaseQuickAdapter<LiveEpgDate, BaseViewHo
     }
 
     public void setFocusedIndex(int focusedIndex) {
-        int preSelectedIndex = this.selectedIndex;
+        int preFocusedIndex = this.focusedIndex;
         this.focusedIndex = focusedIndex;
-        if (preSelectedIndex != -1)
-            notifyItemChanged(preSelectedIndex);
+        if (preFocusedIndex != -1)
+            notifyItemChanged(preFocusedIndex);
         if (this.focusedIndex != -1)
             notifyItemChanged(this.focusedIndex);
+        else if (this.selectedIndex != -1)
+            notifyItemChanged(this.selectedIndex);
     }
 }

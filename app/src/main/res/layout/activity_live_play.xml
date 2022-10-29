@@ -208,13 +208,14 @@
                 app:tv_selectedItemIsCentered="true"
                 app:tv_verticalSpacingWithMargins="10mm" />
 
-            <com.github.tvbox.osc.ui.tv.widget.ChannelListView
+            <com.owen.tvrecyclerview.widget.TvRecyclerView
                 android:id="@+id/lv_epg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_10"
                 android:divider="@null"
                 android:fadeScrollbars="false"
+                android:focusable="true"
                 android:listSelector="@drawable/item_bg_selector_right"
                 android:padding="@dimen/vs_5"
                 android:scrollbars="none" />
@@ -612,7 +613,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
     <TextView
@@ -709,9 +709,5 @@
             android:textColor="#FFFCFFFF"
             android:textSize="24px" />
     </RelativeLayout>
-
-    <!--右上角动态状态栏-->
-
-    <!--公告-->
 
 </FrameLayout>

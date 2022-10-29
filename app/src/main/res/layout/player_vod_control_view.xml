@@ -937,7 +937,9 @@
                 android:padding="@dimen/vs_10"
                 android:text="1S"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_16" />
+                android:textSize="@dimen/ts_16"
+                android:visibility="gone"
+                tools:visibility="gone" />
 
         </LinearLayout>
 
