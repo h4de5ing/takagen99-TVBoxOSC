@@ -207,6 +207,8 @@ public class VodController extends BaseController {
     LinearLayout mTopRoot;
     TextView mPlayTitle;
     TextView mPlayerResolution;
+    LinearLayout mSpeedHidell;
+    LinearLayout mSpeedll;
 
     // pause container
     FrameLayout mProgressTop;
@@ -272,6 +274,8 @@ public class VodController extends BaseController {
         mTopRoot = findViewById(R.id.top_container);
         mPlayTitle = findViewById(R.id.tv_title_top);
         mPlayerResolution = findViewById(R.id.tv_resolution);
+        mSpeedHidell = findViewById(R.id.tv_speed_top_hide);
+        mSpeedll = findViewById(R.id.tv_speed_top);
 
         // pause container
         mProgressTop = findViewById(R.id.tv_pause_container);
@@ -539,9 +543,9 @@ public class VodController extends BaseController {
                 try {
                     int defaultPos = mPlayerConfig.getInt("pl");
                     ArrayList<Integer> players = new ArrayList<>();
-                    players.add(0);
-                    players.add(1);
-                    players.add(2);
+                    players.add(0);  // System
+                    players.add(1);  // IJK
+                    players.add(2);  // Exo
                     if (mxPlayerExist) {
                         players.add(10);
                     }
@@ -662,7 +666,7 @@ public class VodController extends BaseController {
                     int current = (int) mControlWrapper.getCurrentPosition();
                     int duration = (int) mControlWrapper.getDuration();
                     if (current > duration / 2) return;
-                    mPlayerConfig.put("st",current/1000);
+                    mPlayerConfig.put("st", current / 1000);
 
                     updatePlayerCfgView();
                     listener.updatePlayerCfg();
@@ -702,7 +706,7 @@ public class VodController extends BaseController {
                     int current = (int) mControlWrapper.getCurrentPosition();
                     int duration = (int) mControlWrapper.getDuration();
                     if (current < duration / 2) return;
-                    mPlayerConfig.put("et", (duration - current)/1000);
+                    mPlayerConfig.put("et", (duration - current) / 1000);
 
                     updatePlayerCfgView();
                     listener.updatePlayerCfg();
@@ -780,6 +784,14 @@ public class VodController extends BaseController {
     void updatePlayerCfgView() {
         try {
             int playerType = mPlayerConfig.getInt("pl");
+            // takagen99: Only display loading speed when IJK
+            if (playerType == 1) {
+                mSpeedHidell.setVisibility(VISIBLE);
+                mSpeedll.setVisibility(VISIBLE);
+            } else {
+                mSpeedHidell.setVisibility(GONE);
+                mSpeedll.setVisibility(GONE);
+            }
             mPlayerTxt.setText(PlayerHelper.getPlayerName(playerType));
             mPlayerScaleTxt.setText(PlayerHelper.getScaleName(mPlayerConfig.getInt("sc")));
             mPlayerIJKBtn.setText(mPlayerConfig.getString("ijk"));
