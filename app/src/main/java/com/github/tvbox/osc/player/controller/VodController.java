@@ -1065,18 +1065,24 @@ public class VodController extends BaseController {
 
     // takagen99 : Add long press to fast forward x3 speed
     private boolean fromLongPress;
+    private float currentSpeed;
 
     @Override
     public void onLongPress(MotionEvent e) {
         if (!isPaused) {
             fromLongPress = true;
-            circularReveal(mTapSeek, 1);
-            // Set Fast Forward Icon
-            mProgressTop.setVisibility(VISIBLE);
-            mPauseIcon.setImageResource(R.drawable.play_ffwd);
-            // Set x3 Speed
-            mSpeed = 3.0f;
-            setPlaySpeed(mSpeed);
+            try {
+                currentSpeed = (float) mPlayerConfig.getDouble("sp");
+                circularReveal(mTapSeek, 1);
+                // Set Fast Forward Icon
+                mProgressTop.setVisibility(VISIBLE);
+                mPauseIcon.setImageResource(R.drawable.play_ffwd);
+                // Set x3 Speed
+                mSpeed = 3.0f;
+                setPlaySpeed(mSpeed);
+            } catch (JSONException f) {
+                f.printStackTrace();
+            }
         }
     }
 
@@ -1088,8 +1094,8 @@ public class VodController extends BaseController {
                 // Set back to Pause Icon
                 mProgressTop.setVisibility(INVISIBLE);
                 mPauseIcon.setImageResource(R.drawable.play_pause);
-                // Set back Speed to x1
-                mSpeed = 1.0f;
+                // Set back to current speed
+                mSpeed = currentSpeed;
                 setPlaySpeed(mSpeed);
                 mplayerFFImg.setImageDrawable(dFFwd);
                 fromLongPress = false;

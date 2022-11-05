@@ -617,6 +617,7 @@ public class HomeActivity extends BaseActivity {
                     ObjectAnimator.ofFloat(this.topLayout, "alpha", 1.0f, 0.0f));
             animatorSet.setDuration(250);
             animatorSet.start();
+            tvWifi.setFocusable(false);
             tvFind.setFocusable(false);
             tvMenu.setFocusable(false);
             return;
@@ -632,6 +633,7 @@ public class HomeActivity extends BaseActivity {
                     ObjectAnimator.ofFloat(this.topLayout, "alpha", 0.0f, 1.0f));
             animatorSet.setDuration(250);
             animatorSet.start();
+            tvWifi.setFocusable(true);
             tvFind.setFocusable(true);
             tvMenu.setFocusable(true);
             return;
