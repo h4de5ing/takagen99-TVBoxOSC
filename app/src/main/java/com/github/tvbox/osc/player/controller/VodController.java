@@ -946,6 +946,22 @@ public class VodController extends BaseController {
         mHandler.sendEmptyMessageDelayed(1001, 1000);
     }
 
+    // takagen99: (Optional) Hide Bottom Control if trigger Brightness / Volume Slider
+//    @Override
+//    protected void slideToChangeBrightness(float deltaY) {
+//        if (isBottomVisible()) {
+//            hideBottom();
+//        }
+//        super.slideToChangeBrightness(deltaY);
+//    }
+//    @Override
+//    protected void slideToChangeVolume(float deltaY) {
+//        if (isBottomVisible()) {
+//            hideBottom();
+//        }
+//        super.slideToChangeVolume(deltaY);
+//    }
+
     @Override
     protected void onPlayStateChanged(int playState) {
         super.onPlayStateChanged(playState);

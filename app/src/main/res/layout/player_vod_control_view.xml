@@ -6,6 +6,70 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/dialog_volume"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/vs_50"
+        android:background="@drawable/shape_user_pause"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:tag="dialog_volume"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/volume_progressbar"
+            style="@style/video_vertical_progressBar"
+            android:layout_width="5dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:max="100"
+            android:tag="progressbar_volume" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
+            android:alpha="0.8"
+            android:src="@drawable/play_volume" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialog_bright"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_margin="@dimen/vs_50"
+        android:background="@drawable/shape_user_pause"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:tag="dialog_brightness"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/volume_progressbar"
+            style="@style/video_vertical_progressBar"
+            android:layout_width="5dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:max="100"
+            android:tag="progressbar_brightness" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
+            android:alpha="0.8"
+            android:src="@drawable/play_brightness" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/top_container_hide"
         android:layout_width="match_parent"
         android:layout_height="@dimen/vs_120"
@@ -942,7 +1006,6 @@
                 tools:visibility="gone" />
 
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/parse_root"
