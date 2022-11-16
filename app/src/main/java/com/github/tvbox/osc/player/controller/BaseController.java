@@ -120,8 +120,10 @@ public abstract class BaseController extends BaseVideoController implements Gest
     private LinearLayout mDialogBrightness;
     private ProgressBar mDialogVolumeProgressBar;
     private ProgressBar mDialogBrightnessProgressBar;
+    private ProgressBar mDialogVideoProgressBar;
+    private ProgressBar mDialogVideoPauseBar;
 
-    private Runnable mRunnable = new Runnable() {
+    private final Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
             String format = String.format("%.2f", (float) mControlWrapper.getTcpSpeed() / 1024.0 / 1024.0);
@@ -150,12 +152,18 @@ public abstract class BaseController extends BaseVideoController implements Gest
         mDialogBrightness = findViewWithTag("dialog_brightness");
         mDialogVolumeProgressBar = findViewWithTag("progressbar_volume");
         mDialogBrightnessProgressBar = findViewWithTag("progressbar_brightness");
+        mDialogVideoProgressBar = findViewWithTag("progressbar_video");
+        mDialogVideoPauseBar = findViewWithTag("pausebar_video");
     }
 
     @Override
     protected void setProgress(int duration, int position) {
         super.setProgress(duration, position);
         mPauseTime.setText(PlayerUtils.stringForTime(position) + " / " + PlayerUtils.stringForTime(duration));
+        // takagen99 : Update mini bar (via touch)
+        int percent = (int) (((double) position / (double) duration) * 100);
+        mDialogVideoProgressBar.setProgress(percent);
+        mDialogVideoPauseBar.setProgress(percent);
     }
 
     @Override
