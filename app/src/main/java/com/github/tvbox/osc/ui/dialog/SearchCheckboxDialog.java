@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -39,7 +38,7 @@ public class SearchCheckboxDialog extends BaseDialog {
         if (context instanceof Activity) {
             setOwnerActivity((Activity) context);
         }
-        setCanceledOnTouchOutside(false);
+        setCanceledOnTouchOutside(true);
         setCancelable(true);
         mSourceList = sourceList;
         mCheckSourcees = checkedSources;
@@ -70,10 +69,11 @@ public class SearchCheckboxDialog extends BaseDialog {
         });
         mGridView.setHasFixedSize(true);
 
+        // Multi Column Selection
         int size = mSourceList.size();
         int spanCount = (int) Math.floor(size / 10);
         if (spanCount <= 1) spanCount = 2;
-        if (spanCount > 3) spanCount = 3;
+        if (spanCount >= 3) spanCount = 3;
         mGridView.setLayoutManager(new V7GridLayoutManager(getContext(), spanCount));
         View root = findViewById(R.id.root);
         ViewGroup.LayoutParams clp = root.getLayoutParams();
