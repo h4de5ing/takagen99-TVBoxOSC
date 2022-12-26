@@ -202,22 +202,24 @@
 
             <View
                 android:layout_width="@dimen/vs_5"
-                android:layout_height="@dimen/vs_25"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/vs_50"
                 android:layout_marginLeft="@dimen/vs_50"
+                android:layout_marginTop="@dimen/vs_4"
                 android:layout_marginEnd="@dimen/vs_8"
                 android:layout_marginRight="@dimen/vs_8"
+                android:layout_marginBottom="@dimen/vs_4"
                 android:background="@drawable/button_detail_collect" />
 
             <TextView
                 android:id="@+id/tv_title_top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="center|left"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:gravity="left"
+                android:gravity="center|left"
                 android:maxLines="1"
                 android:shadowColor="@color/color_FF000000"
                 android:shadowDx="0"
@@ -226,14 +228,14 @@
                 android:tag="tv_title_top"
                 android:text="TvTitle"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_24"
+                android:textSize="@dimen/ts_26"
                 android:textStyle="bold"
                 android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/tv_speed_top"
                 android:layout_width="@dimen/vs_120"
-                android:layout_height="@dimen/vs_40"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:tag="tv_speed_top">
 
@@ -241,7 +243,7 @@
                     android:id="@+id/tv_play_speed_top"
                     android:layout_width="@dimen/vs_70"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="bottom|center"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:gravity="right"
@@ -259,7 +261,7 @@
                     android:id="@+id/tv_MPBS_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center|right"
+                    android:layout_gravity="bottom|center"
                     android:layout_marginStart="@dimen/vs_5"
                     android:layout_marginLeft="@dimen/vs_5"
                     android:gravity="right"
@@ -276,8 +278,8 @@
             <LinearLayout
                 android:id="@+id/tv_spin_top"
                 android:layout_width="@dimen/vs_45"
-                android:layout_height="@dimen/vs_40"
-                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
                 android:layout_marginEnd="@dimen/vs_10"
                 android:layout_marginRight="@dimen/vs_10"
                 android:gravity="center|right"
@@ -286,7 +288,7 @@
                 <ProgressBar
                     android:layout_width="@dimen/vs_30"
                     android:layout_height="@dimen/vs_30"
-                    android:layout_gravity="center"
+                    android:layout_gravity="bottom"
                     android:layout_marginStart="@dimen/vs_10"
                     android:layout_marginLeft="@dimen/vs_10"
                     android:layout_marginEnd="@dimen/vs_10"
@@ -302,7 +304,7 @@
             android:id="@+id/tv_top_line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/vs_5"
+            android:layout_marginTop="@dimen/vs_10"
             android:orientation="horizontal">
 
             <View
