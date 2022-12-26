@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="color_FFB800">#FF6600</color>
-    <color name="color_FF0057">#FF0057</color>
-    <color name="color_FF0057_80">#CCFF0057</color>
-    <color name="color_FF0057_70">#B3FF0057</color>
-    <color name="color_FF0057_40">#66FF0057</color>
 
+    <!-- Main Theme -->
+    <color name="color_theme">#E50914</color>
+    <color name="color_theme_80">#CCE50914</color>
+    <color name="color_theme_70">#B3E50914</color>
+    <color name="color_theme_60">#99E50914</color>
+    <color name="color_theme_50">#80E50914</color>
+    <color name="color_theme_40">#66E50914</color>
     <!-- Main Dialog Button BG -->
-    <color name="color_6C0025_70">#B36C0025</color>
+    <color name="color_theme_dark_70">#B3601216</color>
 
     <!-- EPG Colors -->
     <color name="color_32364E">#32364E</color>

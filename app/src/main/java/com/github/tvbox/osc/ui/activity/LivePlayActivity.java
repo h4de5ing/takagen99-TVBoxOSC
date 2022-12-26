@@ -349,7 +349,8 @@ public class LivePlayActivity extends BaseActivity {
         } else if (tvRightSettingLayout.getVisibility() == View.VISIBLE) {
             mHandler.removeCallbacks(mHideSettingLayoutRun);
             mHandler.post(mHideSettingLayoutRun);
-        } else if (tvLeftChannelListLayout.getVisibility() == View.INVISIBLE) {
+        }
+        if (tvLeftChannelListLayout.getVisibility() == View.INVISIBLE) {
             //重新载入上一次状态
             liveChannelItemAdapter.setNewData(getLiveChannels(currentChannelGroupIndex));
             if (currentLiveChannelIndex > -1)
@@ -1126,11 +1127,12 @@ public class LivePlayActivity extends BaseActivity {
         // Set default as Today
         liveEpgDateAdapter.setSelectedIndex(6);
 
-        playChannel(liveChannelGroupAdapter.getSelectedGroupIndex(), position, false);
         if (tvLeftChannelListLayout.getVisibility() == View.VISIBLE) {
             mHandler.removeCallbacks(mHideChannelListRun);
-            mHandler.postDelayed(mHideChannelListRun, 500);
+            mHandler.post(mHideChannelListRun);
+//            mHandler.postDelayed(mHideChannelListRun, 500);
         }
+        playChannel(liveChannelGroupAdapter.getSelectedGroupIndex(), position, false);
     }
 
     private void initSettingGroupView() {

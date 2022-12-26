@@ -725,6 +725,7 @@ public class PlayActivity extends BaseActivity {
             enterPictureInPictureMode(params);
             mController.hideBottom();
         }
+        super.onUserLeaveHint();
     }
 
     @Override
