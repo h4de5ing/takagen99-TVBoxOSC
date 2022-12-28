@@ -11,7 +11,6 @@
         android:focusableInTouchMode="false"
         android:scrollbars="none">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +50,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/ts_34"
                     android:textStyle="bold" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -68,7 +66,6 @@
                     android:layout_marginBottom="@dimen/vs_10"
                     android:background="@drawable/shape_setting_model_focus"
                     android:focusable="true"
-
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/vs_20"
@@ -82,7 +79,7 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/ts_24" />
 
-                    <Space
+                    <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
@@ -102,7 +99,7 @@
                         android:layout_marginLeft="@dimen/vs_10"
                         android:text=">"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/ts_30" />
+                        android:textSize="@dimen/ts_24" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -135,7 +132,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -149,14 +146,6 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/vs_10"
-                            android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -176,10 +165,9 @@
                             android:layout_height="@dimen/vs_30"
                             android:focusable="true"
                             android:src="@drawable/hm_history" />
-
                     </LinearLayout>
-                </LinearLayout>
 
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -213,11 +201,10 @@
                             android:textSize="@dimen/ts_26"
                             android:textStyle="bold" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -245,16 +232,13 @@
                             android:textSize="@dimen/ts_26"
                             android:textStyle="bold" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
-
                     </LinearLayout>
 
-
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -284,7 +268,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -297,15 +281,6 @@
                             android:singleLine="true"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/vs_10"
-                            android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -329,7 +304,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -340,17 +315,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/vs_10"
-                            android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_30" />
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -382,7 +347,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -393,15 +358,6 @@
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/vs_10"
-                            android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -433,7 +389,7 @@
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
 
-                            <Space
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
@@ -444,15 +400,6 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/vs_10"
-                                android:layout_marginLeft="@dimen/vs_10"
-                                android:text=">"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/ts_30" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -476,7 +423,7 @@
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
 
-                            <Space
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
@@ -487,19 +434,9 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/vs_10"
-                                android:layout_marginLeft="@dimen/vs_10"
-                                android:text=">"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/ts_30" />
                         </LinearLayout>
 
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -539,7 +476,7 @@
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
 
-                            <Space
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
@@ -550,15 +487,6 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/vs_10"
-                                android:layout_marginLeft="@dimen/vs_10"
-                                android:text=">"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/ts_30" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -582,7 +510,7 @@
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
 
-                            <Space
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
@@ -593,15 +521,6 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/vs_10"
-                                android:layout_marginLeft="@dimen/vs_10"
-                                android:text=">"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/ts_30" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -635,7 +554,7 @@
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
 
-                            <Space
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
@@ -646,15 +565,6 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/vs_10"
-                                android:layout_marginLeft="@dimen/vs_10"
-                                android:text=">"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/ts_30" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -678,7 +588,7 @@
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
 
-                            <Space
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
@@ -689,15 +599,6 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/vs_10"
-                                android:layout_marginLeft="@dimen/vs_10"
-                                android:text=">"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/ts_30" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -736,7 +637,7 @@
                             android:textSize="@dimen/ts_26"
                             android:textStyle="bold" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -762,13 +663,11 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
-
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -800,7 +699,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -812,15 +711,6 @@
                             android:text="系统自带"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/vs_10"
-                            android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -853,7 +743,7 @@
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
 
-                            <Space
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
@@ -863,9 +753,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/vs_10"
                                 android:layout_marginLeft="@dimen/vs_10"
-                                android:text=">"
+                                android:text="◌"
                                 android:textColor="@android:color/white"
-                                android:textSize="@dimen/ts_30" />
+                                android:textSize="@dimen/ts_24" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -889,7 +779,7 @@
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
 
-                            <Space
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
@@ -899,9 +789,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/vs_10"
                                 android:layout_marginLeft="@dimen/vs_10"
-                                android:text=">"
+                                android:text="◌"
                                 android:textColor="@android:color/white"
-                                android:textSize="@dimen/ts_30" />
+                                android:textSize="@dimen/ts_24" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -935,7 +825,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -946,15 +836,6 @@
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/vs_10"
-                            android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -978,7 +859,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -989,17 +870,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/vs_10"
-                            android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_30" />
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -1031,7 +902,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -1042,15 +913,6 @@
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/vs_10"
-                            android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1074,7 +936,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -1085,17 +947,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/vs_10"
-                            android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_30" />
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -1127,7 +979,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -1137,9 +989,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
+                            android:text="◌"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_30" />
+                            android:textSize="@dimen/ts_24" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1163,7 +1015,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
@@ -1173,15 +1025,17 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
+                            android:text="◌"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_30" />
+                            android:textSize="@dimen/ts_24" />
                     </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
 
-
         </LinearLayout>
+
     </ScrollView>
+
 </FrameLayout>

@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ import com.lzy.okgo.model.Response;
 import com.orhanobut.hawk.Hawk;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -93,7 +95,6 @@ public class LivePlayActivity extends BaseActivity {
     private LiveChannelItemAdapter liveChannelItemAdapter;
 
     private LinearLayout tvRightSettingLayout;
-    private LinearLayout ll_loading;
     private TvRecyclerView mSettingGroupView;
     private TvRecyclerView mSettingItemView;
     private LiveSettingGroupAdapter liveSettingGroupAdapter;
@@ -116,18 +117,18 @@ public class LivePlayActivity extends BaseActivity {
     private static LiveChannelItem channel_Name = null;
     private static final Hashtable hsEpg = new Hashtable();
 
-    private View ll_right_top_huikan;
-    private View tv_tiploading;
-
     private LinearLayout divLoadEpgright;
     private LinearLayout divLoadEpgleft;
     private LinearLayout divEpg;
 
     LinearLayout ll_epg;
+    TextView tv_channelname;
     TextView tv_channelnum;
-    TextView tip_chname;
-    TextView tip_epg1;
-    TextView tip_epg2;
+    ImageView tv_logo;
+    TextView tv_curr_time;
+    TextView tv_curr_name;
+    TextView tv_next_time;
+    TextView tv_next_name;
     TextView tv_srcinfo;
     TextView tv_curepg_left;
     TextView tv_nextepg_left;
@@ -150,24 +151,29 @@ public class LivePlayActivity extends BaseActivity {
         hideSystemUI(false);
 
         // Getting EPG Address
-        epgStringAddress = Hawk.get(HawkConfig.EPG_URL, "");
-        if (epgStringAddress == null) {
-            epgStringAddress = "http://epg.51zmt.top:8000/api/diyp/";
-        }
+//        epgStringAddress = Hawk.get(HawkConfig.EPG_URL, "");
+//        if (epgStringAddress == null) {
+//            epgStringAddress = "http://epg.51zmt.top:8000/api/diyp/";
+//        }
+        epgStringAddress = "http://epg.51zmt.top:8000/api/diyp/";
         // http://epg.aishangtv.top/live_proxy_epg_bc.php
         // http://diyp.112114.xyz/
 
         EventBus.getDefault().register(this);
         setLoadSir(findViewById(R.id.live_root));
         mVideoView = findViewById(R.id.mVideoView);
-        mResolution = findViewById(R.id.live_size);
+        mResolution = findViewById(R.id.live_size); // Resolution
+        tv_srcinfo = findViewById(R.id.tv_source);  // Source / Total Source
         mTime = findViewById(R.id.tv_time);
 
-        tip_chname = findViewById(R.id.tv_channel_bar_name);//底部名称
-        tv_channelnum = findViewById(R.id.tv_channel_bottom_number); //底部数字
-        tip_epg1 = findViewById(R.id.tv_current_program_time);//底部EPG当前节目信息
-        tip_epg2 = findViewById(R.id.tv_next_program_time);//底部EPG当下个节目信息
-        tv_srcinfo = findViewById(R.id.tv_source);//线路状态
+        tv_channelname = findViewById(R.id.tv_channel_name);//底部名称
+        tv_channelnum = findViewById(R.id.tv_channel_number); //底部数字
+
+        tv_logo = findViewById(R.id.tv_logo);
+        tv_curr_time = findViewById(R.id.tv_current_program_time);
+        tv_curr_name = findViewById(R.id.tv_current_program_name);
+        tv_next_time = findViewById(R.id.tv_next_program_time);
+        tv_next_name = findViewById(R.id.tv_next_program_name);
 
         ll_epg = findViewById(R.id.ll_epg);
         ll_epg.setVisibility(View.INVISIBLE);
@@ -534,23 +540,24 @@ public class LivePlayActivity extends BaseActivity {
         if (channel_Name.getChannelName() != null) {
 //            findViewById(R.id.ll_epg).setVisibility(View.VISIBLE);
             showChannelInfo();
-            ((TextView) findViewById(R.id.tv_current_program_time)).setText("暂无信息");
-            ((TextView) findViewById(R.id.tv_current_program_name)).setText("");
-            ((TextView) findViewById(R.id.tv_next_program_time)).setText("开源测试软件,请勿商用及播放违法内容");
-            ((TextView) findViewById(R.id.tv_next_program_name)).setText("");
+//            ((TextView) findViewById(R.id.tv_current_program_time)).setText("暂无信息");
+//            ((TextView) findViewById(R.id.tv_current_program_name)).setText("");
+//            ((TextView) findViewById(R.id.tv_next_program_time)).setText("开源测试软件,请勿商用及播放违法内容");
+//            ((TextView) findViewById(R.id.tv_next_program_name)).setText("");
             String savedEpgKey = channel_Name.getChannelName() + "_" + liveEpgDateAdapter.getItem(liveEpgDateAdapter.getSelectedIndex()).getDatePresented();
             if (hsEpg.containsKey(savedEpgKey)) {
                 String[] epgInfo = EpgUtil.getEpgInfo(channel_Name.getChannelName());
+                getTvLogo(channel_Name.getChannelName(), epgInfo == null ? null : epgInfo[0]);
                 ArrayList arrayList = (ArrayList) hsEpg.get(savedEpgKey);
                 if (arrayList != null && arrayList.size() > 0) {
                     int size = arrayList.size() - 1;
                     while (size >= 0) {
                         if (new Date().compareTo(((Epginfo) arrayList.get(size)).startdateTime) >= 0) {
-                            ((TextView) findViewById(R.id.tv_current_program_time)).setText(((Epginfo) arrayList.get(size)).start + " - " + ((Epginfo) arrayList.get(size)).end);
-                            ((TextView) findViewById(R.id.tv_current_program_name)).setText(((Epginfo) arrayList.get(size)).title);
+                            tv_curr_time.setText(((Epginfo) arrayList.get(size)).start + " — " + ((Epginfo) arrayList.get(size)).end);
+                            tv_curr_name.setText(((Epginfo) arrayList.get(size)).title);
                             if (size != arrayList.size() - 1) {
-                                ((TextView) findViewById(R.id.tv_next_program_time)).setText(((Epginfo) arrayList.get(size + 1)).start + " - " + ((Epginfo) arrayList.get(size)).end);
-                                ((TextView) findViewById(R.id.tv_next_program_name)).setText(((Epginfo) arrayList.get(size + 1)).title);
+                                tv_next_time.setText(((Epginfo) arrayList.get(size + 1)).start + " — " + ((Epginfo) arrayList.get(size)).end);
+                                tv_next_name.setText(((Epginfo) arrayList.get(size + 1)).title);
                             }
                             break;
                         } else {
@@ -571,16 +578,23 @@ public class LivePlayActivity extends BaseActivity {
         }
     }
 
-    //获取EPG并存储 // 百川epg
+    // 获取EPG并存储 // 百川epg
     private List<Epginfo> epgdata = new ArrayList<>();
+
+    // Get Channel Logo
+    private void getTvLogo(String channelName, String logoUrl) {
+        Toast.makeText(App.getInstance(), logoUrl, Toast.LENGTH_SHORT).show();
+        Picasso.get().load(logoUrl).placeholder(R.drawable.img_logo_placeholder).into(tv_logo);
+    }
 
     public void getEpg(Date date) {
 
-        final String channelName = channel_Name.getChannelName();
+        String channelName = channel_Name.getChannelName();
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
         timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
         String[] epgInfo = EpgUtil.getEpgInfo(channelName);
         String epgTagName = channelName;
+        getTvLogo(channelName, epgInfo == null ? null : epgInfo[0]);
         if (epgInfo != null && !epgInfo[1].isEmpty()) {
             epgTagName = epgInfo[1];
         }
@@ -594,7 +608,7 @@ public class LivePlayActivity extends BaseActivity {
         }
         UrlHttpUtil.get(epgUrl, new CallBackUtil.CallBackString() {
             public void onFailure(int i, String str) {
-//                showEpg(date, new ArrayList());
+                showEpg(date, new ArrayList());
 //                showBottomEpg();
             }
 
@@ -646,12 +660,14 @@ public class LivePlayActivity extends BaseActivity {
 
         // takagen99 : Moved update of Channel Info here before getting EPG (no dependency on EPG)
         mHandler.post(mTimeRunnable);
-        ((TextView) findViewById(R.id.tv_channel_bar_name)).setText(channel_Name.getChannelName());
-        ((TextView) findViewById(R.id.tv_channel_bottom_number)).setText("" + channel_Name.getChannelNum());
+
+        // Channel Name & No. + Source No.
+        tv_channelname.setText(channel_Name.getChannelName());
+        tv_channelnum.setText("" + channel_Name.getChannelNum());
         if (channel_Name == null || channel_Name.getSourceNum() <= 0) {
-            ((TextView) findViewById(R.id.tv_source)).setText("1/1");
+            tv_srcinfo.setText("1/1");
         } else {
-            ((TextView) findViewById(R.id.tv_source)).setText("线路 " + (channel_Name.getSourceIndex() + 1) + "/" + channel_Name.getSourceNum());
+            tv_srcinfo.setText("线路 " + (channel_Name.getSourceIndex() + 1) + "/" + channel_Name.getSourceNum());
         }
 
         getEpg(new Date());
