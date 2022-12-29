@@ -7,7 +7,7 @@
                 android:state_focused="true"
                 android:state_pressed="true">
                 <shape>
-                    <corners android:radius="@dimen/vs_5" />
+                    <corners android:radius="@dimen/vs_10" />
                     <solid android:color="@color/color_theme_40" />
                 </shape>
             </item>
@@ -15,13 +15,13 @@
                 android:state_focused="false"
                 android:state_pressed="true">
                 <shape>
-                    <corners android:radius="@dimen/vs_5" />
+                    <corners android:radius="@dimen/vs_10" />
                     <solid android:color="@android:color/transparent" />
                 </shape>
             </item>
             <item android:state_focused="true">
                 <shape>
-                    <corners android:radius="@dimen/vs_5" />
+                    <corners android:radius="@dimen/vs_10" />
                     <solid android:color="@color/color_theme_40" />
                 </shape>
             </item>
@@ -29,8 +29,8 @@
                 android:state_focused="false"
                 android:state_pressed="false">
                 <shape>
-                    <corners android:radius="@dimen/vs_5" />
-                    <solid android:color="@color/color_000000_60" />
+                    <corners android:radius="@dimen/vs_10" />
+                    <solid android:color="@android:color/transparent" />
                 </shape>
             </item>
         </selector>

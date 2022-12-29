@@ -145,7 +145,6 @@
                             android:singleLine="true"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -281,6 +280,15 @@
                             android:singleLine="true"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/vs_10"
+                            android:layout_marginLeft="@dimen/vs_10"
+                            android:text=">"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -313,6 +321,15 @@
                             android:id="@+id/showPreviewText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/vs_10"
+                            android:layout_marginLeft="@dimen/vs_10"
+                            android:text=">"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
                     </LinearLayout>
@@ -358,6 +375,15 @@
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/vs_10"
+                            android:layout_marginLeft="@dimen/vs_10"
+                            android:text=">"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -400,6 +426,15 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/vs_10"
+                                android:layout_marginLeft="@dimen/vs_10"
+                                android:text=">"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -432,6 +467,15 @@
                                 android:id="@+id/tvPIP"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/vs_10"
+                                android:layout_marginLeft="@dimen/vs_10"
+                                android:text=">"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
                         </LinearLayout>
@@ -487,6 +531,15 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/vs_10"
+                                android:layout_marginLeft="@dimen/vs_10"
+                                android:text=">"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -519,6 +572,15 @@
                                 android:id="@+id/tvHomeNum"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/vs_10"
+                                android:layout_marginLeft="@dimen/vs_10"
+                                android:text=">"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
                         </LinearLayout>
@@ -565,6 +627,15 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/vs_10"
+                                android:layout_marginLeft="@dimen/vs_10"
+                                android:text=">"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -597,6 +668,15 @@
                                 android:id="@+id/tvMediaCodec"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/vs_10"
+                                android:layout_marginLeft="@dimen/vs_10"
+                                android:text=">"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
                         </LinearLayout>
@@ -641,7 +721,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -711,6 +790,15 @@
                             android:text="系统自带"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/vs_10"
+                            android:layout_marginLeft="@dimen/vs_10"
+                            android:text=">"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -753,7 +841,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/vs_10"
                                 android:layout_marginLeft="@dimen/vs_10"
-                                android:text="◌"
+                                android:text=">"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
                         </LinearLayout>
@@ -789,10 +877,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/vs_10"
                                 android:layout_marginLeft="@dimen/vs_10"
-                                android:text="◌"
+                                android:text=">"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
                         </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -836,6 +925,15 @@
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/vs_10"
+                            android:layout_marginLeft="@dimen/vs_10"
+                            android:text=">"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -868,6 +966,15 @@
                             android:id="@+id/tvSearchView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/vs_10"
+                            android:layout_marginLeft="@dimen/vs_10"
+                            android:text=">"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
                     </LinearLayout>
@@ -913,6 +1020,15 @@
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/vs_10"
+                            android:layout_marginLeft="@dimen/vs_10"
+                            android:text=">"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -945,6 +1061,15 @@
                             android:id="@+id/tvLocale"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/vs_10"
+                            android:layout_marginLeft="@dimen/vs_10"
+                            android:text=">"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
                     </LinearLayout>
@@ -989,7 +1114,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text="◌"
+                            android:text=">"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
                     </LinearLayout>
@@ -1025,7 +1150,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text="◌"
+                            android:text=">"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
                     </LinearLayout>

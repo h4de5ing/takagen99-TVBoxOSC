@@ -967,14 +967,14 @@
             </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/vs_45"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_2"
-                android:layout_marginLeft="@dimen/vs_2"
-                android:layout_marginEnd="@dimen/vs_2"
-                android:layout_marginRight="@dimen/vs_2"
-                android:drawableLeft="@drawable/vod_skip"
+                android:layout_marginStart="@dimen/vs_10"
+                android:layout_marginLeft="@dimen/vs_10"
+                android:layout_marginEnd="@dimen/vs_10"
+                android:layout_marginRight="@dimen/vs_10"
+                android:background="@color/color_FFFFFF_50"
                 android:gravity="center"
                 android:padding="@dimen/vs_10"
                 android:textColor="@color/color_FFFFFF"

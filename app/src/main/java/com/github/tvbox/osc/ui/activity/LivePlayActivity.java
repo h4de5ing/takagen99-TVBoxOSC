@@ -53,6 +53,7 @@ import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -151,11 +152,11 @@ public class LivePlayActivity extends BaseActivity {
         hideSystemUI(false);
 
         // Getting EPG Address
-//        epgStringAddress = Hawk.get(HawkConfig.EPG_URL, "");
-//        if (epgStringAddress == null) {
-//            epgStringAddress = "http://epg.51zmt.top:8000/api/diyp/";
-//        }
-        epgStringAddress = "http://epg.51zmt.top:8000/api/diyp/";
+        epgStringAddress = Hawk.get(HawkConfig.EPG_URL, "");
+        if (StringUtils.isBlank(epgStringAddress)) {
+            epgStringAddress = "http://epg.51zmt.top:8000/api/diyp/";
+//            Hawk.put(HawkConfig.EPG_URL, epgStringAddress);
+        }
         // http://epg.aishangtv.top/live_proxy_epg_bc.php
         // http://diyp.112114.xyz/
 
@@ -163,7 +164,7 @@ public class LivePlayActivity extends BaseActivity {
         setLoadSir(findViewById(R.id.live_root));
         mVideoView = findViewById(R.id.mVideoView);
         mResolution = findViewById(R.id.live_size); // Resolution
-        tv_srcinfo = findViewById(R.id.tv_source);  // Source / Total Source
+        tv_srcinfo = findViewById(R.id.tv_source);  // Source/Total Source
         mTime = findViewById(R.id.tv_time);
 
         tv_channelname = findViewById(R.id.tv_channel_name);//底部名称
@@ -553,10 +554,10 @@ public class LivePlayActivity extends BaseActivity {
                     int size = arrayList.size() - 1;
                     while (size >= 0) {
                         if (new Date().compareTo(((Epginfo) arrayList.get(size)).startdateTime) >= 0) {
-                            tv_curr_time.setText(((Epginfo) arrayList.get(size)).start + " — " + ((Epginfo) arrayList.get(size)).end);
+                            tv_curr_time.setText(((Epginfo) arrayList.get(size)).start + " - " + ((Epginfo) arrayList.get(size)).end);
                             tv_curr_name.setText(((Epginfo) arrayList.get(size)).title);
                             if (size != arrayList.size() - 1) {
-                                tv_next_time.setText(((Epginfo) arrayList.get(size + 1)).start + " — " + ((Epginfo) arrayList.get(size)).end);
+                                tv_next_time.setText(((Epginfo) arrayList.get(size + 1)).start + " - " + ((Epginfo) arrayList.get(size + 1)).end);
                                 tv_next_name.setText(((Epginfo) arrayList.get(size + 1)).title);
                             }
                             break;
@@ -583,7 +584,7 @@ public class LivePlayActivity extends BaseActivity {
 
     // Get Channel Logo
     private void getTvLogo(String channelName, String logoUrl) {
-        Toast.makeText(App.getInstance(), logoUrl, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(App.getInstance(), logoUrl, Toast.LENGTH_SHORT).show();
         Picasso.get().load(logoUrl).placeholder(R.drawable.img_logo_placeholder).into(tv_logo);
     }
 
