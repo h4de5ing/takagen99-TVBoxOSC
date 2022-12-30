@@ -29,7 +29,6 @@
     <dimen name="vs_15">15mm</dimen>
     <dimen name="vs_20">20mm</dimen>
     <dimen name="vs_25">25mm</dimen>
-    <dimen name="vs_28">28mm</dimen>
     <dimen name="vs_30">30mm</dimen>
     <dimen name="vs_33">33mm</dimen>
     <dimen name="vs_35">35mm</dimen>
@@ -56,7 +55,6 @@
     <dimen name="vs_280">280mm</dimen>
     <dimen name="vs_300">300mm</dimen>
     <dimen name="vs_340">340mm</dimen>
-    <dimen name="vs_360">360mm</dimen>
     <dimen name="vs_400">400mm</dimen>
     <dimen name="vs_420">420mm</dimen>
     <dimen name="vs_440">440mm</dimen>
