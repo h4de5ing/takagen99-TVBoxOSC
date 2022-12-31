@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def static buildTime() {
+    return new Date().format("yyyyMMdd_HHmm", TimeZone.getTimeZone("GMT+08:00"))
+}
+
 android {
     compileSdkVersion 30
 
@@ -8,7 +12,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
-        versionName '1.0.0'
+        versionName "1.0.".concat(buildTime())
         multiDexEnabled true
         //设置room的Schema的位置
         javaCompileOptions {

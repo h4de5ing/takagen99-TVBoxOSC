@@ -249,17 +249,25 @@ public class VodController extends BaseController {
     ImageView mPauseImg;
     LinearLayout mNextBtn;
     float mSpeed;
-    LinearLayout mFFwdBtn;
-    TextView mFFwdTxt;
-    LinearLayout mReplayBtn;
-
     LinearLayout mPlayerRetry;
+
+    // Fast Forward Buttons
+    LinearLayout mFFwdBtn;
+    ImageView mFFwdImg;
+    TextView mFFwdTxt;
+
+    // Scale Buttons
     LinearLayout mPlayerScaleBtn;
+    ImageView mPlayerScaleImg;
     TextView mPlayerScaleTxt;
+
+    // Player Buttons
     LinearLayout mPlayerBtn;
+    ImageView mPlayerImg;
     TextView mPlayerTxt;
     TextView mPlayerIJKBtn;
     LinearLayout mSubtitleBtn;
+
     public SimpleSubtitleView mSubtitleView;
     LinearLayout mAudioTrackBtn;
     TextView mPlayerTimeStartBtn;
@@ -318,15 +326,24 @@ public class VodController extends BaseController {
         mPauseBtn = findViewById(R.id.play_pause);
         mPauseImg = findViewById(R.id.play_pauseImg);
         mNextBtn = findViewById(R.id.play_next);
-        mFFwdBtn = findViewById(R.id.play_speed);
-        mFFwdTxt = findViewById(R.id.play_speed_txt);
-        mReplayBtn = findViewById(R.id.play_retry);
         mPlayerRetry = findViewById(R.id.play_retry);
+
+        // Fast Forward Buttons
+        mFFwdBtn = findViewById(R.id.play_speed);
+        mFFwdImg = findViewById(R.id.play_speed_img);
+        mFFwdTxt = findViewById(R.id.play_speed_txt);
+
+        // Scale Buttons
         mPlayerScaleBtn = findViewById(R.id.play_scale);
+        mPlayerScaleImg = findViewById(R.id.play_scale_img);
         mPlayerScaleTxt = findViewById(R.id.play_scale_txt);
+
+        // Player Buttons
         mPlayerBtn = findViewById(R.id.play_player);
+        mPlayerImg = findViewById(R.id.play_player_img);
         mPlayerTxt = findViewById(R.id.play_player_txt);
         mPlayerIJKBtn = findViewById(R.id.play_ijk);
+
         mSubtitleBtn = findViewById(R.id.play_subtitle);
         mSubtitleView = findViewById(R.id.subtitle_view);
         mAudioTrackBtn = findViewById(R.id.play_audio);
@@ -464,6 +481,33 @@ public class VodController extends BaseController {
                 return true;
             }
         });
+//        mFFwdBtn.setOnFocusChangeListener(new OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean isFocus) {
+//                if (isFocus) {
+//                    mFFwdImg.setVisibility(GONE);
+//                    mFFwdTxt.setVisibility(VISIBLE);
+//                } else {
+//                    mFFwdImg.setVisibility(VISIBLE);
+//                    mFFwdTxt.setVisibility(GONE);
+//                }
+//            }
+//        });
+//        mFFwdBtn.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent event) {
+//                //                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+////                    mFFwdImg.setVisibility(GONE);
+////                    mFFwdTxt.setVisibility(VISIBLE);
+////                    return true;
+////                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+////                    mFFwdImg.setVisibility(VISIBLE);
+////                    mFFwdTxt.setVisibility(GONE);
+////                    return true;
+////                }
+//                return false;
+//            }
+//        });
         // Button : REPLAY from start ------------------------------------
         mPlayerRetry.setOnClickListener(new OnClickListener() {
             @Override
@@ -1098,6 +1142,49 @@ public class VodController extends BaseController {
         }
         return super.dispatchKeyEvent(event);
     }
+
+//    @Override
+//    public boolean dispatchKeyEvent(KeyEvent event) {
+//        if (isBottomVisible()) {
+//            if (mFFwdBtn.isFocused()) {
+////                mFFwdImg.setVisibility(GONE);
+////                mFFwdTxt.setVisibility(VISIBLE);
+////                mPlayerImg.setVisibility(VISIBLE);
+////                mPlayerTxt.setVisibility(GONE);
+////                mPlayerScaleImg.setVisibility(VISIBLE);
+////                mPlayerScaleTxt.setVisibility(GONE);
+//            } else if (mPlayerBtn.isFocused()) {
+//                mFFwdImg.setVisibility(VISIBLE);
+//                mFFwdTxt.setVisibility(GONE);
+//                mPlayerImg.setVisibility(GONE);
+//                mPlayerTxt.setVisibility(VISIBLE);
+//                mPlayerScaleImg.setVisibility(VISIBLE);
+//                mPlayerScaleTxt.setVisibility(GONE);
+//            } else if (mPlayerScaleBtn.isFocused()) {
+//                mFFwdImg.setVisibility(VISIBLE);
+//                mFFwdTxt.setVisibility(GONE);
+//                mPlayerImg.setVisibility(VISIBLE);
+//                mPlayerTxt.setVisibility(GONE);
+//                mPlayerScaleImg.setVisibility(GONE);
+//                mPlayerScaleTxt.setVisibility(VISIBLE);
+//            } else {
+//                mFFwdImg.setVisibility(VISIBLE);
+//                mFFwdTxt.setVisibility(GONE);
+//                mPlayerImg.setVisibility(VISIBLE);
+//                mPlayerTxt.setVisibility(GONE);
+//                mPlayerScaleImg.setVisibility(VISIBLE);
+//                mPlayerScaleTxt.setVisibility(GONE);
+//            }
+//        } else {
+//            mFFwdImg.setVisibility(VISIBLE);
+//            mFFwdTxt.setVisibility(GONE);
+//            mPlayerImg.setVisibility(VISIBLE);
+//            mPlayerTxt.setVisibility(GONE);
+//            mPlayerScaleImg.setVisibility(VISIBLE);
+//            mPlayerScaleTxt.setVisibility(GONE);
+//        }
+//        return super.dispatchKeyEvent(event);
+//    }
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
