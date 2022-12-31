@@ -306,7 +306,7 @@
             android:id="@+id/tv_top_line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/vs_10"
+            android:layout_marginTop="@dimen/vs_5"
             android:orientation="horizontal">
 
             <View

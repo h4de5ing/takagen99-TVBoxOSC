@@ -134,9 +134,6 @@ public class LivePlayActivity extends BaseActivity {
     TextView tv_next_time;
     TextView tv_next_name;
     TextView tv_srcinfo;
-    TextView tv_curepg_left;
-    TextView tv_nextepg_left;
-    private TextView txtNoEpg;
     private TextView mResolution;
     private TextView mTime;
 
@@ -194,7 +191,6 @@ public class LivePlayActivity extends BaseActivity {
 
         ll_epg = findViewById(R.id.ll_epg);
         ll_epg.setVisibility(View.INVISIBLE);
-        txtNoEpg = findViewById(R.id.txtNoEpg);
 
         mRightEpgList = findViewById(R.id.lv_epg);
         mEpgDateGridView = findViewById(R.id.mEpgDateGridView);
