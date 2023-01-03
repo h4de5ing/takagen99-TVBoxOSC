@@ -70,6 +70,7 @@
     <string name="dia_hm_type">Select Display Type</string>
     <string name="dia_history">Select History to Keep</string>
     <string name="dia_history_list">Configuration History List</string>
+    <string name="dia_history_live">Live Configuration History</string>
     <string name="dia_player">Select Player Type</string>
     <string name="dia_decode">Select IJK Decoder</string>
     <string name="dia_search">Select Search Mode</string>

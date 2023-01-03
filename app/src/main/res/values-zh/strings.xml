@@ -70,6 +70,7 @@
     <string name="dia_hm_type">请选择列表数据</string>
     <string name="dia_history">历史条数保留</string>
     <string name="dia_history_list">历史配置列表</string>
+    <string name="dia_history_live">历史直播列表</string>
     <string name="dia_player">请选择默认播放器</string>
     <string name="dia_decode">请选择IJK解码</string>
     <string name="dia_search">请选择搜索视图</string>

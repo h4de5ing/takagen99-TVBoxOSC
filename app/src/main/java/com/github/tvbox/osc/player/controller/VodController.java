@@ -445,21 +445,7 @@ public class VodController extends BaseController {
                 mHandler.postDelayed(mHideBottomRunnable, 8000);
                 try {
                     float speed = (float) mPlayerConfig.getDouble("sp");
-                    // increase speed by 0.25 OR by 1.00 if > 3
-                    // set back speed to 0.50 after > 5
-                    if (speed == 5) {
-                        speed = 0.5f;
-                    } else if (speed >= 2 & speed < 3) {
-                        speed += 0.5f;
-                    } else if (speed >= 3) {
-                        speed += 1.0f;
-                    } else {
-                        speed += 0.25f;
-                    }
-                    mPlayerConfig.put("sp", speed);
-                    updatePlayerCfgView();
-                    listener.updatePlayerCfg();
-                    mControlWrapper.setSpeed(speed);
+                    increasePlaySpeed(speed);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -469,14 +455,11 @@ public class VodController extends BaseController {
         mFFwdBtn.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                try {
-                    mPlayerConfig.put("sp", 1.0f);
-                    updatePlayerCfgView();
-                    listener.updatePlayerCfg();
-                    mControlWrapper.setSpeed(1.0f);
-//                    Toast.makeText(getContext(), "x" + mPlayerConfig.getDouble("sp"), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                float currentSpeed = mControlWrapper.getSpeed();
+                if (currentSpeed == 1.0f) {
+                    setPlaySpeed(5.0f);
+                } else {
+                    setPlaySpeed(1.0f);
                 }
                 return true;
             }
@@ -496,15 +479,15 @@ public class VodController extends BaseController {
 //        mFFwdBtn.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View view, MotionEvent event) {
-//                //                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-////                    mFFwdImg.setVisibility(GONE);
-////                    mFFwdTxt.setVisibility(VISIBLE);
-////                    return true;
-////                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-////                    mFFwdImg.setVisibility(VISIBLE);
-////                    mFFwdTxt.setVisibility(GONE);
-////                    return true;
-////                }
+//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                    mFFwdImg.setVisibility(GONE);
+//                    mFFwdTxt.setVisibility(VISIBLE);
+//                    return true;
+//                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+//                    mFFwdImg.setVisibility(VISIBLE);
+//                    mFFwdTxt.setVisibility(GONE);
+//                    return true;
+//                }
 //                return false;
 //            }
 //        });
@@ -1076,6 +1059,32 @@ public class VodController extends BaseController {
         mHandler.removeCallbacks(mHideBottomRunnable);
     }
 
+    void increasePlaySpeed(float speed) {
+        if (speed == 5) {
+            speed = 0.5f;
+        } else if (speed >= 2 & speed < 3) {
+            speed += 0.5f;
+        } else if (speed >= 3) {
+            speed += 1.0f;
+        } else {
+            speed += 0.25f;
+        }
+        setPlaySpeed(speed);
+    }
+
+    void decreasePlaySpeed(float speed) {
+        if (speed == 0.25f) {
+            speed = 5.0f;
+        } else if (speed > 3) {
+            speed -= 1.0f;
+        } else if (speed > 2 & speed <= 3) {
+            speed -= 0.5f;
+        } else {
+            speed -= 0.25f;
+        }
+        setPlaySpeed(speed);
+    }
+
     void setPlaySpeed(float value) {
         try {
             mPlayerConfig.put("sp", value);
@@ -1143,48 +1152,31 @@ public class VodController extends BaseController {
         return super.dispatchKeyEvent(event);
     }
 
-//    @Override
-//    public boolean dispatchKeyEvent(KeyEvent event) {
-//        if (isBottomVisible()) {
-//            if (mFFwdBtn.isFocused()) {
-////                mFFwdImg.setVisibility(GONE);
-////                mFFwdTxt.setVisibility(VISIBLE);
-////                mPlayerImg.setVisibility(VISIBLE);
-////                mPlayerTxt.setVisibility(GONE);
-////                mPlayerScaleImg.setVisibility(VISIBLE);
-////                mPlayerScaleTxt.setVisibility(GONE);
-//            } else if (mPlayerBtn.isFocused()) {
-//                mFFwdImg.setVisibility(VISIBLE);
-//                mFFwdTxt.setVisibility(GONE);
-//                mPlayerImg.setVisibility(GONE);
-//                mPlayerTxt.setVisibility(VISIBLE);
-//                mPlayerScaleImg.setVisibility(VISIBLE);
-//                mPlayerScaleTxt.setVisibility(GONE);
-//            } else if (mPlayerScaleBtn.isFocused()) {
-//                mFFwdImg.setVisibility(VISIBLE);
-//                mFFwdTxt.setVisibility(GONE);
-//                mPlayerImg.setVisibility(VISIBLE);
-//                mPlayerTxt.setVisibility(GONE);
-//                mPlayerScaleImg.setVisibility(GONE);
-//                mPlayerScaleTxt.setVisibility(VISIBLE);
-//            } else {
-//                mFFwdImg.setVisibility(VISIBLE);
-//                mFFwdTxt.setVisibility(GONE);
-//                mPlayerImg.setVisibility(VISIBLE);
-//                mPlayerTxt.setVisibility(GONE);
-//                mPlayerScaleImg.setVisibility(VISIBLE);
-//                mPlayerScaleTxt.setVisibility(GONE);
-//            }
-//        } else {
-//            mFFwdImg.setVisibility(VISIBLE);
-//            mFFwdTxt.setVisibility(GONE);
-//            mPlayerImg.setVisibility(VISIBLE);
-//            mPlayerTxt.setVisibility(GONE);
-//            mPlayerScaleImg.setVisibility(VISIBLE);
-//            mPlayerScaleTxt.setVisibility(GONE);
-//        }
-//        return super.dispatchKeyEvent(event);
-//    }
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (isBottomVisible() & mFFwdBtn.isFocused()) {
+            int keyCode = event.getKeyCode();
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                    try {
+                        float speed = (float) mPlayerConfig.getDouble("sp");
+                        increasePlaySpeed(speed);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                    try {
+                        float speed = (float) mPlayerConfig.getDouble("sp");
+                        decreasePlaySpeed(speed);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }
+        return super.dispatchKeyEvent(event);
+    }
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -1210,8 +1202,12 @@ public class VodController extends BaseController {
                 // Set Fast Forward Icon
                 mProgressTop.setVisibility(VISIBLE);
                 mPauseIcon.setImageResource(R.drawable.play_ffwd);
-                // Set x3 Speed
-                mSpeed = 3.0f;
+                // Set x3 Speed only if less than x3
+                if (currentSpeed < 3.0f) {
+                    mSpeed = 3.0f;
+                } else {
+                    mSpeed = currentSpeed;
+                }
                 setPlaySpeed(mSpeed);
             } catch (JSONException f) {
                 f.printStackTrace();
@@ -1219,7 +1215,7 @@ public class VodController extends BaseController {
         }
     }
 
-    // takagen99 : On release long press, resume x1 speed
+    // takagen99 : On release long press, resume previous speed
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         if (e.getAction() == MotionEvent.ACTION_UP) {
@@ -1230,7 +1226,6 @@ public class VodController extends BaseController {
                 // Set back to current speed
                 mSpeed = currentSpeed;
                 setPlaySpeed(mSpeed);
-//                mplayerFFImg.setImageDrawable(dFFwd);
                 fromLongPress = false;
             }
         }

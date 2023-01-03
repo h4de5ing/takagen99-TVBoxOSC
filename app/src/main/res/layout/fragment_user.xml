@@ -32,6 +32,7 @@
             android:clickable="false"
             android:focusable="true"
             android:minWidth="@dimen/vs_150"
+            android:nextFocusUp="@id/mGridViewCategory"
             android:orientation="horizontal"
             android:padding="@dimen/vs_15">
 
@@ -40,7 +41,7 @@
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
-                android:alpha="0.75"
+                android:alpha="0.9"
                 app:srcCompat="@drawable/hm_history" />
 
             <TextView
@@ -78,7 +79,7 @@
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
-                android:alpha="0.75"
+                android:alpha="0.9"
                 app:srcCompat="@drawable/hm_live" />
 
             <TextView
@@ -92,7 +93,7 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_live"
-                android:textColor="@color/color_FFFFFF_80"
+                android:textColor="@color/color_FFFFFF_90"
                 android:textSize="@dimen/ts_24"
                 android:textStyle="normal" />
 
@@ -116,7 +117,7 @@
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
-                android:alpha="0.75"
+                android:alpha="0.9"
                 app:srcCompat="@drawable/hm_fav" />
 
             <TextView
@@ -130,7 +131,7 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_fav"
-                android:textColor="@color/color_FFFFFF_80"
+                android:textColor="@color/color_FFFFFF_90"
                 android:textSize="@dimen/ts_24"
                 android:textStyle="normal" />
 
@@ -155,7 +156,7 @@
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
-                android:alpha="0.75"
+                android:alpha="0.9"
                 app:srcCompat="@drawable/hm_search" />
 
             <TextView
@@ -169,7 +170,7 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_search"
-                android:textColor="@color/color_FFFFFF_80"
+                android:textColor="@color/color_FFFFFF_90"
                 android:textSize="@dimen/ts_24"
                 android:textStyle="normal" />
 
@@ -194,7 +195,7 @@
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
-                android:alpha="0.75"
+                android:alpha="0.9"
                 app:srcCompat="@drawable/hm_push" />
 
             <TextView
@@ -208,7 +209,7 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_push"
-                android:textColor="@color/color_FFFFFF_80"
+                android:textColor="@color/color_FFFFFF_90"
                 android:textSize="@dimen/ts_24"
                 android:textStyle="normal" />
 
@@ -224,6 +225,8 @@
             android:clickable="false"
             android:focusable="true"
             android:minWidth="@dimen/vs_150"
+            android:nextFocusRight="@id/tvMenu"
+            android:nextFocusUp="@id/mGridViewCategory"
             android:orientation="horizontal"
             android:padding="@dimen/vs_15">
 
@@ -232,7 +235,7 @@
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
-                android:alpha="0.75"
+                android:alpha="0.9"
                 app:srcCompat="@drawable/hm_folder" />
 
             <TextView
@@ -246,7 +249,7 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_file"
-                android:textColor="@color/color_FFFFFF_80"
+                android:textColor="@color/color_FFFFFF_90"
                 android:textSize="@dimen/ts_24"
                 android:textStyle="normal" />
 
@@ -271,7 +274,7 @@
                 android:layout_width="@dimen/vs_40"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/vs_3"
-                android:alpha="0.75"
+                android:alpha="0.9"
                 app:srcCompat="@drawable/hm_settings" />
 
             <TextView
@@ -285,7 +288,7 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_setting"
-                android:textColor="@color/color_FFFFFF_80"
+                android:textColor="@color/color_FFFFFF_90"
                 android:textSize="@dimen/ts_24"
                 android:textStyle="normal" />
 

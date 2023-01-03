@@ -31,13 +31,15 @@
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
             android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="false"
             android:gravity="left|center_vertical"
+            android:nextFocusRight="@id/tvWifi"
+            android:nextFocusDown="@id/mGridViewCategory"
             android:text="@string/app_name"
             android:textAlignment="gravity"
-            android:textColor="@android:color/white"
+            android:textColor="@color/font_home_selector"
             android:textSize="@dimen/ts_30"
             android:textStyle="bold" />
 
@@ -64,6 +66,7 @@
             android:background="@drawable/button_home_select"
             android:clickable="true"
             android:focusable="true"
+            android:nextFocusLeft="@id/tvName"
             android:src="@drawable/hm_wifi_no" />
 
         <ImageView
@@ -90,6 +93,7 @@
             android:background="@drawable/button_home_select"
             android:clickable="true"
             android:focusable="true"
+            android:nextFocusRight="@id/tvDrive"
             android:src="@drawable/hm_settings" />
 
         <TextView
@@ -122,7 +126,7 @@
         app:layout_constraintTop_toBottomOf="@+id/topLayout">
 
         <com.owen.tvrecyclerview.widget.TvRecyclerView
-            android:id="@+id/mGridView"
+            android:id="@+id/mGridViewCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/vs_10"
