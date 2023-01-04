@@ -7,6 +7,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1416,12 +1417,14 @@ public class LivePlayActivity extends BaseActivity {
                             @Override
                             public void click(String liveURL) {
                                 Hawk.put(HawkConfig.LIVE_URL, liveURL);
-//                                liveChannelGroupList.clear();
-//                                Intent intent = getIntent();
-////                                AppManager.getInstance().finishAllActivity();
-//                                String sb = "";
-//                                ApiConfig.get().parseJson(liveURL, "");
-//                                startActivity(intent);
+                                liveChannelGroupList.clear();
+                                try {
+                                    liveURL = Base64.encodeToString(liveURL.getBytes("UTF-8"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
+                                    liveURL = "http://127.0.0.1:9978/proxy?do=live&type=txt&ext=" + liveURL;
+                                    loadProxyLives(liveURL);
+                                } catch (Throwable th) {
+                                    th.printStackTrace();
+                                }
                                 dialog.dismiss();
                             }
 
@@ -1430,19 +1433,6 @@ public class LivePlayActivity extends BaseActivity {
                                 Hawk.put(HawkConfig.LIVE_HISTORY, data);
                             }
                         }, liveHistory, idx);
-//                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-//                            @Override
-//                            public void onDismiss(DialogInterface dialog) {
-//                                if (current != null && !current.equals(Hawk.get(HawkConfig.LIVE_URL, ""))) {
-//                                    Intent intent = new Intent(getApplicationContext(), LivePlayActivity.class);
-//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                    Bundle bundle = new Bundle();
-//                                    bundle.putBoolean("useCache", true);
-//                                    intent.putExtras(bundle);
-//                                    LivePlayActivity.this.startActivity(intent);
-//                                }
-//                            }
-//                        });
                         dialog.show();
                         break;
                 }
@@ -1464,11 +1454,9 @@ public class LivePlayActivity extends BaseActivity {
         if (list.size() == 1 && list.get(0).getGroupName().startsWith("http://127.0.0.1")) {
             showLoading();
             loadProxyLives(list.get(0).getGroupName());
-            Toast.makeText(App.getInstance(), "Here 1" + list.get(0).getGroupName(), Toast.LENGTH_SHORT).show();
         } else {
             liveChannelGroupList.clear();
             liveChannelGroupList.addAll(list);
-            Toast.makeText(App.getInstance(), "Here 2" + list.get(0).getGroupName(), Toast.LENGTH_SHORT).show();
             showSuccess();
             initLiveState();
         }

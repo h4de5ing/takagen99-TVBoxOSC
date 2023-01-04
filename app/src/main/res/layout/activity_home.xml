@@ -93,7 +93,7 @@
             android:background="@drawable/button_home_select"
             android:clickable="true"
             android:focusable="true"
-            android:nextFocusRight="@id/tvDrive"
+            android:nextFocusDown="@id/tvDrive"
             android:src="@drawable/hm_settings" />
 
         <TextView

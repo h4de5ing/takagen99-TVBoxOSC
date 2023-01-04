@@ -435,10 +435,9 @@
 
                 <TextView
                     android:id="@+id/tv_time"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/vs_240"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
-                    android:layout_weight="1"
                     android:fontFamily="@font/advent_pro_extralight"
                     android:gravity="right"
                     android:maxLines="1"

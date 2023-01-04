@@ -55,7 +55,7 @@
                 android:gravity="center"
                 android:padding="@dimen/vs_3"
                 android:text="@string/hm_hist"
-                android:textColor="@color/color_FFFFFF_80"
+                android:textColor="@color/color_FFFFFF_90"
                 android:textSize="@dimen/ts_24"
                 android:textStyle="normal" />
 
@@ -225,8 +225,8 @@
             android:clickable="false"
             android:focusable="true"
             android:minWidth="@dimen/vs_150"
-            android:nextFocusRight="@id/tvMenu"
-            android:nextFocusUp="@id/mGridViewCategory"
+            android:nextFocusRight="@id/tvDrive"
+            android:nextFocusUp="@id/tvMenu"
             android:orientation="horizontal"
             android:padding="@dimen/vs_15">
 

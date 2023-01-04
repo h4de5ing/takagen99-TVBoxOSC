@@ -216,12 +216,6 @@
 # magnet：解决模拟器推送 磁力链接 闪退
 -keep class com.xunlei.downloadlib.** {*;}
 
-# support python
--keep public class com.undcover.freedom.pyramid.** { *; }
--dontwarn com.undcover.freedom.pyramid.**
--keep public class com.chaquo.python.** { *; }
-# python引擎
--dontwarn com.chaquo.python.**
 # quickjs引擎
 -keep class com.github.tvbox.quickjs.** {*;}
 # 支持影视的ali相关的jar
