@@ -252,6 +252,10 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
     }
 
+    public boolean supportsTouch() {
+        return getPackageManager().hasSystemFeature("android.hardware.touchscreen");
+    }
+
     protected static BitmapDrawable globalWp = null;
 
     public void changeWallpaper(boolean force) {

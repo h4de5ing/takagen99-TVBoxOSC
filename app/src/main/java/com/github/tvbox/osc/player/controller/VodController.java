@@ -31,12 +31,14 @@ import androidx.transition.TransitionManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
+import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.IJKCode;
 import com.github.tvbox.osc.bean.ParseBean;
 import com.github.tvbox.osc.player.thirdparty.Kodi;
 import com.github.tvbox.osc.player.thirdparty.MXPlayer;
 import com.github.tvbox.osc.player.thirdparty.ReexPlayer;
 import com.github.tvbox.osc.subtitle.widget.SimpleSubtitleView;
+import com.github.tvbox.osc.ui.activity.DetailActivity;
 import com.github.tvbox.osc.ui.activity.HomeActivity;
 import com.github.tvbox.osc.ui.adapter.ParseAdapter;
 import com.github.tvbox.osc.ui.adapter.SelectDialogAdapter;
@@ -129,6 +131,12 @@ public class VodController extends BaseController {
                                 .setInterpolator(new DecelerateInterpolator())
                                 .setListener(null);
                         mBottomRoot.requestFocus();
+
+                        // takagen99: Check if Touch Screen, show back button
+                        if (((BaseActivity) mActivity).supportsTouch()) {
+                            mBack.setVisibility(VISIBLE);
+                        }
+
                         if (isKeyUp) {
                             mPlayerTimeStartBtn.requestFocus();
                             isKeyUp = false;
@@ -195,6 +203,7 @@ public class VodController extends BaseController {
                                         mBottomRoot.clearAnimation();
                                     }
                                 });
+                        mBack.setVisibility(GONE);
                         break;
                     }
                     case 1004: { // 设置速度
@@ -233,6 +242,9 @@ public class VodController extends BaseController {
     TextView mProgressText;
     ProgressBar mDialogVideoProgressBar;
     ProgressBar mDialogVideoPauseBar;
+
+    // center BACK button
+    LinearLayout mBack;
 
     // bottom container
     LinearLayout mBottomRoot;
@@ -313,6 +325,9 @@ public class VodController extends BaseController {
         mDialogVideoProgressBar = findViewWithTag("progressbar_video");
         mDialogVideoPauseBar = findViewWithTag("pausebar_video");
 
+        // center back button
+        mBack = findViewById(R.id.play_back);
+
         // bottom container
         mBottomRoot = findViewById(R.id.bottom_container);
         mTime = findViewById(R.id.tv_time);
@@ -358,6 +373,7 @@ public class VodController extends BaseController {
         // initialize view
         mTopRoot.setVisibility(INVISIBLE);
         mBottomRoot.setVisibility(INVISIBLE);
+        mBack.setVisibility(INVISIBLE);
 
         // initialize subtitle
         initSubtitleInfo();
@@ -790,6 +806,22 @@ public class VodController extends BaseController {
                 return true;
             }
         });
+        // Button: BACK click to go back to previous page -------------------
+        mBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean showPreview = Hawk.get(HawkConfig.SHOW_PREVIEW, true);
+                if (showPreview) {
+                    mTopRoot.setVisibility(GONE);
+                    mBottomRoot.setVisibility(GONE);
+                    mBack.setVisibility(GONE);
+                    mHandler.removeCallbacks(mHideBottomRunnable);
+                    ((DetailActivity) mActivity).toggleFullPreview();
+                } else {
+                    mActivity.finish();
+                }
+            }
+        });
     }
 
     void initSubtitleInfo() {
@@ -1154,7 +1186,7 @@ public class VodController extends BaseController {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (isBottomVisible() & mFFwdBtn.isFocused()) {
+        if (isBottomVisible() & mFFwdBtn.isFocused() & (mParseRoot.getVisibility() == GONE)) {
             int keyCode = event.getKeyCode();
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {

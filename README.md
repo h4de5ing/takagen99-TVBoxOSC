@@ -1,4 +1,4 @@
-# Box (supports only Android 5 and above)
+# Box
 
 === Source Code - Editing the app default settings ===
 /src/main/java/com/github/tvbox/osc/base/App.java
