@@ -427,6 +427,14 @@ public class VodController extends BaseController {
                 mControlWrapper.startFadeOut();
             }
         });
+        // Text : Share to other App -------------------------------------
+        mPlayTitle.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FastClickCheckUtil.check(view);
+                listener.openVideo();
+            }
+        });
         // Button : Play PREV --------------------------------------------
         mPreBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -906,6 +914,9 @@ public class VodController extends BaseController {
         void selectSubtitle();
 
         void selectAudioTrack();
+
+        void openVideo();
+
     }
 
     public void setListener(VodControlListener listener) {
@@ -1186,7 +1197,7 @@ public class VodController extends BaseController {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (isBottomVisible() & mFFwdBtn.isFocused() & (mParseRoot.getVisibility() == GONE)) {
+        if (isBottomVisible() & mFFwdBtn.isFocused()) {
             int keyCode = event.getKeyCode();
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
@@ -1297,7 +1308,7 @@ public class VodController extends BaseController {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void circularReveal(View v, int direction) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int radius = Math.max(v.getWidth(), v.getHeight()) / 2;
             int width = 0;
             if (direction == 1) {

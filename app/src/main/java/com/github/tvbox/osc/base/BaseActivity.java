@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -254,6 +255,12 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
 
     public boolean supportsTouch() {
         return getPackageManager().hasSystemFeature("android.hardware.touchscreen");
+    }
+
+    public void setScreenBrightness(float amt) {
+        WindowManager.LayoutParams lparams = getWindow().getAttributes();
+        lparams.screenBrightness = amt;
+        getWindow().setAttributes(lparams);
     }
 
     protected static BitmapDrawable globalWp = null;

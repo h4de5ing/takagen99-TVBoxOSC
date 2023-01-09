@@ -835,7 +835,7 @@ public class DetailActivity extends BaseActivity {
                     } else if (currentStatus == PIP_BOARDCAST_ACTION_PLAYPAUSE) {
                         playFragment.getVodController().togglePlay();
                     } else if (currentStatus == PIP_BOARDCAST_ACTION_NEXT) {
-                        playFragment.playNext();
+                        playFragment.playNext(false);
                     }
                 }
             };

@@ -3,7 +3,9 @@ package com.github.tvbox.osc.ui.fragment;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,6 +56,7 @@ import com.github.tvbox.osc.player.controller.VodController;
 import com.github.tvbox.osc.player.thirdparty.Kodi;
 import com.github.tvbox.osc.player.thirdparty.MXPlayer;
 import com.github.tvbox.osc.player.thirdparty.ReexPlayer;
+import com.github.tvbox.osc.ui.activity.DetailActivity;
 import com.github.tvbox.osc.ui.adapter.SelectDialogAdapter;
 import com.github.tvbox.osc.ui.dialog.SearchSubtitleDialog;
 import com.github.tvbox.osc.ui.dialog.SelectDialog;
@@ -112,6 +115,8 @@ public class PlayFragment extends BaseLazyFragment {
     private VodController mController;
     private SourceViewModel sourceViewModel;
     private Handler mHandler;
+
+    private String videoURL;
 
     @Override
     protected int getLayoutResID() {
@@ -190,7 +195,7 @@ public class PlayFragment extends BaseLazyFragment {
                     PlayFragment.this.playPrevious();
                 } else {
                     String preProgressKey = progressKey;
-                    PlayFragment.this.playNext();
+                    PlayFragment.this.playNext(rmProgress);
                     if (rmProgress && preProgressKey != null)
                         CacheManager.delete(MD5.string2MD5(preProgressKey), 0);
                 }
@@ -199,7 +204,7 @@ public class PlayFragment extends BaseLazyFragment {
             @Override
             public void playPre() {
                 if (mVodInfo.reverseSort) {
-                    PlayFragment.this.playNext();
+                    PlayFragment.this.playNext(false);
                 } else {
                     PlayFragment.this.playPrevious();
                 }
@@ -240,6 +245,11 @@ public class PlayFragment extends BaseLazyFragment {
             @Override
             public void selectAudioTrack() {
                 selectMyAudioTrack();
+            }
+
+            @Override
+            public void openVideo() {
+                openMyVideo();
             }
 
             @Override
@@ -479,6 +489,14 @@ public class PlayFragment extends BaseLazyFragment {
         dialog.show();
     }
 
+    void openMyVideo() {
+        Intent i = new Intent();
+        i.addCategory(Intent.CATEGORY_DEFAULT);
+        i.setAction(android.content.Intent.ACTION_VIEW);
+        i.setDataAndType(Uri.parse(videoURL), "video/*");
+        startActivity(Intent.createChooser(i, "Open Video with ..."));
+    }
+
     void setTip(String msg, boolean loading, boolean err) {
         requireActivity().runOnUiThread(new Runnable() { //影魔
             @Override
@@ -520,6 +538,7 @@ public class PlayFragment extends BaseLazyFragment {
                 if (mVideoView != null) {
                     mVideoView.release();
                     if (url != null) {
+                        videoURL = url;
                         try {
                             int playerType = mVodPlayerCfg.getInt("pl");
                             // takagen99: Check for External Player
@@ -771,7 +790,7 @@ public class PlayFragment extends BaseLazyFragment {
     private String sourceKey;
     private SourceBean sourceBean;
 
-    public void playNext() {
+    public void playNext(boolean inProgress) {
         boolean hasNext = true;
         if (mVodInfo == null || mVodInfo.seriesMap.get(mVodInfo.playFlag) == null) {
             hasNext = false;
@@ -780,6 +799,10 @@ public class PlayFragment extends BaseLazyFragment {
         }
         if (!hasNext) {
             Toast.makeText(requireContext(), "已经是最后一集了", Toast.LENGTH_SHORT).show();
+            // takagen99: To auto go back to Detail Page after last episode
+            if (inProgress) {
+                ((DetailActivity) mActivity).toggleFullPreview();
+            }
             return;
         }
         mVodInfo.playIndex++;
