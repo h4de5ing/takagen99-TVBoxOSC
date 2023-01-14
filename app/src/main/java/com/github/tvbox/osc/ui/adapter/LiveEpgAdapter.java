@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.tvbox.osc.R;
+import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.Epginfo;
 import com.github.tvbox.osc.ui.tv.widget.AudioWaveView;
 
@@ -16,15 +17,12 @@ import java.util.Date;
 public class LiveEpgAdapter extends BaseQuickAdapter<Epginfo, BaseViewHolder> {
     private int selectedEpgIndex = -1;
     private int focusedEpgIndex = -1;
-    public static float fontSize = 20;
-    private final int defaultShiyiSelection = 0;
+//    public static float fontSize = 20;
+//    private final int defaultShiyiSelection = 0;
     private boolean ShiyiSelection = false;
-    private String shiyiDate = null;
-    private final String currentEpgDate = null;
-    private final int focusSelection = -1;
     private boolean source_include_back = false;
-
-    SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private String shiyiDate = null;
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public LiveEpgAdapter() {
         super(R.layout.item_epglist, new ArrayList<>());
@@ -44,8 +42,11 @@ public class LiveEpgAdapter extends BaseQuickAdapter<Epginfo, BaseViewHolder> {
         wqddg_AudioWaveView.setVisibility(View.GONE);
 
         if (value.index == selectedEpgIndex && value.index != focusedEpgIndex && (value.currentEpgDate.equals(shiyiDate) || value.currentEpgDate.equals(timeFormat.format(now)))) {
-            textview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
-            timeview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+            // takagen99: Added Theme Color
+//            textview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+//            timeview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+            textview.setTextColor(((BaseActivity) mContext).getThemeColor());
+            timeview.setTextColor(((BaseActivity) mContext).getThemeColor());
         } else {
             textview.setTextColor(mContext.getResources().getColor(R.color.color_FFFFFF));
             timeview.setTextColor(mContext.getResources().getColor(R.color.color_FFFFFF));
@@ -77,8 +78,11 @@ public class LiveEpgAdapter extends BaseQuickAdapter<Epginfo, BaseViewHolder> {
         if (ShiyiSelection == false) {
             if (now.compareTo(value.startdateTime) >= 0 && now.compareTo(value.enddateTime) <= 0) {
                 wqddg_AudioWaveView.setVisibility(View.VISIBLE);
-                textview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
-                timeview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+                // takagen99: Added Theme Color
+//                textview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+//                timeview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+                textview.setTextColor(((BaseActivity) mContext).getThemeColor());
+                timeview.setTextColor(((BaseActivity) mContext).getThemeColor());
                 textview.setFreezesText(true);
                 timeview.setFreezesText(true);
                 shiyi.setText("直播中");
@@ -88,8 +92,11 @@ public class LiveEpgAdapter extends BaseQuickAdapter<Epginfo, BaseViewHolder> {
         } else {
             if (value.index == this.selectedEpgIndex && value.currentEpgDate.equals(shiyiDate)) {
                 wqddg_AudioWaveView.setVisibility(View.VISIBLE);
-                textview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
-                timeview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+                // takagen99: Added Theme Color
+//                textview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+//                timeview.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+                textview.setTextColor(((BaseActivity) mContext).getThemeColor());
+                timeview.setTextColor(((BaseActivity) mContext).getThemeColor());
                 textview.setFreezesText(true);
                 timeview.setFreezesText(true);
                 shiyi.setText("回看中");

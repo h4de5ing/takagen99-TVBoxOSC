@@ -81,6 +81,28 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/play_back"
+        android:layout_width="@dimen/vs_60"
+        android:layout_height="@dimen/vs_60"
+        android:layout_gravity="center|left"
+        android:layout_marginStart="@dimen/vs_50"
+        android:layout_marginLeft="@dimen/vs_50"
+        android:layout_marginEnd="@dimen/vs_6"
+        android:layout_marginRight="@dimen/vs_6"
+        android:background="@drawable/button_dialog_vod"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/vs_40"
+            android:layout_height="@dimen/vs_40"
+            android:layout_gravity="center"
+            android:src="@drawable/v_back" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/dialog_volume"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
@@ -161,7 +183,7 @@
         <LinearLayout
             android:id="@+id/tv_top_line1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/vs_40"
             android:layout_marginTop="@dimen/vs_10"
             android:orientation="horizontal">
 
@@ -172,10 +194,10 @@
                 android:layout_marginStart="@dimen/vs_50"
                 android:layout_marginLeft="@dimen/vs_50"
                 android:layout_marginTop="@dimen/vs_4"
-                android:layout_marginEnd="@dimen/vs_8"
-                android:layout_marginRight="@dimen/vs_8"
+                android:layout_marginEnd="@dimen/vs_10"
+                android:layout_marginRight="@dimen/vs_10"
                 android:layout_marginBottom="@dimen/vs_4"
-                android:background="@drawable/button_detail_collect" />
+                android:background="?attr/color_theme" />
 
             <TextView
                 android:id="@+id/tv_title_top"
@@ -282,8 +304,8 @@
                 android:layout_gravity="bottom|center"
                 android:layout_marginStart="@dimen/vs_50"
                 android:layout_marginLeft="@dimen/vs_50"
-                android:layout_marginEnd="@dimen/vs_8"
-                android:layout_marginRight="@dimen/vs_8" />
+                android:layout_marginEnd="@dimen/vs_10"
+                android:layout_marginRight="@dimen/vs_10" />
 
             <TextView
                 android:id="@+id/tv_resolution"
@@ -310,7 +332,7 @@
     <LinearLayout
         android:id="@+id/top_container_hide"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/vs_120"
+        android:layout_height="@dimen/vs_128"
         android:layout_gravity="top"
         android:gravity="end"
         android:orientation="horizontal"
@@ -323,8 +345,8 @@
         <LinearLayout
             android:id="@+id/tv_top_line1_hide"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/vs_5"
+            android:layout_height="@dimen/vs_40"
+            android:layout_marginTop="@dimen/vs_10"
             android:orientation="horizontal">
 
             <TextView
@@ -1094,28 +1116,6 @@
         android:orientation="horizontal"
         android:visibility="invisible" >
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/play_back"
-        android:layout_width="@dimen/vs_60"
-        android:layout_height="@dimen/vs_60"
-        android:layout_gravity="center|left"
-        android:layout_marginStart="@dimen/vs_50"
-        android:layout_marginLeft="@dimen/vs_50"
-        android:layout_marginEnd="@dimen/vs_6"
-        android:layout_marginRight="@dimen/vs_6"
-        android:background="@drawable/button_dialog_vod"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="@dimen/vs_40"
-            android:layout_height="@dimen/vs_40"
-            android:layout_gravity="center"
-            android:src="@drawable/v_back" />
     </LinearLayout>
 
 </FrameLayout>

@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.tvbox.osc.R;
+import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.LiveChannelGroup;
 
 import java.util.ArrayList;
@@ -30,7 +31,9 @@ public class LiveChannelGroupAdapter extends BaseQuickAdapter<LiveChannelGroup, 
         tvGroupName.setText(item.getGroupName());
         int groupIndex = item.getGroupIndex();
         if (groupIndex == selectedGroupIndex && groupIndex != focusedGroupIndex) {
-            tvGroupName.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+            // takagen99: Added Theme Color
+//            tvGroupName.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+            tvGroupName.setTextColor(((BaseActivity) mContext).getThemeColor());
         } else {
             tvGroupName.setTextColor(Color.WHITE);
         }

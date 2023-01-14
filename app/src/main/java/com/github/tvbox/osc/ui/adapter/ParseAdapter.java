@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.tvbox.osc.R;
+import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.ParseBean;
 
 import java.util.ArrayList;
@@ -21,7 +22,9 @@ public class ParseAdapter extends BaseQuickAdapter<ParseBean, BaseViewHolder> {
         TextView tvParse = helper.getView(R.id.tvParse);
         tvParse.setVisibility(View.VISIBLE);
         if (item.isDefault()) {
-            tvParse.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+            // takagen99: Added Theme Color
+//            tvParse.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+            tvParse.setTextColor(((BaseActivity) mContext).getThemeColor());
         } else {
             tvParse.setTextColor(Color.WHITE);
         }

@@ -2,6 +2,17 @@
 <resources>
     <attr name="fontPath" format="string" />
     <attr name="textFieldStyle" format="reference" />
+
+    <declare-styleable name="themeColor">
+        <attr name="color_theme" format="color|reference" />
+        <attr name="color_theme_80" format="color|reference" />
+        <attr name="color_theme_70" format="color|reference" />
+        <attr name="color_theme_60" format="color|reference" />
+        <attr name="color_theme_50" format="color|reference" />
+        <attr name="color_theme_40" format="color|reference" />
+        <attr name="color_theme_dark_70" format="color|reference" />
+    </declare-styleable>
+
     <declare-styleable name="lbBaseGridView">
         <attr name="focusOutFront" format="boolean" />
         <attr name="focusOutEnd" format="boolean" />
@@ -27,6 +38,7 @@
         </attr>
         <attr name="numberOfRows" format="integer" />
     </declare-styleable>
+
     <declare-styleable name="RecyclerViewTV">
         <attr name="selectedItemOffsetStartTV" format="dimension" />
         <attr name="selectedItemOffsetEndTV" format="dimension" />
@@ -37,10 +49,12 @@
         <attr name="verticalSpacingWithMarginsTV" format="dimension" />
         <attr name="horizontalSpacingWithMarginsTV" format="dimension" />
     </declare-styleable>
+
     <attr name="startColor" format="reference|color" />
     <attr name="topDelta" format="float" />
     <!-- Selected Paint Color (color). -->
     <attr name="endColor" format="reference|color" />
+
     <declare-styleable name="CardViewShadow">
         <!-- Default Paint Color (color). -->
         <attr name="startColor" />
@@ -48,4 +62,5 @@
         <attr name="endColor" />
         <attr name="topDelta" />
     </declare-styleable>
+
 </resources>

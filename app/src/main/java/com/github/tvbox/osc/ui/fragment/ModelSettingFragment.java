@@ -73,6 +73,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
     private TextView tvHomeShow;
     private TextView tvLocale;
     private TextView tvPIP;
+    private TextView tvTheme;
 
     public static ModelSettingFragment newInstance() {
         return new ModelSettingFragment().setArguments();
@@ -121,6 +122,8 @@ public class ModelSettingFragment extends BaseLazyFragment {
         tvScale.setText(PlayerHelper.getScaleName(Hawk.get(HawkConfig.PLAY_SCALE, 0)));
         tvPlay.setText(PlayerHelper.getPlayerName(Hawk.get(HawkConfig.PLAY_TYPE, 0)));
         tvRender.setText(PlayerHelper.getRenderName(Hawk.get(HawkConfig.PLAY_RENDER, 0)));
+        tvTheme = findViewById(R.id.tvTheme);
+        tvTheme.setText(getThemeView(Hawk.get(HawkConfig.THEME_SELECT, 0)));
 
         //takagen99 : Set HomeApi as default
         findViewById(R.id.llHomeApi).requestFocus();
@@ -697,6 +700,62 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 dialog.show();
             }
         });
+        // Select App Language ( English / Chinese ) -----------------
+        findViewById(R.id.llTheme).setOnClickListener(new View.OnClickListener() {
+            private final int chkTheme = Hawk.get(HawkConfig.THEME_SELECT, 0);
+
+            @Override
+            public void onClick(View v) {
+                FastClickCheckUtil.check(v);
+                int defaultPos = Hawk.get(HawkConfig.THEME_SELECT, 0);
+                ArrayList<Integer> types = new ArrayList<>();
+                types.add(0);
+                types.add(1);
+                types.add(2);
+                types.add(3);
+                SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
+                dialog.setTip(getString(R.string.dia_theme));
+                dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
+                    @Override
+                    public void click(Integer value, int pos) {
+                        Hawk.put(HawkConfig.THEME_SELECT, value);
+                        tvTheme.setText(getThemeView(value));
+                    }
+
+                    @Override
+                    public String getDisplay(Integer val) {
+                        return getThemeView(val);
+                    }
+                }, new DiffUtil.ItemCallback<Integer>() {
+                    @Override
+                    public boolean areItemsTheSame(@NonNull @NotNull Integer oldItem, @NonNull @NotNull Integer newItem) {
+                        return oldItem.intValue() == newItem.intValue();
+                    }
+
+                    @Override
+                    public boolean areContentsTheSame(@NonNull @NotNull Integer oldItem, @NonNull @NotNull Integer newItem) {
+                        return oldItem.intValue() == newItem.intValue();
+                    }
+                }, types, defaultPos);
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (chkTheme != Hawk.get(HawkConfig.THEME_SELECT, 0)) {
+                            Intent intent = getActivity().getApplicationContext().getPackageManager().getLaunchIntentForPackage(getActivity().getApplication().getPackageName());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean("useCache", true);
+                            intent.putExtras(bundle);
+                            getActivity().getApplicationContext().startActivity(intent);
+                            //  android.os.Process.killProcess(android.os.Process.myPid());
+                            //  System.exit(0);
+                        }
+                    }
+                });
+                dialog.show();
+            }
+        });
         // About App -----------------------------------------------
         findViewById(R.id.llAbout).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -747,4 +806,17 @@ public class ModelSettingFragment extends BaseLazyFragment {
             return "英文";
         }
     }
+
+    String getThemeView(int type) {
+        if (type == 0) {
+            return "奈飞";
+        } else if (type == 1) {
+            return "百事";
+        } else if (type == 2) {
+            return "黄人";
+        } else {
+            return "樱花";
+        }
+    }
+
 }

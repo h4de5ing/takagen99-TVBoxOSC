@@ -6,10 +6,10 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.tvbox.osc.R;
+import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.LiveSettingItem;
 
 import java.util.ArrayList;
-
 
 /**
  * @author pj567
@@ -29,7 +29,9 @@ public class LiveSettingItemAdapter extends BaseQuickAdapter<LiveSettingItem, Ba
         tvItemName.setText(item.getItemName());
         int itemIndex = item.getItemIndex();
         if (item.isItemSelected() && itemIndex != focusedItemIndex) {
-            tvItemName.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+            // takagen99: Added Theme Color
+//            tvItemName.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+            tvItemName.setTextColor(((BaseActivity) mContext).getThemeColor());
         } else {
             tvItemName.setTextColor(Color.WHITE);
         }

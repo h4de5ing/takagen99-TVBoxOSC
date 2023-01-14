@@ -63,6 +63,7 @@
     <string name="mn_backup">数据备份还原</string>
     <string name="mn_dns">安全DNS</string>
     <string name="mn_locale">语言</string>
+    <string name="mn_theme">主题</string>
     <string name="mn_about">关于</string>
 
     // Settings Dialog Pop-Up //
@@ -80,6 +81,7 @@
     <string name="dia_bkpkg">点击下方数据还原</string>
     <string name="dia_dns">请选择安全DNS</string>
     <string name="dia_locale">请选择应用语言</string>
+    <string name="dia_theme">请选择主题</string>
 
     // Settings Backup Restore Page //
     <string name="set_bkup_ok">备份成功!</string>

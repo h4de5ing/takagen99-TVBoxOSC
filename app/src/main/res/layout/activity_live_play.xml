@@ -377,8 +377,10 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/vs_60"
             android:layout_marginLeft="@dimen/vs_60"
+            android:layout_marginTop="@dimen/vs_30"
             android:layout_marginEnd="@dimen/vs_30"
             android:layout_marginRight="@dimen/vs_30"
+            android:layout_marginBottom="@dimen/vs_30"
             android:layout_weight="1"
             android:paddingTop="@dimen/vs_10"
             android:paddingBottom="@dimen/vs_10"
@@ -403,13 +405,13 @@
                 <View
                     android:id="@+id/redLine"
                     android:layout_width="@dimen/vs_6"
-                    android:layout_height="@dimen/vs_33"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/vs_20"
                     android:layout_marginLeft="@dimen/vs_20"
-                    android:layout_marginTop="@dimen/vs_2"
-                    android:layout_marginBottom="@dimen/vs_2"
-                    android:background="@drawable/button_detail_collect" />
+                    android:layout_marginTop="@dimen/vs_5"
+                    android:layout_marginBottom="@dimen/vs_5"
+                    android:background="?attr/color_theme" />
 
                 <com.github.tvbox.osc.ui.tv.widget.MarqueeTextView
                     android:id="@+id/tv_current_program_name"

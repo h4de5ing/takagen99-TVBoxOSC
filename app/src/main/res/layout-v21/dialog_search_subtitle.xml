@@ -90,7 +90,7 @@
             android:layout_gravity="center"
             android:indeterminateBehavior="repeat"
             android:indeterminateTintMode="src_atop"
-            android:indeterminateTint="@color/color_theme_70"
+            android:indeterminateTint="?attr/color_theme_70"
             android:indeterminateOnly="true"
             android:visibility="gone" />
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/color_theme_dark_70">
+    android:color="?attr/color_theme_dark_70">
     <item>
         <selector xmlns:android="http://schemas.android.com/apk/res/android">
             <item
@@ -8,7 +8,7 @@
                 android:state_pressed="true">
                 <shape>
                     <corners android:radius="@dimen/vs_5" />
-                    <solid android:color="@color/color_theme_dark_70" />
+                    <solid android:color="?attr/color_theme_dark_70" />
                 </shape>
             </item>
             <item
@@ -16,13 +16,13 @@
                 android:state_pressed="true">
                 <shape>
                     <corners android:radius="@dimen/vs_5" />
-                    <solid android:color="@color/color_theme_dark_70" />
+                    <solid android:color="?attr/color_theme_dark_70" />
                 </shape>
             </item>
             <item android:state_focused="true">
                 <shape>
                     <corners android:radius="@dimen/vs_5" />
-                    <solid android:color="@color/color_theme_dark_70" />
+                    <solid android:color="?attr/color_theme_dark_70" />
                 </shape>
             </item>
             <item

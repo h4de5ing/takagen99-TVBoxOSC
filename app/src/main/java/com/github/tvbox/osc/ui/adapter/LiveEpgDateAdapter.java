@@ -6,14 +6,12 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.tvbox.osc.R;
+import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.LiveEpgDate;
 
 import java.util.ArrayList;
-import java.util.Date;
-
 
 public class LiveEpgDateAdapter extends BaseQuickAdapter<LiveEpgDate, BaseViewHolder> {
-
     private int selectedIndex = -1;
     private int focusedIndex = -1;
 
@@ -27,7 +25,9 @@ public class LiveEpgDateAdapter extends BaseQuickAdapter<LiveEpgDate, BaseViewHo
         tvGroupName.setText(item.getDatePresented());
         tvGroupName.setBackgroundColor(Color.TRANSPARENT);
         if (item.getIndex() == selectedIndex && item.getIndex() != focusedIndex) {
-            tvGroupName.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+            // takagen99: Added Theme Color
+//            tvGroupName.setTextColor(mContext.getResources().getColor(R.color.color_theme));
+            tvGroupName.setTextColor(((BaseActivity) mContext).getThemeColor());
         } else if (item.getIndex() == selectedIndex && item.getIndex() == focusedIndex) {
             tvGroupName.setTextColor(mContext.getResources().getColor(R.color.color_FFFFFF));
         } else {

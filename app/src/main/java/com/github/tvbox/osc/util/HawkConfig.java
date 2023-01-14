@@ -40,6 +40,7 @@ public class HawkConfig {
     public static final String SOURCES_FOR_SEARCH = "checked_sources_for_search";
     public static final String SUBTITLE_TEXT_SIZE = "subtitle_text_size";
     public static final String SUBTITLE_TIME_DELAY = "subtitle_time_delay";
+    public static final String THEME_SELECT = "theme_select";
 
     public static boolean isDebug() {
         return Hawk.get(DEBUG_OPEN, false);

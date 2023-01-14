@@ -11,7 +11,7 @@
             android:clipOrientation="horizontal"
             android:gravity="left">
             <shape>
-                <solid android:color="@color/color_theme_80" />
+                <solid android:color="?attr/color_theme_80" />
                 <corners android:radius="2.0dip" />
             </shape>
         </clip>

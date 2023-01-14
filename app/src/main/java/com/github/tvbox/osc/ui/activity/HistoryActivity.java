@@ -50,7 +50,10 @@ public class HistoryActivity extends BaseActivity {
     private void toggleDelMode() {
         delMode = !delMode;
         tvDelTip.setVisibility(delMode ? View.VISIBLE : View.GONE);
-        tvDel.setTextColor(delMode ? getResources().getColor(R.color.color_theme) : Color.WHITE);
+
+        // takagen99: Added Theme Color
+//        tvDel.setTextColor(delMode ? getResources().getColor(R.color.color_theme) : Color.WHITE);
+        tvDel.setTextColor(delMode ? getThemeColor() : Color.WHITE);
     }
 
     private void initView() {
