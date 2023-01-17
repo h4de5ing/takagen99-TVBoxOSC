@@ -483,7 +483,7 @@ public class LivePlayActivity extends BaseActivity {
                 tvLeftChannelListLayout.animate()
                         .translationX(0)
                         .alpha(1.0f)
-                        .setDuration(400)
+                        .setDuration(250)
                         .setInterpolator(new DecelerateInterpolator())
                         .setListener(null);
                 mHandler.removeCallbacks(mHideChannelListRun);
@@ -501,7 +501,7 @@ public class LivePlayActivity extends BaseActivity {
                 tvLeftChannelListLayout.animate()
                         .translationX(-tvLeftChannelListLayout.getWidth() / 2)
                         .alpha(0.0f)
-                        .setDuration(400)
+                        .setDuration(250)
                         .setInterpolator(new DecelerateInterpolator())
                         .setListener(new AnimatorListenerAdapter() {
                             @Override
@@ -527,7 +527,8 @@ public class LivePlayActivity extends BaseActivity {
             ll_epg.setAlpha(0.0f);
             ll_epg.animate()
                     .alpha(1.0f)
-                    .setDuration(400)
+                    .setDuration(250)
+                    .setInterpolator(new DecelerateInterpolator())
                     .translationY(0)
                     .setListener(null);
         }
@@ -542,7 +543,8 @@ public class LivePlayActivity extends BaseActivity {
             if (ll_epg.getVisibility() == View.VISIBLE) {
                 ll_epg.animate()
                         .alpha(0.0f)
-                        .setDuration(400)
+                        .setDuration(250)
+                        .setInterpolator(new DecelerateInterpolator())
                         .translationY(ll_epg.getHeight() / 2)
                         .setListener(new AnimatorListenerAdapter() {
                             @Override
@@ -817,7 +819,7 @@ public class LivePlayActivity extends BaseActivity {
                 tvRightSettingLayout.animate()
                         .translationX(0)
                         .alpha(1.0f)
-                        .setDuration(400)
+                        .setDuration(250)
                         .setInterpolator(new DecelerateInterpolator())
                         .setListener(null);
                 mHandler.removeCallbacks(mHideSettingLayoutRun);
@@ -834,7 +836,7 @@ public class LivePlayActivity extends BaseActivity {
                 tvRightSettingLayout.animate()
                         .translationX(tvRightSettingLayout.getWidth() / 2)
                         .alpha(0.0f)
-                        .setDuration(400)
+                        .setDuration(250)
                         .setInterpolator(new DecelerateInterpolator())
                         .setListener(new AnimatorListenerAdapter() {
                             @Override
@@ -1407,6 +1409,11 @@ public class LivePlayActivity extends BaseActivity {
                         Hawk.put(HawkConfig.LIVE_CROSS_GROUP, select);
                         break;
                     case 4:
+                        // takagen99 : Added Skip Password Option
+                        select = !Hawk.get(HawkConfig.LIVE_SKIP_PASSWORD, false);
+                        Hawk.put(HawkConfig.LIVE_SKIP_PASSWORD, select);
+                        break;
+                    case 5:
                         // takagen99 : Added Live History list selection - 直播列表
                         ArrayList<String> liveHistory = Hawk.get(HawkConfig.LIVE_HISTORY, new ArrayList<String>());
                         if (liveHistory.isEmpty())
@@ -1423,7 +1430,7 @@ public class LivePlayActivity extends BaseActivity {
                                 Hawk.put(HawkConfig.LIVE_URL, liveURL);
                                 liveChannelGroupList.clear();
                                 try {
-                                    liveURL = Base64.encodeToString(liveURL.getBytes(StandardCharsets.UTF_8), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
+                                    liveURL = Base64.encodeToString(liveURL.getBytes("UTF-8"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
                                     liveURL = "http://127.0.0.1:9978/proxy?do=live&type=txt&ext=" + liveURL;
                                     loadProxyLives(liveURL);
                                 } catch (Throwable th) {
@@ -1470,7 +1477,7 @@ public class LivePlayActivity extends BaseActivity {
     public void loadProxyLives(String url) {
         try {
             Uri parsedUrl = Uri.parse(url);
-            url = new String(Base64.decode(parsedUrl.getQueryParameter("ext"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP), StandardCharsets.UTF_8);
+            url = new String(Base64.decode(parsedUrl.getQueryParameter("ext"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP), "UTF-8");
         } catch (Throwable th) {
             Toast.makeText(App.getInstance(), "频道列表为空", Toast.LENGTH_SHORT).show();
             finish();
@@ -1579,7 +1586,7 @@ public class LivePlayActivity extends BaseActivity {
         ArrayList<String> scaleItems = new ArrayList<>(Arrays.asList("默认", "16:9", "4:3", "填充", "原始", "裁剪"));
         ArrayList<String> playerDecoderItems = new ArrayList<>(Arrays.asList("系统", "ijk硬解", "ijk软解", "exo"));
         ArrayList<String> timeoutItems = new ArrayList<>(Arrays.asList("5s", "10s", "15s", "20s", "25s", "30s"));
-        ArrayList<String> personalSettingItems = new ArrayList<>(Arrays.asList("显示时间", "显示网速", "换台反转", "跨选分类", "直播列表"));
+        ArrayList<String> personalSettingItems = new ArrayList<>(Arrays.asList("显示时间", "显示网速", "换台反转", "跨选分类", "关闭密码", "直播列表"));
         itemsArrayList.add(sourceItems);
         itemsArrayList.add(scaleItems);
         itemsArrayList.add(playerDecoderItems);
@@ -1606,6 +1613,7 @@ public class LivePlayActivity extends BaseActivity {
         liveSettingGroupList.get(4).getLiveSettingItems().get(1).setItemSelected(Hawk.get(HawkConfig.LIVE_SHOW_NET_SPEED, false));
         liveSettingGroupList.get(4).getLiveSettingItems().get(2).setItemSelected(Hawk.get(HawkConfig.LIVE_CHANNEL_REVERSE, false));
         liveSettingGroupList.get(4).getLiveSettingItems().get(3).setItemSelected(Hawk.get(HawkConfig.LIVE_CROSS_GROUP, false));
+        liveSettingGroupList.get(4).getLiveSettingItems().get(4).setItemSelected(Hawk.get(HawkConfig.LIVE_SKIP_PASSWORD, false));
     }
 
     private void loadCurrentSourceList() {
@@ -1723,11 +1731,15 @@ public class LivePlayActivity extends BaseActivity {
     }
 
     private boolean isPasswordConfirmed(int groupIndex) {
-        for (Integer confirmedNum : channelGroupPasswordConfirmed) {
-            if (confirmedNum == groupIndex)
-                return true;
+        if (Hawk.get(HawkConfig.LIVE_SKIP_PASSWORD, false)) {
+            return true;
+        } else {
+            for (Integer confirmedNum : channelGroupPasswordConfirmed) {
+                if (confirmedNum == groupIndex)
+                    return true;
+            }
+            return false;
         }
-        return false;
     }
 
     private ArrayList<LiveChannelItem> getLiveChannels(int groupIndex) {

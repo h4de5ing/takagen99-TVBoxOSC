@@ -26,7 +26,7 @@ public class XWalkInitDialog extends BaseDialog {
 
     public XWalkInitDialog(@NonNull @NotNull Context context) {
         super(context);
-        setCanceledOnTouchOutside(false);
+        setCanceledOnTouchOutside(true);
         setCancelable(true);
         setContentView(R.layout.dialog_xwalk);
         setOnDismissListener(new DialogInterface.OnDismissListener() {
