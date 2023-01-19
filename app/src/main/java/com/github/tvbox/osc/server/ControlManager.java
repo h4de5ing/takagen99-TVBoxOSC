@@ -77,6 +77,16 @@ public class ControlManager {
                 }
 
                 @Override
+                public void onLiveReceived(String url) {
+                    EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_LIVE_URL_CHANGE, url));
+                }
+
+                @Override
+                public void onEpgReceived(String url) {
+                    EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_EPG_URL_CHANGE, url));
+                }
+
+                @Override
                 public void onPushReceived(String url) {
                     EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_PUSH_URL, url));
                 }

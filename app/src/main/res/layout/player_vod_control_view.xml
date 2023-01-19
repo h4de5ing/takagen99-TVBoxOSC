@@ -794,7 +794,7 @@
 
             <LinearLayout
                 android:id="@+id/play_speed"
-                android:layout_width="@dimen/vs_120"
+                android:layout_width="@dimen/vs_90"
                 android:layout_height="@dimen/vs_60"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/vs_6"
@@ -818,17 +818,20 @@
 
                 <TextView
                     android:id="@+id/play_speed_txt"
-                    android:layout_width="@dimen/vs_45"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/vs_40"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/vs_4_"
-                    android:layout_marginLeft="@dimen/vs_4_"
+                    android:layout_marginStart="-15mm"
+                    android:layout_marginLeft="-15mm"
+                    android:layout_marginTop="8mm"
+                    android:background="@drawable/shape_speed_hint"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:gravity="center"
-                    android:text="x1.0"
+                    android:text="x0.25"
                     android:textColor="@color/color_FFFFFF"
-                    android:textSize="@dimen/ts_16" />
+                    android:textSize="@dimen/ts_12"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -854,7 +857,7 @@
 
             <LinearLayout
                 android:id="@+id/play_scale"
-                android:layout_width="@dimen/vs_120"
+                android:layout_width="@dimen/vs_110"
                 android:layout_height="@dimen/vs_60"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/vs_6"

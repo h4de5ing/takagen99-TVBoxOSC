@@ -71,9 +71,27 @@
 										<div class="weui-cell__bd weui-flex">
 											<input id="diy_api_url"
 												class="weui-input weui-cell__control weui-cell__control_flex"
-												type="text" value="" placeholder="请输入自定义配置接口地址..." />
+												type="text" value="" placeholder="1. 请输入数据源地址" />
 											<button onclick="api(); return false;"
 												class="weui-cell__control weui-btn weui-btn_default weui-vcode-btn">确定</button>
+										</div>
+									</div>
+									<div class="weui-cell weui-cell_active weui-cell_vcode weui-cell_wrap">
+										<div class="weui-cell__bd weui-flex">
+											<input id="diy_live_url"
+													class="weui-input weui-cell__control weui-cell__control_flex"
+													type="text" value="" placeholder="2. 请输入直播源地址 (optional)" />
+											<button onclick="live(); return false;"
+													class="weui-cell__control weui-btn weui-btn_default weui-vcode-btn">确定</button>
+										</div>
+									</div>
+									<div class="weui-cell weui-cell_active weui-cell_vcode weui-cell_wrap">
+										<div class="weui-cell__bd weui-flex">
+											<input id="diy_epg_url"
+													class="weui-input weui-cell__control weui-cell__control_flex"
+													type="text" value="" placeholder="3. 请输入直播EPG地址 (optional)" />
+											<button onclick="epg(); return false;"
+													class="weui-cell__control weui-btn weui-btn_default weui-vcode-btn">确定</button>
 										</div>
 									</div>
 								</div>

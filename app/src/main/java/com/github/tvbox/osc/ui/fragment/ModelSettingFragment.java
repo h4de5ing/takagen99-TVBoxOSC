@@ -297,7 +297,6 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 types.add(2);
                 types.add(3);
                 types.add(4);
-
                 SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
                 dialog.setTip(getString(R.string.dia_history));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
@@ -700,7 +699,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 dialog.show();
             }
         });
-        // Select App Language ( English / Chinese ) -----------------
+        // Select App Theme Color -------------------------------------
         findViewById(R.id.llTheme).setOnClickListener(new View.OnClickListener() {
             private final int chkTheme = Hawk.get(HawkConfig.THEME_SELECT, 0);
 
@@ -713,6 +712,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 types.add(1);
                 types.add(2);
                 types.add(3);
+                types.add(4);
                 SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
                 dialog.setTip(getString(R.string.dia_theme));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
@@ -813,7 +813,9 @@ public class ModelSettingFragment extends BaseLazyFragment {
         } else if (type == 1) {
             return "百事";
         } else if (type == 2) {
-            return "黄人";
+            return "鸣人";
+        } else if (type == 3) {
+            return "小黄";
         } else {
             return "樱花";
         }

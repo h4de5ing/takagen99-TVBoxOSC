@@ -32,6 +32,7 @@
     <color name="color_FFFFFF_70">#B3FFFFFF</color>
     <color name="color_FFFFFF_50">#80FFFFFF</color>
     <color name="color_FFFFFF_40">#66FFFFFF</color>
+    <color name="color_FFFFFF_20">#32FFFFFF</color>
     <color name="color_FFFFFF_15">#26FFFFFF</color>
 
     <color name="transparent">#00000000</color>
