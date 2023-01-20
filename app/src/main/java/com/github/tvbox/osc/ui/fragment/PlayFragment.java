@@ -108,7 +108,7 @@ import xyz.doikki.videoplayer.player.AbstractPlayer;
 import xyz.doikki.videoplayer.player.ProgressManager;
 
 public class PlayFragment extends BaseLazyFragment {
-    private MyVideoView mVideoView;
+    public MyVideoView mVideoView;
     private TextView mPlayLoadTip;
     private ImageView mPlayLoadErr;
     private ProgressBar mPlayLoading;
@@ -744,13 +744,13 @@ public class PlayFragment extends BaseLazyFragment {
         mVideoView.pause();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mVideoView != null) {
-            mVideoView.resume();
-        }
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        if (mVideoView != null) {
+//            mVideoView.pause();
+//        }
+//    }
 
     @Override
     public void onResume() {
@@ -758,6 +758,14 @@ public class PlayFragment extends BaseLazyFragment {
         if (mVideoView != null) {
             mVideoView.resume();
         }
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        if(!isInPictureInPictureMode && mVideoView.isPlaying()) {
+//            mVideoView.pause();
+        }
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
     }
 
     @Override
@@ -802,6 +810,7 @@ public class PlayFragment extends BaseLazyFragment {
             // takagen99: To auto go back to Detail Page after last episode
             if (inProgress) {
                 ((DetailActivity) mActivity).toggleFullPreview();
+//                ((DetailActivity) mActivity).setScreenOff();
             }
             return;
         }

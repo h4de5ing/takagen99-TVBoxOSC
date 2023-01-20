@@ -794,7 +794,7 @@
 
             <LinearLayout
                 android:id="@+id/play_speed"
-                android:layout_width="@dimen/vs_90"
+                android:layout_width="@dimen/vs_60"
                 android:layout_height="@dimen/vs_60"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/vs_6"
@@ -816,23 +816,23 @@
                     android:layout_gravity="center"
                     android:src="@drawable/v_ffwd" />
 
-                <TextView
-                    android:id="@+id/play_speed_txt"
-                    android:layout_width="@dimen/vs_40"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="-15mm"
-                    android:layout_marginLeft="-15mm"
-                    android:layout_marginTop="8mm"
-                    android:background="@drawable/shape_speed_hint"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:gravity="center"
-                    android:text="x0.25"
-                    android:textColor="@color/color_FFFFFF"
-                    android:textSize="@dimen/ts_12"
-                    android:textStyle="bold" />
             </LinearLayout>
+            <TextView
+                android:id="@+id/play_speed_txt"
+                android:layout_width="@dimen/vs_40"
+                android:layout_height="@dimen/vs_20"
+                android:layout_gravity="center"
+                android:layout_marginStart="-20mm"
+                android:layout_marginLeft="-15mm"
+                android:layout_marginTop="8mm"
+                android:background="@drawable/shape_speed_hint"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center"
+                android:text="x0.25"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/ts_12"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/play_retry"
@@ -881,14 +881,14 @@
                     android:layout_width="@dimen/vs_45"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/vs_4_"
+                    android:layout_marginStart="-10mm"
                     android:layout_marginLeft="@dimen/vs_4_"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:gravity="center"
                     android:text="16:9"
                     android:textColor="@color/color_FFFFFF"
-                    android:textSize="@dimen/ts_16"
+                    android:textSize="@dimen/ts_14"
                     android:visibility="visible" />
             </LinearLayout>
 
@@ -923,13 +923,13 @@
                     android:gravity="center"
                     android:text="系统"
                     android:textColor="@color/color_FFFFFF"
-                    android:textSize="@dimen/ts_16"
+                    android:textSize="@dimen/ts_14"
                     android:visibility="gone" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/play_ijk"
-                android:layout_width="@dimen/vs_70"
+                android:layout_width="@dimen/vs_60"
                 android:layout_height="@dimen/vs_60"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/vs_6"
@@ -943,7 +943,7 @@
                 android:padding="@dimen/vs_8"
                 android:text="硬解码"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_16" />
+                android:textSize="@dimen/ts_14" />
 
             <LinearLayout
                 android:id="@+id/play_subtitle"

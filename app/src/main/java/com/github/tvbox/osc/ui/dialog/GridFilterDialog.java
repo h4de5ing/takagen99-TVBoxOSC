@@ -2,6 +2,7 @@ package com.github.tvbox.osc.ui.dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,6 @@ import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
-import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.MovieSort;
 import com.github.tvbox.osc.ui.adapter.GridFilterKVAdapter;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
@@ -80,7 +80,9 @@ public class GridFilterDialog extends BaseDialog {
                         val.getPaint().setFakeBoldText(true);
                         // takagen99: Added Theme Color
 //                        val.setTextColor(getContext().getResources().getColor(R.color.color_theme));
-                        val.setTextColor(((BaseActivity) getContext()).getThemeColor());
+                        TypedArray a = getContext().obtainStyledAttributes(R.styleable.themeColor);
+                        int themeColor = a.getColor(R.styleable.themeColor_color_theme, 0);
+                        val.setTextColor(themeColor);
                         pre = view;
                     }
                 }
