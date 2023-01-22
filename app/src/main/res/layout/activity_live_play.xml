@@ -724,7 +724,7 @@
         android:id="@+id/play_back"
         android:layout_width="@dimen/vs_60"
         android:layout_height="@dimen/vs_60"
-        android:layout_gravity="center|right"
+        android:layout_gravity="center|left"
         android:layout_marginStart="@dimen/vs_50"
         android:layout_marginLeft="@dimen/vs_50"
         android:layout_marginEnd="@dimen/vs_50"

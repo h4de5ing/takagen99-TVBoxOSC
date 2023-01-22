@@ -905,7 +905,7 @@ public class DetailActivity extends BaseActivity {
     // preview : true 开启 false 关闭
     VodInfo previewVodInfo = null;
     boolean showPreview = Hawk.get(HawkConfig.SHOW_PREVIEW, true);
-    boolean fullWindows = false;
+    public boolean fullWindows = false;
     ViewGroup.LayoutParams windowsPreview = null;
     ViewGroup.LayoutParams windowsFull = null;
 

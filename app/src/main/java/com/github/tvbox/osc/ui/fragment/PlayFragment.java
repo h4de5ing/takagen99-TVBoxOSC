@@ -808,7 +808,7 @@ public class PlayFragment extends BaseLazyFragment {
         if (!hasNext) {
             Toast.makeText(requireContext(), "已经是最后一集了", Toast.LENGTH_SHORT).show();
             // takagen99: To auto go back to Detail Page after last episode
-            if (inProgress) {
+            if (inProgress && ((DetailActivity) mActivity).fullWindows) {
                 ((DetailActivity) mActivity).toggleFullPreview();
 //                ((DetailActivity) mActivity).setScreenOff();
             }

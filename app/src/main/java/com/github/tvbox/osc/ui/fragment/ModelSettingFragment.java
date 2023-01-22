@@ -714,6 +714,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 types.add(3);
                 types.add(4);
                 types.add(5);
+                types.add(6);
                 SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
                 dialog.setTip(getString(R.string.dia_theme));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
@@ -819,6 +820,8 @@ public class ModelSettingFragment extends BaseLazyFragment {
             return "鸣人";
         } else if (type == 4) {
             return "小黄";
+        } else if (type == 5) {
+            return "八神";
         } else {
             return "樱花";
         }

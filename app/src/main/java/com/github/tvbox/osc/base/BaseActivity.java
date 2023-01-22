@@ -84,6 +84,8 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
             setTheme(R.style.NarutoTheme);
         } else if (Hawk.get(HawkConfig.THEME_SELECT, 0) == 4) {
             setTheme(R.style.MinionTheme);
+        } else if (Hawk.get(HawkConfig.THEME_SELECT, 0) == 5) {
+            setTheme(R.style.YagamiTheme);
         } else {
             setTheme(R.style.SakuraTheme);
         }
