@@ -69,7 +69,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -151,6 +150,9 @@ public class LivePlayActivity extends BaseActivity {
     TextView mTotalTime;
     boolean isVOD = false;
 
+    // center BACK button
+    LinearLayout mBack;
+
     private boolean isSHIYI = false;
     private static String shiyi_time;//时移时间
 
@@ -185,6 +187,10 @@ public class LivePlayActivity extends BaseActivity {
         mCurrentTime = findViewById(R.id.curr_time);
         mSeekBar = findViewById(R.id.seekBar);
         mTotalTime = findViewById(R.id.total_time);
+
+        // center back button
+        mBack = findViewById(R.id.play_back);
+        mBack.setVisibility(View.INVISIBLE);
 
         tv_channelname = findViewById(R.id.tv_channel_name);//底部名称
         tv_channelnum = findViewById(R.id.tv_channel_number); //底部数字
@@ -270,14 +276,21 @@ public class LivePlayActivity extends BaseActivity {
                 return false;
             }
         });
+        // Button: BACK click to go back to previous page -------------------
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    finish();
+                }
+        });
     }
 
-    boolean PIP = Hawk.get(HawkConfig.PIC_IN_PIC, false);
+    boolean PiPON = Hawk.get(HawkConfig.PIC_IN_PIC, false);
 
     // takagen99 : Enter PIP if supported
     @Override
     public void onUserLeaveHint() {
-        if (supportsPiPMode() && PIP) {
+        if (supportsPiPMode() && PiPON) {
             // Hide controls when entering PIP
             mHandler.post(mHideChannelListRun);
             mHandler.post(mHideChannelInfoRun);
@@ -516,6 +529,11 @@ public class LivePlayActivity extends BaseActivity {
     };
 
     private void showChannelInfo() {
+        // takagen99: Check if Touch Screen, show back button
+        if (supportsTouch()) {
+            mBack.setVisibility(View.VISIBLE);
+        }
+
         tvChannelInfo.setText(String.format(Locale.getDefault(), "%d %s (%d/%d)", currentLiveChannelItem.getChannelNum(),
                 currentLiveChannelItem.getChannelName(),
                 currentLiveChannelItem.getSourceIndex() + 1, currentLiveChannelItem.getSourceNum()));
@@ -539,6 +557,7 @@ public class LivePlayActivity extends BaseActivity {
     private final Runnable mHideChannelInfoRun = new Runnable() {
         @Override
         public void run() {
+            mBack.setVisibility(View.GONE);
             tvChannelInfo.setVisibility(View.INVISIBLE);
             if (ll_epg.getVisibility() == View.VISIBLE) {
                 ll_epg.animate()
@@ -557,8 +576,6 @@ public class LivePlayActivity extends BaseActivity {
             }
         }
     };
-
-    static boolean noEPG = false;
 
     //显示侧边EPG
     private void showEpg(Date date, ArrayList<Epginfo> arrayList) {

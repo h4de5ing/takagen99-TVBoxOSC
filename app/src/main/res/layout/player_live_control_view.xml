@@ -173,6 +173,7 @@
                     android:indeterminateOnly="true"
                     android:tag="vod_control_loading_hide" />
             </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -298,6 +299,7 @@
                         android:indeterminateOnly="true"
                         android:tag="vod_control_loading" />
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -333,11 +335,9 @@
                     android:textSize="@dimen/ts_20"
                     android:textStyle="bold"
                     android:visibility="visible" />
-
             </LinearLayout>
 
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/ll_pause"
@@ -391,7 +391,6 @@
                     android:layout_gravity="center|top"
                     android:max="100"
                     android:tag="pausebar_video" />
-
             </LinearLayout>
 
             <ImageView
