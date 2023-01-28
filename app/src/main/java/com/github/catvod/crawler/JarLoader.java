@@ -61,7 +61,7 @@ public class JarLoader {
                             Class proxy = classLoader.loadClass("com.github.catvod.spider.Proxy");
                             Method mth = proxy.getMethod("proxy", Map.class);
                             proxyMethods.put(key, mth);
-                        } catch (Throwable th) {
+                        } catch (Throwable ignored) {
 
                         }
                         break;

@@ -1,25 +1,27 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 def static buildTime() {
     return new Date().format("yyyyMMdd_HHmm", TimeZone.getTimeZone("GMT+08:00"))
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId 'com.github.tvbox.osc.tk'
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0.".concat(buildTime())
         multiDexEnabled true
         //设置room的Schema的位置
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
-            }
-        }
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+//            }
+//        }
     }
 
     packagingOptions {
@@ -54,12 +56,6 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
-    dexOptions {
-        javaMaxHeapSize "4g"
-        additionalParameters += '--multi-dex'
-        additionalParameters += '--set-max-idx-number=48000'
-        additionalParameters += '--minimal-main-dex'
-    }
     buildFeatures {
         dataBinding = true
     }
@@ -85,22 +81,22 @@ dependencies {
     }
     implementation 'com.github.NanoHttpd.nanohttpd:nanohttpd:nanohttpd-project-2.3.1'
     implementation 'com.github.NanoHttpd.nanohttpd:nanohttpd:nanohttpd-websocket-2.3.1'
-    implementation 'com.google.zxing:core:3.4.1'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.zxing:core:3.5.1'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation files('libs\\thunder.jar')
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation files('libs/thunder.jar')
 
-    annotationProcessor 'androidx.room:room-compiler:2.3.0'
-    implementation 'androidx.room:room-runtime:2.3.0'
+    annotationProcessor 'androidx.room:room-compiler:2.5.0'
+    implementation 'androidx.room:room-runtime:2.5.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
     implementation 'com.squareup.okio:okio:2.6.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
     implementation 'com.kingja.loadsir:loadsir:1.3.8'
-    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'me.jessyan:autosize:1.2.1'
     implementation('com.thoughtworks.xstream:xstream:1.4.15') {

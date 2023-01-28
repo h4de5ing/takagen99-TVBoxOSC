@@ -6,7 +6,6 @@ import android.animation.AnimatorSet;
 import android.animation.IntEvaluator;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
@@ -26,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.viewpager.widget.ViewPager;
@@ -199,101 +197,67 @@ public class HomeActivity extends BaseActivity {
                 }
             }
         });
-        this.mGridView.setOnInBorderKeyEventListener(new TvRecyclerView.OnInBorderKeyEventListener() {
-            public final boolean onInBorderKeyEvent(int direction, View view) {
-                if (direction == View.FOCUS_UP) {
-                    BaseLazyFragment baseLazyFragment = fragments.get(sortFocused);
-                    if ((baseLazyFragment instanceof GridFragment)) {// 弹出筛选
-                        ((GridFragment) baseLazyFragment).forceRefresh();
-                    }
-                }
-                if (direction != View.FOCUS_DOWN) {
-                    return false;
-                }
+        this.mGridView.setOnInBorderKeyEventListener((direction, view) -> {
+            if (direction == View.FOCUS_UP) {
                 BaseLazyFragment baseLazyFragment = fragments.get(sortFocused);
-                if (!(baseLazyFragment instanceof GridFragment)) {
-                    return false;
+                if ((baseLazyFragment instanceof GridFragment)) {// 弹出筛选
+                    ((GridFragment) baseLazyFragment).forceRefresh();
                 }
-                return !((GridFragment) baseLazyFragment).isLoad();
             }
+            if (direction != View.FOCUS_DOWN) {
+                return false;
+            }
+            BaseLazyFragment baseLazyFragment = fragments.get(sortFocused);
+            if (!(baseLazyFragment instanceof GridFragment)) {
+                return false;
+            }
+            return !((GridFragment) baseLazyFragment).isLoad();
         });
         // Button : TVBOX >> Delete Cache / Longclick to Refresh Source --
-        tvName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        tvName.setOnClickListener(v -> {
 //                dataInitOk = false;
 //                jarInitOk = true;
 //                showSiteSwitch();
-                File dir = mContext.getCacheDir();
-                FileUtils.recursiveDelete(dir);
-                Toast.makeText(HomeActivity.this, getString(R.string.hm_cache_del), Toast.LENGTH_SHORT).show();
-            }
+            File dir = mContext.getCacheDir();
+            FileUtils.recursiveDelete(dir);
+            Toast.makeText(HomeActivity.this, getString(R.string.hm_cache_del), Toast.LENGTH_SHORT).show();
         });
-        tvName.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("useCache", true);
-                intent.putExtras(bundle);
-                HomeActivity.this.startActivity(intent);
-                return true;
-            }
+        tvName.setOnLongClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("useCache", true);
+            intent.putExtras(bundle);
+            HomeActivity.this.startActivity(intent);
+            return true;
         });
         // Button : Wifi >> Go into Android Wifi Settings -------------
-        tvWifi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-            }
-        });
+        tvWifi.setOnClickListener(view -> startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)));
         // Button : Search --------------------------------------------
-        tvFind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpActivity(SearchActivity.class);
-            }
-        });
+        tvFind.setOnClickListener(view -> jumpActivity(SearchActivity.class));
         // Button : Settings >> To go into Settings --------------------
-        tvMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpActivity(SettingActivity.class);
-            }
-        });
+        tvMenu.setOnClickListener(view -> jumpActivity(SettingActivity.class));
         // Button : Settings >> To go into App Settings ----------------
-        tvMenu.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", getPackageName(), null)));
-                return true;
-            }
+        tvMenu.setOnLongClickListener(view -> {
+            startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", getPackageName(), null)));
+            return true;
         });
         // Button : Date >> Go into Android Date Settings --------------
-        tvDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));
-            }
-        });
+        tvDate.setOnClickListener(view -> startActivity(new Intent(Settings.ACTION_DATE_SETTINGS)));
         setLoadSir(this.contentLayout);
         //mHandler.postDelayed(mFindFocus, 250);
     }
 
     private void initViewModel() {
         sourceViewModel = new ViewModelProvider(this).get(SourceViewModel.class);
-        sourceViewModel.sortResult.observe(this, new Observer<AbsSortXml>() {
-            @Override
-            public void onChanged(AbsSortXml absXml) {
-                showSuccess();
-                if (absXml != null && absXml.classes != null && absXml.classes.sortList != null) {
-                    sortAdapter.setNewData(DefaultConfig.adjustSort(ApiConfig.get().getHomeSourceBean().getKey(), absXml.classes.sortList, true));
-                } else {
-                    sortAdapter.setNewData(DefaultConfig.adjustSort(ApiConfig.get().getHomeSourceBean().getKey(), new ArrayList<>(), true));
-                }
-                initViewPager(absXml);
+        sourceViewModel.sortResult.observe(this, absXml -> {
+            showSuccess();
+            if (absXml != null && absXml.classes != null && absXml.classes.sortList != null) {
+                sortAdapter.setNewData(DefaultConfig.adjustSort(ApiConfig.get().getHomeSourceBean().getKey(), absXml.classes.sortList, true));
+            } else {
+                sortAdapter.setNewData(DefaultConfig.adjustSort(ApiConfig.get().getHomeSourceBean().getKey(), new ArrayList<>(), true));
             }
+            initViewPager(absXml);
         });
     }
 
@@ -350,13 +314,10 @@ public class HomeActivity extends BaseActivity {
                     @Override
                     public void success() {
                         jarInitOk = true;
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!useCacheConfig)
-                                    Toast.makeText(HomeActivity.this, getString(R.string.hm_ok), Toast.LENGTH_SHORT).show();
-                                initData();
-                            }
+                        mHandler.postDelayed(() -> {
+                            if (!useCacheConfig)
+                                Toast.makeText(HomeActivity.this, getString(R.string.hm_ok), Toast.LENGTH_SHORT).show();
+                            initData();
                         }, 50);
                     }
 
@@ -368,12 +329,9 @@ public class HomeActivity extends BaseActivity {
                     @Override
                     public void error(String msg) {
                         jarInitOk = true;
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(HomeActivity.this, getString(R.string.hm_notok), Toast.LENGTH_SHORT).show();
-                                initData();
-                            }
+                        mHandler.post(() -> {
+                            Toast.makeText(HomeActivity.this, getString(R.string.hm_notok), Toast.LENGTH_SHORT).show();
+                            initData();
                         });
                     }
                 });
@@ -385,12 +343,7 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void retry() {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        initData();
-                    }
-                });
+                mHandler.post(() -> initData());
             }
 
             @Override
@@ -399,72 +352,52 @@ public class HomeActivity extends BaseActivity {
                 if (ApiConfig.get().getSpider().isEmpty()) {
                     jarInitOk = true;
                 }
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        initData();
-                    }
-                }, 50);
+                mHandler.postDelayed(() -> initData(), 50);
             }
 
             @Override
             public void error(String msg) {
                 if (msg.equalsIgnoreCase("-1")) {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            dataInitOk = true;
-                            jarInitOk = true;
-                            initData();
-                        }
+                    mHandler.post(() -> {
+                        dataInitOk = true;
+                        jarInitOk = true;
+                        initData();
                     });
                     return;
                 }
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (dialog == null)
-                            dialog = new TipDialog(HomeActivity.this, msg, getString(R.string.hm_retry), getString(R.string.hm_cancel), new TipDialog.OnListener() {
-                                @Override
-                                public void left() {
-                                    mHandler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            initData();
-                                            dialog.hide();
-                                        }
-                                    });
-                                }
+                mHandler.post(() -> {
+                    if (dialog == null)
+                        dialog = new TipDialog(HomeActivity.this, msg, getString(R.string.hm_retry), getString(R.string.hm_cancel), new TipDialog.OnListener() {
+                            @Override
+                            public void left() {
+                                mHandler.post(() -> {
+                                    initData();
+                                    dialog.hide();
+                                });
+                            }
 
-                                @Override
-                                public void right() {
-                                    dataInitOk = true;
-                                    jarInitOk = true;
-                                    mHandler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            initData();
-                                            dialog.hide();
-                                        }
-                                    });
-                                }
+                            @Override
+                            public void right() {
+                                dataInitOk = true;
+                                jarInitOk = true;
+                                mHandler.post(() -> {
+                                    initData();
+                                    dialog.hide();
+                                });
+                            }
 
-                                @Override
-                                public void cancel() {
-                                    dataInitOk = true;
-                                    jarInitOk = true;
-                                    mHandler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            initData();
-                                            dialog.hide();
-                                        }
-                                    });
-                                }
-                            });
-                        if (!dialog.isShowing())
-                            dialog.show();
-                    }
+                            @Override
+                            public void cancel() {
+                                dataInitOk = true;
+                                jarInitOk = true;
+                                mHandler.post(() -> {
+                                    initData();
+                                    dialog.hide();
+                                });
+                            }
+                        });
+                    if (!dialog.isShowing())
+                        dialog.show();
                 });
             }
         }, this);
@@ -490,7 +423,7 @@ public class HomeActivity extends BaseActivity {
                 FixedSpeedScroller scroller = new FixedSpeedScroller(mContext, new AccelerateInterpolator());
                 field.set(mViewPager, scroller);
                 scroller.setmDuration(300);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             mViewPager.setPageTransformer(true, new DefaultTransformer());
             mViewPager.setAdapter(pageAdapter);
@@ -649,7 +582,6 @@ public class HomeActivity extends BaseActivity {
             tvWifi.setFocusable(true);
             tvFind.setFocusable(true);
             tvMenu.setFocusable(true);
-            return;
         }
     }
 
@@ -668,7 +600,7 @@ public class HomeActivity extends BaseActivity {
             SelectDialog<SourceBean> dialog = new SelectDialog<>(HomeActivity.this);
 
             // Multi Column Selection
-            int spanCount = (int) Math.floor(sites.size() / 10);
+            int spanCount = (int) Math.floor(sites.size() / 10.0);
             if (spanCount <= 1) spanCount = 1;
             if (spanCount >= 3) spanCount = 3;
 
@@ -708,9 +640,7 @@ public class HomeActivity extends BaseActivity {
                     return oldItem.getKey().equals(newItem.getKey());
                 }
             }, sites, sites.indexOf(ApiConfig.get().getHomeSourceBean()));
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
+            dialog.setOnDismissListener(dialog1 -> {
 //                    if (homeSourceKey != null && !homeSourceKey.equals(Hawk.get(HawkConfig.HOME_API, ""))) {
 //                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
 //                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -719,7 +649,6 @@ public class HomeActivity extends BaseActivity {
 //                        intent.putExtras(bundle);
 //                        HomeActivity.this.startActivity(intent);
 //                    }
-                }
             });
             dialog.show();
         }

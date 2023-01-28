@@ -762,7 +762,7 @@ public class PlayFragment extends BaseLazyFragment {
 
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
-        if(!isInPictureInPictureMode && mVideoView.isPlaying()) {
+        if (!isInPictureInPictureMode && mVideoView.isPlaying()) {
 //            mVideoView.pause();
         }
         super.onPictureInPictureModeChanged(isInPictureInPictureMode);
@@ -819,7 +819,7 @@ public class PlayFragment extends BaseLazyFragment {
     }
 
     public void playPrevious() {
-        boolean hasPre = true;
+        boolean hasPre;
         if (mVodInfo == null || mVodInfo.seriesMap.get(mVodInfo.playFlag) == null) {
             hasPre = false;
         } else {
@@ -851,8 +851,7 @@ public class PlayFragment extends BaseLazyFragment {
         EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_REFRESH, mVodInfo.playIndex));
         setTip("正在获取播放信息", true, false);
         String playTitleInfo = mVodInfo.name + " : " + vs.name;
-        mController.setTitle(playTitleInfo);
-
+        getActivity().runOnUiThread(() -> mController.setTitle(playTitleInfo));
         stopParse();
         if (mVideoView != null) mVideoView.release();
         String subtitleCacheKey = mVodInfo.sourceKey + "-" + mVodInfo.id + "-" + mVodInfo.playFlag + "-" + mVodInfo.playIndex + "-" + vs.name + "-subt";

@@ -20,10 +20,10 @@
     <application
         android:name=".base.App"
         android:allowBackup="true"
+        android:banner="@drawable/app_banner"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:hardwareAccelerated="true"
         android:icon="@drawable/app_icon"
-        android:banner="@drawable/app_banner"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -33,6 +33,7 @@
 
         <activity
             android:name=".ui.activity.HomeActivity"
+            android:exported="true"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,30 +45,30 @@
 
         <activity
             android:name=".ui.activity.LivePlayActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:screenOrientation="sensorLandscape"
-            android:supportsPictureInPicture="true"
-            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation" />
+            android:supportsPictureInPicture="true" />
         <activity
             android:name=".ui.activity.DetailActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:screenOrientation="sensorLandscape"
-            android:supportsPictureInPicture="true"
-            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation" />
+            android:supportsPictureInPicture="true" />
         <activity
             android:name=".ui.activity.PlayActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:screenOrientation="sensorLandscape"
-            android:supportsPictureInPicture="true"
-            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation" />
+            android:supportsPictureInPicture="true" />
         <activity
             android:name=".ui.activity.PushActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.activity.SearchActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.activity.FastSearchActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.activity.DriveActivity"
             android:screenOrientation="sensorLandscape" />
@@ -81,12 +82,16 @@
             android:name=".ui.activity.CollectActivity"
             android:screenOrientation="sensorLandscape" />
 
-        <receiver android:name=".receiver.SearchReceiver">
+        <receiver
+            android:name=".receiver.SearchReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.content.movie.search.Action" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.CustomWebReceiver">
+        <receiver
+            android:name=".receiver.CustomWebReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.content.movie.custom.web.Action" />
             </intent-filter>
