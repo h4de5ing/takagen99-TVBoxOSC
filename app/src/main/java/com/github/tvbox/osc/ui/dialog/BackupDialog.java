@@ -52,11 +52,11 @@ public class BackupDialog extends BaseDialog {
             adapter.setNewInstance(allBackup());
         });
         findViewById(R.id.storagePermission).setOnClickListener(v -> {
-            if (XXPermissions.isGranted(getContext(), Permission.Group.STORAGE)) {
+            if (XXPermissions.isGranted(getContext(), Permission.WRITE_EXTERNAL_STORAGE)) {
                 Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_ok), Toast.LENGTH_SHORT).show();
             } else {
                 XXPermissions.with(getContext())
-                        .permission(Permission.Group.STORAGE)
+                        .permission(Permission.WRITE_EXTERNAL_STORAGE)
                         .request(new OnPermissionCallback() {
                             @Override
                             public void onGranted(List<String> permissions, boolean all) {

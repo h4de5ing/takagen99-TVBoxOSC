@@ -185,11 +185,11 @@ public class ApiDialog extends BaseDialog {
             dialog.show();
         });
         findViewById(R.id.storagePermission).setOnClickListener(v -> {
-            if (XXPermissions.isGranted(getContext(), Permission.Group.STORAGE)) {
+            if (XXPermissions.isGranted(getContext(), Permission.WRITE_EXTERNAL_STORAGE)) {
                 Toast.makeText(getContext(), "已获得存储权限", Toast.LENGTH_SHORT).show();
             } else {
                 XXPermissions.with(getContext())
-                        .permission(Permission.Group.STORAGE)
+                        .permission(Permission.WRITE_EXTERNAL_STORAGE)
                         .request(new OnPermissionCallback() {
                             @Override
                             public void onGranted(List<String> permissions, boolean all) {
