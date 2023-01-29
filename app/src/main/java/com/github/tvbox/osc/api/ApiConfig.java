@@ -163,7 +163,7 @@ public class ApiConfig {
         } else {
             configUrl = apiUrl;
         }
-        System.out.println("API URL :" + configUrl);
+        System.out.println("数据配置接口 :" + configUrl);
         String configKey = TempKey;
         OkGo.<String>get(configUrl)
                 .headers("User-Agent", userAgent)
@@ -403,7 +403,7 @@ public class ApiConfig {
                     }
 
                     // takagen99: Capture Live URL into Config
-                    System.out.println("Live URL :" + extUrlFix);
+                    System.out.println("直播配置 :" + extUrlFix);
                     putLiveHistory(extUrlFix);
                     // Overwrite with Live URL from Settings
                     if (StringUtils.isBlank(liveURL)) {
