@@ -204,21 +204,15 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
     }
 
     protected void showLoading() {
-        if (mLoadService != null) {
-            mLoadService.showCallback(LoadingCallback.class);
-        }
+        if (mLoadService != null) mLoadService.showCallback(LoadingCallback.class);
     }
 
     protected void showEmpty() {
-        if (null != mLoadService) {
-            mLoadService.showCallback(EmptyCallback.class);
-        }
+        if (null != mLoadService) mLoadService.showCallback(EmptyCallback.class);
     }
 
     protected void showSuccess() {
-        if (null != mLoadService) {
-            mLoadService.showSuccess();
-        }
+        if (null != mLoadService) mLoadService.showSuccess();
     }
 
     @Override

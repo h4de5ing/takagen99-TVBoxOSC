@@ -231,14 +231,10 @@ public class ApiConfig {
         String jarUrl = urls[0];
         String md5 = urls.length > 1 ? urls[1].trim() : "";
         File cache = new File(App.getInstance().getFilesDir().getAbsolutePath() + "/csp.jar");
-
         if (!md5.isEmpty() || useCache) {
             if (cache.exists() && (useCache || MD5.getFileMd5(cache).equalsIgnoreCase(md5))) {
-                if (jarLoader.load(cache.getAbsolutePath())) {
-                    callback.success();
-                } else {
-                    callback.error("");
-                }
+                if (jarLoader.load(cache.getAbsolutePath())) callback.success();
+                else callback.error("");
                 return;
             }
         }
@@ -295,10 +291,8 @@ public class ApiConfig {
         System.out.println("从本地缓存加载" + f.getAbsolutePath());
         BufferedReader bReader = new BufferedReader(new InputStreamReader(new FileInputStream(f), "UTF-8"));
         StringBuilder sb = new StringBuilder();
-        String s = "";
-        while ((s = bReader.readLine()) != null) {
-            sb.append(s + "\n");
-        }
+        String s;
+        while ((s = bReader.readLine()) != null) sb.append(s).append("\n");
         bReader.close();
         parseJson(apiUrl, sb.toString());
     }

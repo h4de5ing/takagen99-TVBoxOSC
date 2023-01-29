@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.github.tvbox.osc.R;
@@ -60,6 +59,14 @@ public class SearchKeyboard extends FrameLayout {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_keyborad, this);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.mRecyclerView);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 6);
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position == 0) return 3;
+                else if (position == 1) return 3;
+                return 1;
+            }
+        });
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
@@ -80,15 +87,6 @@ public class SearchKeyboard extends FrameLayout {
         }
         final KeyboardAdapter adapter = new KeyboardAdapter(keyboardList);
         mRecyclerView.setAdapter(adapter);
-        //TODO 寻找替代方法
-//        adapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
-//            @Override
-//            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
-//                if (position == 0) return 3;
-//                else if (position == 1) return 3;
-//                return 1;
-//            }
-//        });
         adapter.setOnItemClickListener((adapter1, view1, position) -> {
             Keyboard keyboard = (Keyboard) adapter1.getItem(position);
             if (searchKeyListener != null) {

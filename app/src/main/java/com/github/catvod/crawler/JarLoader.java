@@ -44,8 +44,7 @@ public class JarLoader {
         boolean success = false;
         try {
             File cacheDir = new File(App.getInstance().getCacheDir().getAbsolutePath() + "/catvod_csp");
-            if (!cacheDir.exists())
-                cacheDir.mkdirs();
+            if (!cacheDir.exists()) cacheDir.mkdirs();
             DexClassLoader classLoader = new DexClassLoader(jar, cacheDir.getAbsolutePath(), null, App.getInstance().getClassLoader());
             // make force wait here, some device async dex load
             int count = 0;
@@ -72,10 +71,7 @@ public class JarLoader {
                 }
                 count++;
             } while (count < 5);
-
-            if (success) {
-                classLoaders.put(key, classLoader);
-            }
+            if (success) classLoaders.put(key, classLoader);
         } catch (Throwable th) {
             th.printStackTrace();
         }
@@ -99,9 +95,7 @@ public class JarLoader {
             try {
                 byte[] buffer = new byte[2048];
                 int length;
-                while ((length = is.read(buffer)) > 0) {
-                    os.write(buffer, 0, length);
-                }
+                while ((length = is.read(buffer)) > 0) os.write(buffer, 0, length);
             } finally {
                 try {
                     is.close();
@@ -134,20 +128,15 @@ public class JarLoader {
         recentJarKey = jarKey;
         if (spiders.containsKey(key))
             return spiders.get(key);
-        DexClassLoader classLoader = null;
-        if (jarKey.equals("main"))
-            classLoader = classLoaders.get("main");
-        else {
-            classLoader = loadJarInternal(jarUrl, jarMd5, jarKey);
-        }
-        if (classLoader == null)
-            return new SpiderNull();
+        DexClassLoader classLoader;
+        if (jarKey.equals("main")) classLoader = classLoaders.get("main");
+        else classLoader = loadJarInternal(jarUrl, jarMd5, jarKey);
+        if (classLoader == null) return new SpiderNull();
         try {
             Spider sp = (Spider) classLoader.loadClass("com.github.catvod.spider." + clsKey).newInstance();
             sp.init(App.getInstance(), ext);
-            if (!jar.isEmpty()) {
-                sp.homeContent(false); // 增加此行 应该可以解决部分写的有问题源的历史记录问题 但会增加这个源的首次加载时间 不需要可以已删掉
-            }
+            // 增加此行 应该可以解决部分写的有问题源的历史记录问题 但会增加这个源的首次加载时间 不需要可以已删掉
+            if (!jar.isEmpty()) sp.homeContent(false);
             spiders.put(key, sp);
             return sp;
         } catch (Throwable th) {
@@ -187,11 +176,8 @@ public class JarLoader {
     public Object[] proxyInvoke(Map params) {
         try {
             Method proxyFun = proxyMethods.get(recentJarKey);
-            if (proxyFun != null) {
-                return (Object[]) proxyFun.invoke(null, params);
-            }
+            if (proxyFun != null) return (Object[]) proxyFun.invoke(null, params);
         } catch (Throwable ignored) {
-
         }
         return null;
     }

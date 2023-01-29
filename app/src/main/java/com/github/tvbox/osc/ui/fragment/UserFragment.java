@@ -89,7 +89,7 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
                     vod.note = "上次看到" + vodInfo.playNote;
                 vodList.add(vod);
             }
-            homeHotVodAdapter.setNewData(vodList);
+            homeHotVodAdapter.setNewInstance(vodList);
         }
     }
 
@@ -150,7 +150,7 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
             Movie.Video vod = ((Movie.Video) adapter.getItem(position));
             // Additional Check if : Home Rec 0=豆瓣, 1=推荐, 2=历史
             if ((vod.id != null && !vod.id.isEmpty()) && (Hawk.get(HawkConfig.HOME_REC, 0) == 2)) {
-                homeHotVodAdapter.remove(position);
+                homeHotVodAdapter.removeAt(position);
                 VodInfo vodInfo = RoomDataManger.getVodInfo(vod.sourceKey, vod.id);
                 RoomDataManger.deleteVodRecord(vod.sourceKey, vodInfo);
                 Toast.makeText(mContext, getString(R.string.hm_hist_del), Toast.LENGTH_SHORT).show();
@@ -184,42 +184,39 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
     }
 
     private void initHomeHotVod(HomeHotVodAdapter adapter) {
-        if (Hawk.get(HawkConfig.HOME_REC, 0) == 1) {
-            if (homeSourceRec != null) {
-                adapter.setNewData(homeSourceRec);
-            }
-            return;
-        } else if (Hawk.get(HawkConfig.HOME_REC, 0) == 2) {
-            return;
-        }
         try {
-            Calendar cal = Calendar.getInstance();
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH) + 1;
-            int day = cal.get(Calendar.DATE);
-            String today = String.format("%d%d%d", year, month, day);
-            String requestDay = Hawk.get("home_hot_day", "");
-            if (requestDay.equals(today)) {
-                String json = Hawk.get("home_hot", "");
-                if (!json.isEmpty()) {
-                    adapter.setNewData(loadHots(json));
-                    return;
+            int source = Hawk.get(HawkConfig.HOME_REC, 0);
+            if (source == 0) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH) + 1;
+                int day = cal.get(Calendar.DATE);
+                String today = String.format("%d%d%d", year, month, day);
+                String requestDay = Hawk.get("home_hot_day", "");
+                if (requestDay.equals(today)) {
+                    String json = Hawk.get("home_hot", "");
+                    if (!json.isEmpty()) {
+                        adapter.setNewInstance(loadHots(json));
+                        return;
+                    }
                 }
-            }
-            OkGo.<String>get("https://movie.douban.com/j/new_search_subjects?sort=U&range=0,10&tags=&playable=1&start=0&year_range=" + year + "," + year).execute(new AbsCallback<String>() {
-                @Override
-                public void onSuccess(Response<String> response) {
-                    String netJson = response.body();
-                    Hawk.put("home_hot_day", today);
-                    Hawk.put("home_hot", netJson);
-                    mActivity.runOnUiThread(() -> adapter.setNewData(loadHots(netJson)));
-                }
+                OkGo.<String>get("https://movie.douban.com/j/new_search_subjects?sort=U&range=0,10&tags=&playable=1&start=0&year_range=" + year + "," + year).execute(new AbsCallback<String>() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        String netJson = response.body();
+                        Hawk.put("home_hot_day", today);
+                        Hawk.put("home_hot", netJson);
+                        mActivity.runOnUiThread(() -> adapter.setNewInstance(loadHots(netJson)));
+                    }
 
-                @Override
-                public String convertResponse(okhttp3.Response response) throws Throwable {
-                    return response.body().string();
-                }
-            });
+                    @Override
+                    public String convertResponse(okhttp3.Response response) throws Throwable {
+                        return response.body().string();
+                    }
+                });
+            } else if (source == 1) {
+                if (homeSourceRec != null) adapter.setNewInstance(homeSourceRec);
+            }
         } catch (Throwable th) {
             th.printStackTrace();
         }

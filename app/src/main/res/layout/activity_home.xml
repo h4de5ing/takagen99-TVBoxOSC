@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -97,21 +96,22 @@
             android:nextFocusDown="@id/tvDrive"
             android:src="@drawable/hm_settings" />
 
-        <TextView
+        <TextClock
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/vs_15"
             android:layout_marginLeft="@dimen/vs_15"
             android:focusable="false"
             android:focusableInTouchMode="false"
+            android:format12Hour="yyyy/MM/dd EE HH:mm"
+            android:format24Hour="yyyy/MM/dd EE HH:mm"
             android:gravity="right|center_vertical"
             android:textAlignment="gravity"
             android:textColor="@android:color/white"
             android:textSize="@dimen/ts_22"
-            android:textStyle="bold"
-            tools:text="DateTime" />
-
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout

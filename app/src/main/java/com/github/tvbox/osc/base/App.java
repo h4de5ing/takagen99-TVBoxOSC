@@ -2,7 +2,6 @@ package com.github.tvbox.osc.base;
 
 import androidx.multidex.MultiDexApplication;
 
-import com.github.tvbox.osc.BuildConfig;
 import com.github.tvbox.osc.callback.EmptyCallback;
 import com.github.tvbox.osc.callback.LoadingCallback;
 import com.github.tvbox.osc.data.AppDataManager;
@@ -65,10 +64,11 @@ public class App extends MultiDexApplication {
         putDefault(HawkConfig.PLAY_TYPE, 1);      // Player   0=系统, 1=IJK, 2=Exo
         putDefault(HawkConfig.IJK_CODEC, "硬解码");// IJK Render 软解码, 硬解码
         putDefault(HawkConfig.HOME_SHOW_SOURCE, true);// 数据源
+        putDefault(HawkConfig.API_URL, "http://0zark.0zark.io/eth/tv/m.json");
+        putDefault(HawkConfig.LIVE_URL, "http://0zark.0zark.io/eth/tv/live_plus.txt");
 //        putDefault(HawkConfig.HOME_NUM, 2);       // History Number
-//        putDefault(HawkConfig.DOH_URL, 2);        // DNS
+        putDefault(HawkConfig.DOH_URL, 1);        // DNS
 //        putDefault(HawkConfig.SEARCH_VIEW, 1);    // Text or Picture
-
     }
 
     private void initLocale() {

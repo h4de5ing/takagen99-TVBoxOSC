@@ -41,7 +41,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -110,12 +109,8 @@ public class SourceViewModel extends ViewModel {
                                     sortResult.postValue(sortXml);
                                 });
                             }
-                        } else {
-                            sortResult.postValue(sortXml);
-                        }
-                    } else {
-                        sortResult.postValue(null);
-                    }
+                        } else sortResult.postValue(sortXml);
+                    } else sortResult.postValue(null);
                     try {
                         executor.shutdown();
                     } catch (Throwable th) {

@@ -99,7 +99,7 @@ public class SubtitleViewModel extends ViewModel {
                                 if (pages.size() > 0) {
                                     String[] ps = pages.last().text().split("/", 2);
                                     if (ps.length == 2 && !TextUtils.isEmpty(ps[1])) {
-                                        pagesTotal = Integer.valueOf(ps[1].trim());
+                                        pagesTotal = Integer.parseInt(ps[1].trim());
                                     }
                                 }
                             } catch (Throwable th) {
