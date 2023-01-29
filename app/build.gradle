@@ -27,7 +27,14 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
     }
-
+    signingConfigs {
+        sign {
+            storeFile file("../hello_android.jks")
+            storePassword('android')
+            keyAlias('android')
+            keyPassword('android')
+        }
+    }
     buildTypes {
         debug {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -36,6 +43,7 @@ android {
             ndk {
                 abiFilters 'armeabi-v7a'
             }
+            signingConfig signingConfigs.sign
         }
         release {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -44,6 +52,7 @@ android {
             ndk {
                 abiFilters 'armeabi-v7a'
             }
+            signingConfig signingConfigs.sign
         }
     }
 
@@ -70,7 +79,22 @@ android {
 //            universalApk true //generate an additional APK that contains all the ABIs
 //        }
 //    }
-
+    applicationVariants.all { variant ->
+        def buildType = variant.buildType.name
+        def prefix = "TVBOX"
+        if (buildType == "release") {
+            variant.outputs.each {
+                def fromFile = it.outputFile
+                def intoFile = "D:/test/${prefix}/"
+                copy {
+                    from fromFile
+                    into intoFile
+                    include('*release.apk')
+                    rename('app-', "tvbox_v${android.defaultConfig.versionName}_")
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -113,8 +137,7 @@ dependencies {
     }
     implementation 'com.lzy.net:okgo:3.0.4'
     implementation 'com.owen:tv-recyclerview:3.0.0'
-
-    implementation 'com.github.getActivity:XXPermissions:13.6'
+    implementation 'com.github.getActivity:XXPermissions:16.2'
     implementation 'org.jsoup:jsoup:1.14.1'
     implementation 'com.github.hedzr:android-file-chooser:v1.2.0-final'
     implementation 'commons-io:commons-io:2.11.0'

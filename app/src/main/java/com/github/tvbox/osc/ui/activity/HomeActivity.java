@@ -69,9 +69,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import me.jessyan.autosize.utils.AutoSizeUtils;
@@ -191,9 +189,7 @@ public class HomeActivity extends BaseActivity {
                     ((GridFragment) baseLazyFragment).forceRefresh();
                 }
             }
-            if (direction != View.FOCUS_DOWN) {
-                return false;
-            }
+            if (direction != View.FOCUS_DOWN) return false;
             BaseLazyFragment baseLazyFragment = fragments.get(sortFocused);
             if (!(baseLazyFragment instanceof GridFragment)) {
                 return false;
@@ -366,8 +362,7 @@ public class HomeActivity extends BaseActivity {
                                 });
                             }
                         });
-                    if (!dialog.isShowing())
-                        dialog.show();
+                    if (!dialog.isShowing()) dialog.show();
                 });
             }
         }, this);
@@ -468,8 +463,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (topHide < 0)
-            return false;
+        if (topHide < 0) return false;
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             if (event.getKeyCode() == KeyEvent.KEYCODE_MENU) showSiteSwitch();
         } else if (event.getAction() == KeyEvent.ACTION_UP) {
@@ -506,13 +500,7 @@ public class HomeActivity extends BaseActivity {
         });
         // Hide Top =======================================================
         if (hide && topHide == 0) {
-            animatorSet.playTogether(ObjectAnimator.ofObject(viewObj, "marginTop", new IntEvaluator(),
-                            AutoSizeUtils.mm2px(this.mContext, 20.0f),
-                            AutoSizeUtils.mm2px(this.mContext, 0.0f)),
-                    ObjectAnimator.ofObject(viewObj, "height", new IntEvaluator(),
-                            AutoSizeUtils.mm2px(this.mContext, 50.0f),
-                            AutoSizeUtils.mm2px(this.mContext, 1.0f)),
-                    ObjectAnimator.ofFloat(this.topLayout, "alpha", 1.0f, 0.0f));
+            animatorSet.playTogether(ObjectAnimator.ofObject(viewObj, "marginTop", new IntEvaluator(), AutoSizeUtils.mm2px(this.mContext, 20.0f), AutoSizeUtils.mm2px(this.mContext, 0.0f)), ObjectAnimator.ofObject(viewObj, "height", new IntEvaluator(), AutoSizeUtils.mm2px(this.mContext, 50.0f), AutoSizeUtils.mm2px(this.mContext, 1.0f)), ObjectAnimator.ofFloat(this.topLayout, "alpha", 1.0f, 0.0f));
             animatorSet.setDuration(250);
             animatorSet.start();
             tvName.setFocusable(false);
@@ -523,13 +511,7 @@ public class HomeActivity extends BaseActivity {
         }
         // Show Top =======================================================
         if (!hide && topHide == 1) {
-            animatorSet.playTogether(ObjectAnimator.ofObject(viewObj, "marginTop", new IntEvaluator(),
-                            AutoSizeUtils.mm2px(this.mContext, 0.0f),
-                            AutoSizeUtils.mm2px(this.mContext, 20.0f)),
-                    ObjectAnimator.ofObject(viewObj, "height", new IntEvaluator(),
-                            AutoSizeUtils.mm2px(this.mContext, 1.0f),
-                            AutoSizeUtils.mm2px(this.mContext, 50.0f)),
-                    ObjectAnimator.ofFloat(this.topLayout, "alpha", 0.0f, 1.0f));
+            animatorSet.playTogether(ObjectAnimator.ofObject(viewObj, "marginTop", new IntEvaluator(), AutoSizeUtils.mm2px(this.mContext, 0.0f), AutoSizeUtils.mm2px(this.mContext, 20.0f)), ObjectAnimator.ofObject(viewObj, "height", new IntEvaluator(), AutoSizeUtils.mm2px(this.mContext, 1.0f), AutoSizeUtils.mm2px(this.mContext, 50.0f)), ObjectAnimator.ofFloat(this.topLayout, "alpha", 0.0f, 1.0f));
             animatorSet.setDuration(250);
             animatorSet.start();
             tvName.setFocusable(true);
