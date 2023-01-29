@@ -131,6 +131,7 @@ public class VodController extends BaseController {
                                 .setInterpolator(new DecelerateInterpolator())
                                 .setListener(null);
                         mBottomRoot.requestFocus();
+                        mHandler.postDelayed(mUpdateLayout, 255);   // Workaround Fix : SurfaceView
 
                         // takagen99: Check if Touch Screen, show back button
                         if (((BaseActivity) mActivity).supportsTouch()) {
@@ -301,6 +302,13 @@ public class VodController extends BaseController {
         }
     };
 
+    private final Runnable mUpdateLayout = new Runnable() {
+        @Override
+        public void run() {
+            mBottomRoot.requestLayout();
+        }
+    };
+
     @Override
     protected void initView() {
         super.initView();
@@ -326,7 +334,7 @@ public class VodController extends BaseController {
         mDialogVideoPauseBar = findViewWithTag("pausebar_video");
 
         // center back button
-        mBack = findViewById(R.id.play_back);
+        mBack = findViewById(R.id.tvBackButton);
 
         // bottom container
         mBottomRoot = findViewById(R.id.bottom_container);

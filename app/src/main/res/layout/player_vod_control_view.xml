@@ -81,7 +81,7 @@
     </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/play_back"
+        android:id="@+id/tvBackButton"
         android:layout_width="@dimen/vs_60"
         android:layout_height="@dimen/vs_60"
         android:layout_gravity="center|left"
@@ -91,7 +91,7 @@
         android:layout_marginRight="@dimen/vs_6"
         android:background="@drawable/button_dialog_vod"
         android:clickable="true"
-        android:focusable="true"
+        android:focusable="false"
         android:gravity="center"
         android:orientation="horizontal">
 
