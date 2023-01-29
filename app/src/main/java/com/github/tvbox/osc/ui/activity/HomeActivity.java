@@ -122,7 +122,6 @@ public class HomeActivity extends BaseActivity {
     protected void init() {
         // takagen99: Added to allow read string
         res = getResources();
-
         EventBus.getDefault().register(this);
         ControlManager.get().startServer();
         initView();
@@ -142,26 +141,26 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initView() {
-        this.topLayout = findViewById(R.id.topLayout);
-        this.tvName = findViewById(R.id.tvName);
-        this.tvWifi = findViewById(R.id.tvWifi);
-        this.tvFind = findViewById(R.id.tvFind);
-        this.tvMenu = findViewById(R.id.tvMenu);
-        this.tvDate = findViewById(R.id.tvDate);
-        this.contentLayout = findViewById(R.id.contentLayout);
-        this.mGridView = findViewById(R.id.mGridViewCategory);
-        this.mViewPager = findViewById(R.id.mViewPager);
-        this.sortAdapter = new SortAdapter();
-        this.mGridView.setLayoutManager(new V7LinearLayoutManager(this.mContext, 0, false));
-        this.mGridView.setSpacingWithMargins(0, AutoSizeUtils.dp2px(this.mContext, 10.0f));
-        this.mGridView.setAdapter(this.sortAdapter);
-        this.mGridView.setOnItemListener(new TvRecyclerView.OnItemListener() {
+        topLayout = findViewById(R.id.topLayout);
+        tvName = findViewById(R.id.tvName);
+        tvWifi = findViewById(R.id.tvWifi);
+        tvFind = findViewById(R.id.tvFind);
+        tvMenu = findViewById(R.id.tvMenu);
+        tvDate = findViewById(R.id.tvDate);
+        contentLayout = findViewById(R.id.contentLayout);
+        mGridView = findViewById(R.id.mGridViewCategory);
+        mViewPager = findViewById(R.id.mViewPager);
+        sortAdapter = new SortAdapter();
+        mGridView.setLayoutManager(new V7LinearLayoutManager(mContext, 0, false));
+        mGridView.setSpacingWithMargins(0, AutoSizeUtils.dp2px(mContext, 10.0f));
+        mGridView.setAdapter(sortAdapter);
+        mGridView.setOnItemListener(new TvRecyclerView.OnItemListener() {
             public void onItemPreSelected(TvRecyclerView tvRecyclerView, View view, int position) {
-                if (view != null && !HomeActivity.this.isDownOrUp) {
+                if (view != null && !isDownOrUp) {
                     view.animate().scaleX(1.0f).scaleY(1.0f).setDuration(250).start();
                     TextView textView = view.findViewById(R.id.tvTitle);
                     textView.getPaint().setFakeBoldText(false);
-                    textView.setTextColor(HomeActivity.this.getResources().getColor(R.color.color_FFFFFF_70));
+                    textView.setTextColor(getResources().getColor(R.color.color_FFFFFF_70));
                     textView.invalidate();
                     view.findViewById(R.id.tvFilter).setVisibility(View.GONE);
                 }
@@ -169,17 +168,17 @@ public class HomeActivity extends BaseActivity {
 
             public void onItemSelected(TvRecyclerView tvRecyclerView, View view, int position) {
                 if (view != null) {
-                    HomeActivity.this.isDownOrUp = false;
-                    HomeActivity.this.sortChange = true;
+                    isDownOrUp = false;
+                    sortChange = true;
                     view.animate().scaleX(1.1f).scaleY(1.1f).setInterpolator(new BounceInterpolator()).setDuration(250).start();
                     TextView textView = view.findViewById(R.id.tvTitle);
                     textView.getPaint().setFakeBoldText(true);
-                    textView.setTextColor(HomeActivity.this.getResources().getColor(R.color.color_FFFFFF));
+                    textView.setTextColor(getResources().getColor(R.color.color_FFFFFF));
                     textView.invalidate();
                     if (!sortAdapter.getItem(position).filters.isEmpty())
                         view.findViewById(R.id.tvFilter).setVisibility(View.VISIBLE);
-                    HomeActivity.this.sortFocusView = view;
-                    HomeActivity.this.sortFocused = position;
+                    sortFocusView = view;
+                    sortFocused = position;
                     mHandler.removeCallbacks(mDataRunnable);
                     mHandler.postDelayed(mDataRunnable, 200);
                 }
@@ -197,7 +196,7 @@ public class HomeActivity extends BaseActivity {
                 }
             }
         });
-        this.mGridView.setOnInBorderKeyEventListener((direction, view) -> {
+        mGridView.setOnInBorderKeyEventListener((direction, view) -> {
             if (direction == View.FOCUS_UP) {
                 BaseLazyFragment baseLazyFragment = fragments.get(sortFocused);
                 if ((baseLazyFragment instanceof GridFragment)) {// 弹出筛选
@@ -220,7 +219,7 @@ public class HomeActivity extends BaseActivity {
 //                showSiteSwitch();
             File dir = mContext.getCacheDir();
             FileUtils.recursiveDelete(dir);
-            Toast.makeText(HomeActivity.this, getString(R.string.hm_cache_del), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.hm_cache_del), Toast.LENGTH_SHORT).show();
         });
         tvName.setOnLongClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
@@ -228,7 +227,7 @@ public class HomeActivity extends BaseActivity {
             Bundle bundle = new Bundle();
             bundle.putBoolean("useCache", true);
             intent.putExtras(bundle);
-            HomeActivity.this.startActivity(intent);
+            startActivity(intent);
             return true;
         });
         // Button : Wifi >> Go into Android Wifi Settings -------------
@@ -244,7 +243,7 @@ public class HomeActivity extends BaseActivity {
         });
         // Button : Date >> Go into Android Date Settings --------------
         tvDate.setOnClickListener(view -> startActivity(new Intent(Settings.ACTION_DATE_SETTINGS)));
-        setLoadSir(this.contentLayout);
+        setLoadSir(contentLayout);
         //mHandler.postDelayed(mFindFocus, 250);
     }
 
@@ -269,15 +268,13 @@ public class HomeActivity extends BaseActivity {
 
     // takagen99 : Check if network is available
     boolean isNetworkAvailable() {
-        ConnectivityManager cm
-                = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
     private void initData() {
         SourceBean home = ApiConfig.get().getHomeSourceBean();
-
         // takagen99 : Switch to show / hide source title
         if (HomeShow) {
             if (home != null && home.getName() != null && !home.getName().isEmpty())
@@ -296,15 +293,12 @@ public class HomeActivity extends BaseActivity {
             }
         }
         mGridView.requestFocus();
-
         if (dataInitOk && jarInitOk) {
             showLoading();
             sourceViewModel.getSort(ApiConfig.get().getHomeSourceBean().getKey());
             if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                LOG.e("有");
-            } else {
-                LOG.e("无");
-            }
+                LOG.e("有存储权限");
+            } else LOG.e("无存储权限");
             return;
         }
         showLoading();
@@ -328,6 +322,7 @@ public class HomeActivity extends BaseActivity {
 
                     @Override
                     public void error(String msg) {
+                        LOG.i("发生错误:" + msg);
                         jarInitOk = true;
                         mHandler.post(() -> {
                             Toast.makeText(HomeActivity.this, getString(R.string.hm_notok), Toast.LENGTH_SHORT).show();
@@ -434,27 +429,20 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         int i;
-        if (this.fragments.size() <= 0 || this.sortFocused >= this.fragments.size() || (i = this.sortFocused) < 0) {
+        if (fragments.size() <= 0 || sortFocused >= fragments.size() || (i = this.sortFocused) < 0) {
             exit();
             return;
         }
-        BaseLazyFragment baseLazyFragment = this.fragments.get(i);
+        BaseLazyFragment baseLazyFragment = fragments.get(i);
         if (baseLazyFragment instanceof GridFragment) {
-            View view = this.sortFocusView;
+            View view = sortFocusView;
             GridFragment grid = (GridFragment) baseLazyFragment;
-            if (grid.restoreView()) {
-                return;
-            }// 还原上次保存的UI内容
-            if (view != null && !view.isFocused()) {
-                this.sortFocusView.requestFocus();
-            } else if (this.sortFocused != 0) {
-                this.mGridView.setSelection(0);
-            } else {
-                exit();
-            }
-        } else {
-            exit();
-        }
+            // 还原上次保存的UI内容
+            if (grid.restoreView()) return;
+            if (view != null && !view.isFocused()) sortFocusView.requestFocus();
+            else if (sortFocused != 0) mGridView.setSelection(0);
+            else exit();
+        } else exit();
     }
 
     private void exit() {
@@ -515,9 +503,7 @@ public class HomeActivity extends BaseActivity {
         if (topHide < 0)
             return false;
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (event.getKeyCode() == KeyEvent.KEYCODE_MENU) {
-                showSiteSwitch();
-            }
+            if (event.getKeyCode() == KeyEvent.KEYCODE_MENU) showSiteSwitch();
         } else if (event.getAction() == KeyEvent.ACTION_UP) {
 
         }

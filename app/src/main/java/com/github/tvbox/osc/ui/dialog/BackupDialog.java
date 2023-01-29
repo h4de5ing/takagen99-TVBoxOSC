@@ -85,20 +85,18 @@ public class BackupDialog extends BaseDialog {
         try {
             String root = Environment.getExternalStorageDirectory().getAbsolutePath();
             File file = new File(root + "/tvbox_backup/");
-            File[] list = file.listFiles();
-            Arrays.sort(list, (o1, o2) -> {
-                if (o1.isDirectory() && o2.isFile()) return -1;
-                return o1.isFile() && o2.isDirectory() ? 1 : o2.getName().compareTo(o1.getName());
-            });
             if (file.exists()) {
+                File[] list = file.listFiles();
+                Arrays.sort(list, (o1, o2) -> {
+                    if (o1.isDirectory() && o2.isFile()) return -1;
+                    return o1.isFile() && o2.isDirectory() ? 1 : o2.getName().compareTo(o1.getName());
+                });
                 for (File f : list) {
                     if (result.size() > 10) {
                         FileUtils.recursiveDelete(f);
                         continue;
                     }
-                    if (f.isDirectory()) {
-                        result.add(f.getName());
-                    }
+                    if (f.isDirectory()) result.add(f.getName());
                 }
             }
         } catch (Throwable e) {
@@ -146,8 +144,7 @@ public class BackupDialog extends BaseDialog {
         try {
             String root = Environment.getExternalStorageDirectory().getAbsolutePath();
             File file = new File(root + "/tvbox_backup/");
-            if (!file.exists())
-                file.mkdirs();
+            if (!file.exists()) file.mkdir();
             Date now = new Date();
             SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd-HHmmss");
             File backup = new File(file, f.format(now));

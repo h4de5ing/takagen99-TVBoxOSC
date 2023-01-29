@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
+import com.github.tvbox.osc.BuildConfig;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.base.BaseActivity;
@@ -73,6 +74,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
     private TextView tvLocale;
     private TextView tvPIP;
     private TextView tvTheme;
+    private TextView tvAbout;
 
     public static ModelSettingFragment newInstance() {
         return new ModelSettingFragment().setArguments();
@@ -122,6 +124,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
         tvPlay.setText(PlayerHelper.getPlayerName(Hawk.get(HawkConfig.PLAY_TYPE, 0)));
         tvRender.setText(PlayerHelper.getRenderName(Hawk.get(HawkConfig.PLAY_RENDER, 0)));
         tvTheme = findViewById(R.id.tvTheme);
+        tvAbout = findViewById(R.id.tvAbout);
         tvTheme.setText(getThemeView(Hawk.get(HawkConfig.THEME_SELECT, 0)));
 
         //takagen99 : Set HomeApi as default
@@ -692,14 +695,13 @@ public class ModelSettingFragment extends BaseLazyFragment {
             }
         });
         // About App -----------------------------------------------
+        tvAbout.setText("V" + BuildConfig.VERSION_NAME);
         findViewById(R.id.llAbout).setOnClickListener(v -> {
             FastClickCheckUtil.check(v);
             AboutDialog dialog = new AboutDialog(mActivity);
             dialog.show();
         });
-
         SettingActivity.callback = () -> findViewById(R.id.llDebug).setVisibility(View.VISIBLE);
-
     }
 
     @Override

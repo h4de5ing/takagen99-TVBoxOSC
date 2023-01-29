@@ -168,6 +168,9 @@ public class DriveActivity extends BaseActivity {
         this.mGridView.setLayoutManager(new V7LinearLayoutManager(this.mContext, V7LinearLayoutManager.VERTICAL, false));
         this.mGridView.setSpacingWithMargins(AutoSizeUtils.mm2px(this.mContext, 10), 0);
         this.mGridView.setAdapter(this.adapter);
+        adapter.setDeleteListener((adapter, view, position) -> {
+            delete(position);
+        });
         this.mGridView.setOnItemListener(new TvRecyclerView.OnItemListener() {
             public void onItemPreSelected(TvRecyclerView tvRecyclerView, View view, int position) {
                 if (position >= 0) adapter.getData().get(position).isSelected = false;
@@ -179,70 +182,73 @@ public class DriveActivity extends BaseActivity {
 
             @Override
             public void onItemClick(TvRecyclerView parent, View itemView, int position) {
-                if (delMode) {
-                    DriveFolderFile selectedDrive = drives.get(position);
-                    RoomDataManger.deleteDrive(selectedDrive.getDriveData().getId());
-                    EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_DRIVE_REFRESH));
-                    return;
-                }
-                btnAddServer.setVisibility(View.GONE);
-                btnRemoveServer.setVisibility(View.GONE);
-                DriveFolderFile selectedItem = DriveActivity.this.adapter.getItem(position);
-                if ((selectedItem == selectedItem.parentFolder || selectedItem.parentFolder == null) && selectedItem.name == null) {
-                    returnPreviousFolder();
-                    return;
-                }
-                if (viewModel == null) {
-                    if (selectedItem.getDriveType() == StorageDriveType.TYPE.LOCAL) {
-                        viewModel = new LocalDriveViewModel();
-                    } else if (selectedItem.getDriveType() == StorageDriveType.TYPE.WEBDAV) {
-                        viewModel = new WebDAVDriveViewModel();
-                    } else if (selectedItem.getDriveType() == StorageDriveType.TYPE.ALISTWEB) {
-                        viewModel = new AlistDriveViewModel();
-                    }
-                    viewModel.setCurrentDrive(selectedItem);
-                    if (!selectedItem.isFile) {
-                        loadDriveData();
-                        return;
-                    }
-                }
-                if (!selectedItem.isFile) {
-                    viewModel.setCurrentDriveNote(selectedItem);
-                    loadDriveData();
-                } else {
-                    // takagen99 - To only play media file
-                    if (StorageDriveType.isVideoType(selectedItem.fileType)) {
-                        DriveFolderFile currentDrive = viewModel.getCurrentDrive();
-                        if (currentDrive.getDriveType() == StorageDriveType.TYPE.LOCAL)
-                            playFile(currentDrive.name + selectedItem.getAccessingPathStr() + selectedItem.name);
-                        else if (currentDrive.getDriveType() == StorageDriveType.TYPE.WEBDAV) {
-                            JsonObject config = currentDrive.getConfig();
-                            String targetPath = selectedItem.getAccessingPathStr() + selectedItem.name;
-                            playFile(config.get("url").getAsString() + targetPath);
-                        } else if (currentDrive.getDriveType() == StorageDriveType.TYPE.ALISTWEB) {
-                            AlistDriveViewModel boxedViewModel = (AlistDriveViewModel) viewModel;
-                            boxedViewModel.loadFile(selectedItem, new AlistDriveViewModel.LoadFileCallback() {
-                                @Override
-                                public void callback(String fileUrl) {
-                                    mHandler.post(() -> playFile(fileUrl));
-                                }
-
-                                @Override
-                                public void fail(String msg) {
-                                    mHandler.post(() -> {
-                                        Toast toast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                    });
-                                }
-                            });
-                        }
-                    } else {
-                        Toast.makeText(DriveActivity.this, "Media Unsupported", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                delete(position);
             }
         });
         setLoadSir(findViewById(R.id.mLayout));
+    }
+
+    private void delete(int position) {
+        if (delMode) {
+            DriveFolderFile selectedDrive = drives.get(position);
+            RoomDataManger.deleteDrive(selectedDrive.getDriveData().getId());
+            EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_DRIVE_REFRESH));
+            return;
+        }
+        btnAddServer.setVisibility(View.GONE);
+        btnRemoveServer.setVisibility(View.GONE);
+        DriveFolderFile selectedItem = DriveActivity.this.adapter.getItem(position);
+        if ((selectedItem == selectedItem.parentFolder || selectedItem.parentFolder == null) && selectedItem.name == null) {
+            returnPreviousFolder();
+            return;
+        }
+        if (viewModel == null) {
+            if (selectedItem.getDriveType() == StorageDriveType.TYPE.LOCAL) {
+                viewModel = new LocalDriveViewModel();
+            } else if (selectedItem.getDriveType() == StorageDriveType.TYPE.WEBDAV) {
+                viewModel = new WebDAVDriveViewModel();
+            } else if (selectedItem.getDriveType() == StorageDriveType.TYPE.ALISTWEB) {
+                viewModel = new AlistDriveViewModel();
+            }
+            viewModel.setCurrentDrive(selectedItem);
+            if (!selectedItem.isFile) {
+                loadDriveData();
+                return;
+            }
+        }
+        if (!selectedItem.isFile) {
+            viewModel.setCurrentDriveNote(selectedItem);
+            loadDriveData();
+        } else {
+            // takagen99 - To only play media file
+            if (StorageDriveType.isVideoType(selectedItem.fileType)) {
+                DriveFolderFile currentDrive = viewModel.getCurrentDrive();
+                if (currentDrive.getDriveType() == StorageDriveType.TYPE.LOCAL)
+                    playFile(currentDrive.name + selectedItem.getAccessingPathStr() + selectedItem.name);
+                else if (currentDrive.getDriveType() == StorageDriveType.TYPE.WEBDAV) {
+                    JsonObject config = currentDrive.getConfig();
+                    String targetPath = selectedItem.getAccessingPathStr() + selectedItem.name;
+                    playFile(config.get("url").getAsString() + targetPath);
+                } else if (currentDrive.getDriveType() == StorageDriveType.TYPE.ALISTWEB) {
+                    AlistDriveViewModel boxedViewModel = (AlistDriveViewModel) viewModel;
+                    boxedViewModel.loadFile(selectedItem, new AlistDriveViewModel.LoadFileCallback() {
+                        @Override
+                        public void callback(String fileUrl) {
+                            mHandler.post(() -> playFile(fileUrl));
+                        }
+
+                        @Override
+                        public void fail(String msg) {
+                            mHandler.post(() -> {
+                                Toast toast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
+                                toast.show();
+                            });
+                        }
+                    });
+                }
+            } else
+                Toast.makeText(DriveActivity.this, "Media Unsupported", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void playFile(String fileUrl) {
@@ -342,13 +348,8 @@ public class DriveActivity extends BaseActivity {
 
     public void toggleDelMode() {
         delMode = !delMode;
-        if (delMode) {
-            // takagen99: Added Theme Color
-//            this.btnRemoveServer.setColorFilter(ContextCompat.getColor(mContext, R.color.color_theme));
-            this.btnRemoveServer.setColorFilter(getThemeColor());
-        } else {
-            this.btnRemoveServer.setColorFilter(ContextCompat.getColor(mContext, R.color.color_FFFFFF));
-        }
+        if (delMode) btnRemoveServer.setColorFilter(getThemeColor());
+        else btnRemoveServer.setColorFilter(ContextCompat.getColor(mContext, R.color.color_FFFFFF));
         adapter.toggleDelMode(delMode);
     }
 
