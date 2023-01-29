@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.base.BaseActivity;
@@ -164,12 +163,9 @@ public class FastSearchActivity extends BaseActivity {
             }
         });
 
-        spListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                String spName = spListAdapter.getItem(position);
-                filterResult(spName);
-            }
+        spListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            String spName = spListAdapter.getItem(position);
+            filterResult(spName);
         });
 
         // mGridView.setHasFixedSize(true);
@@ -178,52 +174,46 @@ public class FastSearchActivity extends BaseActivity {
         searchAdapter = new FastSearchAdapter();
         mGridView.setAdapter(searchAdapter);
 
-        searchAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                FastClickCheckUtil.check(view);
-                Movie.Video video = searchAdapter.getData().get(position);
-                if (video != null) {
-                    try {
-                        if (searchExecutorService != null) {
-                            pauseRunnable = searchExecutorService.shutdownNow();
-                            searchExecutorService = null;
-                            JSEngine.getInstance().stopAll();
-                        }
-                    } catch (Throwable th) {
-                        th.printStackTrace();
+        searchAdapter.setOnItemClickListener((adapter, view, position) -> {
+            FastClickCheckUtil.check(view);
+            Movie.Video video = searchAdapter.getData().get(position);
+            if (video != null) {
+                try {
+                    if (searchExecutorService != null) {
+                        pauseRunnable = searchExecutorService.shutdownNow();
+                        searchExecutorService = null;
+                        JSEngine.getInstance().stopAll();
                     }
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", video.id);
-                    bundle.putString("sourceKey", video.sourceKey);
-                    jumpActivity(DetailActivity.class, bundle);
+                } catch (Throwable th) {
+                    th.printStackTrace();
                 }
+                Bundle bundle = new Bundle();
+                bundle.putString("id", video.id);
+                bundle.putString("sourceKey", video.sourceKey);
+                jumpActivity(DetailActivity.class, bundle);
             }
         });
 
         mGridViewFilter.setLayoutManager(new V7GridLayoutManager(this.mContext, isBaseOnWidth() ? 4 : 5));
         searchAdapterFilter = new FastSearchAdapter();
         mGridViewFilter.setAdapter(searchAdapterFilter);
-        searchAdapterFilter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                FastClickCheckUtil.check(view);
-                Movie.Video video = searchAdapterFilter.getData().get(position);
-                if (video != null) {
-                    try {
-                        if (searchExecutorService != null) {
-                            pauseRunnable = searchExecutorService.shutdownNow();
-                            searchExecutorService = null;
-                            JSEngine.getInstance().stopAll();
-                        }
-                    } catch (Throwable th) {
-                        th.printStackTrace();
+        searchAdapterFilter.setOnItemClickListener((adapter, view, position) -> {
+            FastClickCheckUtil.check(view);
+            Movie.Video video = searchAdapterFilter.getData().get(position);
+            if (video != null) {
+                try {
+                    if (searchExecutorService != null) {
+                        pauseRunnable = searchExecutorService.shutdownNow();
+                        searchExecutorService = null;
+                        JSEngine.getInstance().stopAll();
                     }
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", video.id);
-                    bundle.putString("sourceKey", video.sourceKey);
-                    jumpActivity(DetailActivity.class, bundle);
+                } catch (Throwable th) {
+                    th.printStackTrace();
                 }
+                Bundle bundle = new Bundle();
+                bundle.putString("id", video.id);
+                bundle.putString("sourceKey", video.sourceKey);
+                jumpActivity(DetailActivity.class, bundle);
             }
         });
 
@@ -234,12 +224,9 @@ public class FastSearchActivity extends BaseActivity {
         mGridViewWordFenci = findViewById(R.id.mGridViewWordFenci);
         mGridViewWordFenci.setAdapter(searchWordAdapter);
         mGridViewWordFenci.setLayoutManager(new V7LinearLayoutManager(this.mContext, 0, false));
-        searchWordAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                String str = searchWordAdapter.getData().get(position);
-                search(str);
-            }
+        searchWordAdapter.setOnItemClickListener((adapter, view, position) -> {
+            String str = searchWordAdapter.getData().get(position);
+            search(str);
         });
         searchWordAdapter.setNewData(new ArrayList<>());
     }

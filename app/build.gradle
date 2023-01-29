@@ -17,11 +17,11 @@ android {
         versionName "1.0.".concat(buildTime())
         multiDexEnabled true
         //设置room的Schema的位置
-//        javaCompileOptions {
-//            annotationProcessorOptions {
-//                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
-//            }
-//        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     packagingOptions {
@@ -93,8 +93,8 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.5.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
-    implementation 'com.squareup.okio:okio:2.6.0'
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
+    implementation 'com.squareup.okio:okio:3.0.0-alpha.4'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
     implementation 'com.kingja.loadsir:loadsir:1.3.8'
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'com.squareup.picasso:picasso:2.71828'

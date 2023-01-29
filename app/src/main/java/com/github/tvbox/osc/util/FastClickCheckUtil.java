@@ -26,11 +26,6 @@ public class FastClickCheckUtil {
      */
     public static void check(final View view, int mills) {
         view.setClickable(false);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                view.setClickable(true);
-            }
-        }, mills);
+        new Handler().postDelayed(() -> view.setClickable(true), mills);
     }
 }

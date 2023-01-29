@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.LiveSettingItem;
@@ -30,8 +30,8 @@ public class LiveSettingItemAdapter extends BaseQuickAdapter<LiveSettingItem, Ba
         int itemIndex = item.getItemIndex();
         if (item.isItemSelected() && itemIndex != focusedItemIndex) {
             // takagen99: Added Theme Color
-//            tvItemName.setTextColor(mContext.getResources().getColor(R.color.color_theme));
-            tvItemName.setTextColor(((BaseActivity) mContext).getThemeColor());
+//            tvItemName.setTextColor(getContext().getResources().getColor(R.color.color_theme));
+            tvItemName.setTextColor(((BaseActivity) getContext()).getThemeColor());
         } else {
             tvItemName.setTextColor(Color.WHITE);
         }

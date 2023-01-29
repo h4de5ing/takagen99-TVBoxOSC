@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.LiveChannelGroup;
@@ -33,7 +33,7 @@ public class LiveChannelGroupAdapter extends BaseQuickAdapter<LiveChannelGroup, 
         if (groupIndex == selectedGroupIndex && groupIndex != focusedGroupIndex) {
             // takagen99: Added Theme Color
 //            tvGroupName.setTextColor(mContext.getResources().getColor(R.color.color_theme));
-            tvGroupName.setTextColor(((BaseActivity) mContext).getThemeColor());
+            tvGroupName.setTextColor(((BaseActivity) getContext()).getThemeColor());
         } else {
             tvGroupName.setTextColor(Color.WHITE);
         }

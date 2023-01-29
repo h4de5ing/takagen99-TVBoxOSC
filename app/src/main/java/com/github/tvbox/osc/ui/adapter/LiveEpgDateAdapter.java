@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.LiveEpgDate;
@@ -26,12 +26,12 @@ public class LiveEpgDateAdapter extends BaseQuickAdapter<LiveEpgDate, BaseViewHo
         tvGroupName.setBackgroundColor(Color.TRANSPARENT);
         if (item.getIndex() == selectedIndex && item.getIndex() != focusedIndex) {
             // takagen99: Added Theme Color
-//            tvGroupName.setTextColor(mContext.getResources().getColor(R.color.color_theme));
-            tvGroupName.setTextColor(((BaseActivity) mContext).getThemeColor());
+//            tvGroupName.setTextColor(getContext().getResources().getColor(R.color.color_theme));
+            tvGroupName.setTextColor(((BaseActivity) getContext()).getThemeColor());
         } else if (item.getIndex() == selectedIndex && item.getIndex() == focusedIndex) {
-            tvGroupName.setTextColor(mContext.getResources().getColor(R.color.color_FFFFFF));
+            tvGroupName.setTextColor(getContext().getResources().getColor(R.color.color_FFFFFF));
         } else {
-            tvGroupName.setTextColor(mContext.getResources().getColor(R.color.color_FFFFFF));
+            tvGroupName.setTextColor(getContext().getResources().getColor(R.color.color_FFFFFF));
         }
     }
 

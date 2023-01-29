@@ -2,7 +2,6 @@ package com.github.tvbox.osc.ui.dialog;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,129 +66,102 @@ public class SubtitleDialog extends BaseDialog {
         subtitleTimeText.setText(HomeActivity.getRes().getString(R.string.vod_sub_delay));
 
         // Internal Subtitle from Video File
-        selectInternal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FastClickCheckUtil.check(view);
-                dismiss();
-                mSubtitleViewListener.selectInternalSubtitle();
-            }
+        selectInternal.setOnClickListener(view -> {
+            FastClickCheckUtil.check(view);
+            dismiss();
+            mSubtitleViewListener.selectInternalSubtitle();
         });
         // Local Drive Subtitle
-        selectLocal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FastClickCheckUtil.check(view);
-                dismiss();
-                mLocalFileChooserListener.openLocalFileChooserDialog();
-            }
+        selectLocal.setOnClickListener(view -> {
+            FastClickCheckUtil.check(view);
+            dismiss();
+            mLocalFileChooserListener.openLocalFileChooserDialog();
         });
         // Remote Search Subtitle
-        selectRemote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FastClickCheckUtil.check(view);
-                dismiss();
-                mSearchSubtitleListener.openSearchSubtitleDialog();
-            }
+        selectRemote.setOnClickListener(view -> {
+            FastClickCheckUtil.check(view);
+            dismiss();
+            mSearchSubtitleListener.openSearchSubtitleDialog();
         });
 
         int size = SubtitleHelper.getTextSize(getOwnerActivity());
         subtitleSizeText.setText(Integer.toString(size));
 
-        subtitleSizeMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String sizeStr = subtitleSizeText.getText().toString();
-                int curSize = Integer.parseInt(sizeStr);
-                curSize -= 2;
-                if (curSize <= 10) {
-                    curSize = 10;
-                }
-                subtitleSizeText.setText(Integer.toString(curSize));
-                SubtitleHelper.setTextSize(curSize);
-                mSubtitleViewListener.setTextSize(curSize);
+        subtitleSizeMinus.setOnClickListener(view -> {
+            String sizeStr = subtitleSizeText.getText().toString();
+            int curSize = Integer.parseInt(sizeStr);
+            curSize -= 2;
+            if (curSize <= 10) {
+                curSize = 10;
             }
+            subtitleSizeText.setText(Integer.toString(curSize));
+            SubtitleHelper.setTextSize(curSize);
+            mSubtitleViewListener.setTextSize(curSize);
         });
-        subtitleSizePlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String sizeStr = subtitleSizeText.getText().toString();
-                int curSize = Integer.parseInt(sizeStr);
-                curSize += 2;
-                if (curSize >= 60) {
-                    curSize = 60;
-                }
-                subtitleSizeText.setText(Integer.toString(curSize));
-                SubtitleHelper.setTextSize(curSize);
-                mSubtitleViewListener.setTextSize(curSize);
+        subtitleSizePlus.setOnClickListener(view -> {
+            String sizeStr = subtitleSizeText.getText().toString();
+            int curSize = Integer.parseInt(sizeStr);
+            curSize += 2;
+            if (curSize >= 60) {
+                curSize = 60;
             }
+            subtitleSizeText.setText(Integer.toString(curSize));
+            SubtitleHelper.setTextSize(curSize);
+            mSubtitleViewListener.setTextSize(curSize);
         });
 
         int timeDelay = SubtitleHelper.getTimeDelay();
         String timeStr = "0";
         if (timeDelay != 0) {
-            double dbTimeDelay = timeDelay/1000;
+            double dbTimeDelay = timeDelay / 1000f;
             timeStr = Double.toString(dbTimeDelay);
         }
         subtitleTimeText.setText(timeStr);
 
-        subtitleTimeMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FastClickCheckUtil.check(view);
-                String timeStr = subtitleTimeText.getText().toString();
-                double time = Float.parseFloat(timeStr);
-                double oneceDelay = -0.5;
-                time += oneceDelay;
-                if (time == 0.0) {
-                    timeStr = "0";
-                } else {
-                    timeStr = Double.toString(time);
-                }
-                subtitleTimeText.setText(timeStr);
-                int mseconds = (int)(oneceDelay*1000);
-                SubtitleHelper.setTimeDelay((int)(time*1000));
-                mSubtitleViewListener.setSubtitleDelay(mseconds);
+        subtitleTimeMinus.setOnClickListener(view -> {
+            FastClickCheckUtil.check(view);
+            String timeStr1 = subtitleTimeText.getText().toString();
+            double time = Float.parseFloat(timeStr1);
+            double oneceDelay = -0.5;
+            time += oneceDelay;
+            if (time == 0.0) {
+                timeStr1 = "0";
+            } else {
+                timeStr1 = Double.toString(time);
             }
+            subtitleTimeText.setText(timeStr1);
+            int mseconds = (int) (oneceDelay * 1000);
+            SubtitleHelper.setTimeDelay((int) (time * 1000));
+            mSubtitleViewListener.setSubtitleDelay(mseconds);
         });
-        subtitleTimePlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FastClickCheckUtil.check(view);
-                String timeStr = subtitleTimeText.getText().toString();
-                double time = Float.parseFloat(timeStr);
-                double oneceDelay = 0.5;
-                time += oneceDelay;
-                if (time == 0.0) {
-                    timeStr = "0";
-                } else {
-                    timeStr = Double.toString(time);
-                }
-                subtitleTimeText.setText(timeStr);
-                int mseconds = (int)(oneceDelay*1000);
-                SubtitleHelper.setTimeDelay((int)(time*1000));
-                mSubtitleViewListener.setSubtitleDelay(mseconds);
+        subtitleTimePlus.setOnClickListener(view -> {
+            FastClickCheckUtil.check(view);
+            String timeStr12 = subtitleTimeText.getText().toString();
+            double time = Float.parseFloat(timeStr12);
+            double oneceDelay = 0.5;
+            time += oneceDelay;
+            if (time == 0.0) {
+                timeStr12 = "0";
+            } else {
+                timeStr12 = Double.toString(time);
             }
+            subtitleTimeText.setText(timeStr12);
+            int mseconds = (int) (oneceDelay * 1000);
+            SubtitleHelper.setTimeDelay((int) (time * 1000));
+            mSubtitleViewListener.setSubtitleDelay(mseconds);
         });
 
-        subtitleStyleOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int style = 0;
-                dismiss();
-                mSubtitleViewListener.setTextStyle(style);
-                Toast.makeText(getContext(), "设置样式成功", Toast.LENGTH_SHORT).show();
-            }
+        subtitleStyleOne.setOnClickListener(view -> {
+            int style = 0;
+            dismiss();
+            mSubtitleViewListener.setTextStyle(style);
+            Toast.makeText(getContext(), "设置样式成功", Toast.LENGTH_SHORT).show();
         });
-        subtitleStyleTwo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int style = 1;
-                dismiss();
-                mSubtitleViewListener.setTextStyle(style);
-                Toast.makeText(getContext(), "设置样式成功", Toast.LENGTH_SHORT).show();
-            }
+        subtitleStyleTwo.setOnClickListener(view -> {
+            int style = 1;
+            dismiss();
+            mSubtitleViewListener.setTextStyle(style);
+            Toast.makeText(getContext(), "设置样式成功", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -215,8 +187,11 @@ public class SubtitleDialog extends BaseDialog {
 
     public interface SubtitleViewListener {
         void setTextSize(int size);
+
         void setSubtitleDelay(int milliseconds);
+
         void selectInternalSubtitle();
+
         void setTextStyle(int style);
     }
 

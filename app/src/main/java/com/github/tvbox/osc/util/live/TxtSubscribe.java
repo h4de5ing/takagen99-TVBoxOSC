@@ -58,7 +58,7 @@ public class TxtSubscribe {
                 return;
             }
             linkedHashMap.put("未分组", linkedHashMap2);
-        } catch (Throwable unused) {
+        } catch (Throwable ignored) {
         }
     }
 
@@ -79,7 +79,7 @@ public class TxtSubscribe {
                         try {
                             jsonobj.addProperty("name", str2);
                             jsonobj.add("urls", jsonarr3);
-                        } catch (Throwable e) {
+                        } catch (Throwable ignored) {
                         }
                         jsonarr2.add(jsonobj);
                     }
@@ -88,7 +88,7 @@ public class TxtSubscribe {
                 try {
                     jsonobj2.addProperty("group", str);
                     jsonobj2.add("channels", jsonarr2);
-                } catch (Throwable e) {
+                } catch (Throwable ignored) {
                 }
                 jsonarr.add(jsonobj2);
             }

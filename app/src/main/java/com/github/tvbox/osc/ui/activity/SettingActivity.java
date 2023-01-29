@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.base.BaseActivity;
@@ -65,17 +64,14 @@ public class SettingActivity extends BaseActivity {
         sortAdapter = new SettingMenuAdapter();
         mGridView.setAdapter(sortAdapter);
         mGridView.setLayoutManager(new V7LinearLayoutManager(this.mContext, 1, false));
-        sortAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId() == R.id.tvName) {
-                    if (view.getParent() != null) {
-                        ((ViewGroup) view.getParent()).requestFocus();
-                        sortFocused = position;
-                        if (sortFocused != defaultSelected) {
-                            defaultSelected = sortFocused;
-                            mViewPager.setCurrentItem(sortFocused, false);
-                        }
+        sortAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.tvName) {
+                if (view.getParent() != null) {
+                    ((ViewGroup) view.getParent()).requestFocus();
+                    sortFocused = position;
+                    if (sortFocused != defaultSelected) {
+                        defaultSelected = sortFocused;
+                        mViewPager.setCurrentItem(sortFocused, false);
                     }
                 }
             }

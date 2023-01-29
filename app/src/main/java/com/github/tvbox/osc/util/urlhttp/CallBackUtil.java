@@ -37,22 +37,12 @@ public abstract class CallBackUtil<T> {
         } else {
             errorMessage = "";
         }
-        mMainHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                onFailure(response.code, errorMessage);
-            }
-        });
+        mMainHandler.post(() -> onFailure(response.code, errorMessage));
     }
 
     void onSeccess(RealResponse response) {
         final T obj = onParseResponse(response);
-        mMainHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                onResponse(obj);
-            }
-        });
+        mMainHandler.post(() -> onResponse(obj));
     }
 
     /**
@@ -194,25 +184,16 @@ public abstract class CallBackUtil<T> {
             try {
                 is = response.inputStream;
                 final long total = response.contentLength;
-
                 long sum = 0;
-
                 File dir = new File(mDestFileDir);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
+                if (!dir.exists()) dir.mkdirs();
                 File file = new File(dir, mdestFileName);
                 fos = new FileOutputStream(file);
                 while ((len = is.read(buf)) != -1) {
                     sum += len;
                     fos.write(buf, 0, len);
                     final long finalSum = sum;
-                    mMainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            onProgress(finalSum * 100.0f / total, total);
-                        }
-                    });
+                    mMainHandler.post(() -> onProgress(finalSum * 100.0f / total, total));
                 }
                 fos.flush();
 
@@ -224,11 +205,11 @@ public abstract class CallBackUtil<T> {
                 try {
                     fos.close();
                     if (is != null) is.close();
-                } catch (IOException e) {
+                } catch (IOException ignored) {
                 }
                 try {
-                    if (fos != null) fos.close();
-                } catch (IOException e) {
+                    fos.close();
+                } catch (IOException ignored) {
                 }
 
             }
@@ -243,7 +224,7 @@ public abstract class CallBackUtil<T> {
             StringBuilder sb = new StringBuilder();
             String line = "";
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line).append("\n");
             }
             is.close();
             buf = sb.toString();

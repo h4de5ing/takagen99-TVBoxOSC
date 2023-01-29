@@ -33,11 +33,8 @@ public class CustomWebReceiver extends BroadcastReceiver {
             if (action.equals(REFRESH_PARSE)) {
                 /*String name = intent.getExtras().getString("name");
                 String url = intent.getExtras().getString("url");*/
-                return;
             } else if (action.equals(REFRESH_LIVE)) {
-                return;
             } else {
-                return;
             }
             /*if (callback != null) {
                 for (Callback call : callback) {

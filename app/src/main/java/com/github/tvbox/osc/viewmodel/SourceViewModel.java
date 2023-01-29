@@ -82,53 +82,44 @@ public class SourceViewModel extends ViewModel {
         SourceBean sourceBean = ApiConfig.get().getSource(sourceKey);
         int type = sourceBean.getType();
         if (type == 3) {
-            Runnable waitResponse = new Runnable() {
-                @Override
-                public void run() {
-                    ExecutorService executor = Executors.newSingleThreadExecutor();
-                    Future<String> future = executor.submit(new Callable<String>() {
-                        @Override
-                        public String call() throws Exception {
-                            Spider sp = ApiConfig.get().getCSP(sourceBean);
-                            return sp.homeContent(true);
-                        }
-                    });
-                    String sortJson = null;
-                    try {
-                        sortJson = future.get(15, TimeUnit.SECONDS);
-                    } catch (TimeoutException e) {
-                        e.printStackTrace();
-                        future.cancel(true);
-                    } catch (InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
-                    } finally {
-                        if (sortJson != null) {
-                            AbsSortXml sortXml = sortJson(sortResult, sortJson);
-                            if (sortXml != null && Hawk.get(HawkConfig.HOME_REC, 0) == 1) {
-                                AbsXml absXml = json(null, sortJson, sourceBean.getKey());
-                                if (absXml != null && absXml.movie != null && absXml.movie.videoList != null && absXml.movie.videoList.size() > 0) {
-                                    sortXml.videoList = absXml.movie.videoList;
-                                    sortResult.postValue(sortXml);
-                                } else {
-                                    getHomeRecList(sourceBean, null, new HomeRecCallback() {
-                                        @Override
-                                        public void done(List<Movie.Video> videos) {
-                                            sortXml.videoList = videos;
-                                            sortResult.postValue(sortXml);
-                                        }
-                                    });
-                                }
-                            } else {
+            Runnable waitResponse = () -> {
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                Future<String> future = executor.submit(() -> {
+                    Spider sp = ApiConfig.get().getCSP(sourceBean);
+                    return sp.homeContent(true);
+                });
+                String sortJson = null;
+                try {
+                    sortJson = future.get(15, TimeUnit.SECONDS);
+                } catch (TimeoutException e) {
+                    e.printStackTrace();
+                    future.cancel(true);
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (sortJson != null) {
+                        AbsSortXml sortXml = sortJson(sortResult, sortJson);
+                        if (sortXml != null && Hawk.get(HawkConfig.HOME_REC, 0) == 1) {
+                            AbsXml absXml = json(null, sortJson, sourceBean.getKey());
+                            if (absXml != null && absXml.movie != null && absXml.movie.videoList != null && absXml.movie.videoList.size() > 0) {
+                                sortXml.videoList = absXml.movie.videoList;
                                 sortResult.postValue(sortXml);
+                            } else {
+                                getHomeRecList(sourceBean, null, videos -> {
+                                    sortXml.videoList = videos;
+                                    sortResult.postValue(sortXml);
+                                });
                             }
                         } else {
-                            sortResult.postValue(null);
+                            sortResult.postValue(sortXml);
                         }
-                        try {
-                            executor.shutdown();
-                        } catch (Throwable th) {
-                            th.printStackTrace();
-                        }
+                    } else {
+                        sortResult.postValue(null);
+                    }
+                    try {
+                        executor.shutdown();
+                    } catch (Throwable th) {
+                        th.printStackTrace();
                     }
                 }
             };
@@ -162,12 +153,9 @@ public class SourceViewModel extends ViewModel {
                                     ids.add(vod.id);
                                 }
                                 AbsSortXml finalSortXml = sortXml;
-                                getHomeRecList(sourceBean, ids, new HomeRecCallback() {
-                                    @Override
-                                    public void done(List<Movie.Video> videos) {
-                                        finalSortXml.videoList = videos;
-                                        sortResult.postValue(finalSortXml);
-                                    }
+                                getHomeRecList(sourceBean, ids, videos -> {
+                                    finalSortXml.videoList = videos;
+                                    sortResult.postValue(finalSortXml);
                                 });
                             } else {
                                 sortResult.postValue(sortXml);
@@ -206,12 +194,9 @@ public class SourceViewModel extends ViewModel {
                                         sortXml.videoList = absXml.movie.videoList;
                                         sortResult.postValue(sortXml);
                                     } else {
-                                        getHomeRecList(sourceBean, null, new HomeRecCallback() {
-                                            @Override
-                                            public void done(List<Movie.Video> videos) {
-                                                sortXml.videoList = videos;
-                                                sortResult.postValue(sortXml);
-                                            }
+                                        getHomeRecList(sourceBean, null, videos -> {
+                                            sortXml.videoList = videos;
+                                            sortResult.postValue(sortXml);
                                         });
                                     }
                                 } else {
@@ -238,15 +223,12 @@ public class SourceViewModel extends ViewModel {
         SourceBean homeSourceBean = ApiConfig.get().getHomeSourceBean();
         int type = homeSourceBean.getType();
         if (type == 3) {
-            spThreadPool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Spider sp = ApiConfig.get().getCSP(homeSourceBean);
-                        json(listResult, sp.categoryContent(sortData.id, page + "", true, sortData.filterSelect), homeSourceBean.getKey());
-                    } catch (Throwable th) {
-                        th.printStackTrace();
-                    }
+            spThreadPool.execute(() -> {
+                try {
+                    Spider sp = ApiConfig.get().getCSP(homeSourceBean);
+                    json(listResult, sp.categoryContent(sortData.id, page + "", true, sortData.filterSelect), homeSourceBean.getKey());
+                } catch (Throwable th) {
+                    th.printStackTrace();
                 }
             });
         } else if (type == 0 || type == 1) {
@@ -339,41 +321,35 @@ public class SourceViewModel extends ViewModel {
     void getHomeRecList(SourceBean sourceBean, ArrayList<String> ids, HomeRecCallback callback) {
         int type = sourceBean.getType();
         if (type == 3) {
-            Runnable waitResponse = new Runnable() {
-                @Override
-                public void run() {
-                    ExecutorService executor = Executors.newSingleThreadExecutor();
-                    Future<String> future = executor.submit(new Callable<String>() {
-                        @Override
-                        public String call() throws Exception {
-                            Spider sp = ApiConfig.get().getCSP(sourceBean);
-                            return sp.homeVideoContent();
-                        }
-                    });
-                    String sortJson = null;
-                    try {
-                        sortJson = future.get(15, TimeUnit.SECONDS);
-                    } catch (TimeoutException e) {
-                        e.printStackTrace();
-                        future.cancel(true);
-                    } catch (InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
-                    } finally {
-                        if (sortJson != null) {
-                            AbsXml absXml = json(null, sortJson, sourceBean.getKey());
-                            if (absXml != null && absXml.movie != null && absXml.movie.videoList != null) {
-                                callback.done(absXml.movie.videoList);
-                            } else {
-                                callback.done(null);
-                            }
+            Runnable waitResponse = () -> {
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                Future<String> future = executor.submit(() -> {
+                    Spider sp = ApiConfig.get().getCSP(sourceBean);
+                    return sp.homeVideoContent();
+                });
+                String sortJson = null;
+                try {
+                    sortJson = future.get(15, TimeUnit.SECONDS);
+                } catch (TimeoutException e) {
+                    e.printStackTrace();
+                    future.cancel(true);
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (sortJson != null) {
+                        AbsXml absXml = json(null, sortJson, sourceBean.getKey());
+                        if (absXml != null && absXml.movie != null && absXml.movie.videoList != null) {
+                            callback.done(absXml.movie.videoList);
                         } else {
                             callback.done(null);
                         }
-                        try {
-                            executor.shutdown();
-                        } catch (Throwable th) {
-                            th.printStackTrace();
-                        }
+                    } else {
+                        callback.done(null);
+                    }
+                    try {
+                        executor.shutdown();
+                    } catch (Throwable th) {
+                        th.printStackTrace();
                     }
                 }
             };
@@ -427,17 +403,14 @@ public class SourceViewModel extends ViewModel {
         SourceBean sourceBean = ApiConfig.get().getSource(sourceKey);
         int type = sourceBean.getType();
         if (type == 3) {
-            spThreadPool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Spider sp = ApiConfig.get().getCSP(sourceBean);
-                        List<String> ids = new ArrayList<>();
-                        ids.add(id);
-                        json(detailResult, sp.detailContent(ids), sourceBean.getKey());
-                    } catch (Throwable th) {
-                        th.printStackTrace();
-                    }
+            spThreadPool.execute(() -> {
+                try {
+                    Spider sp = ApiConfig.get().getCSP(sourceBean);
+                    List<String> ids = new ArrayList<>();
+                    ids.add(id);
+                    json(detailResult, sp.detailContent(ids), sourceBean.getKey());
+                } catch (Throwable th) {
+                    th.printStackTrace();
                 }
             });
         } else if (type == 0 || type == 1 || type == 4) {
@@ -648,23 +621,20 @@ public class SourceViewModel extends ViewModel {
         SourceBean sourceBean = ApiConfig.get().getSource(sourceKey);
         int type = sourceBean.getType();
         if (type == 3) {
-            spThreadPool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    Spider sp = ApiConfig.get().getCSP(sourceBean);
-                    String json = sp.playerContent(playFlag, url, ApiConfig.get().getVipParseFlags());
-                    try {
-                        JSONObject result = new JSONObject(json);
-                        result.put("key", url);
-                        result.put("proKey", progressKey);
-                        result.put("subtKey", subtitleKey);
-                        if (!result.has("flag"))
-                            result.put("flag", playFlag);
-                        playResult.postValue(result);
-                    } catch (Throwable th) {
-                        th.printStackTrace();
-                        playResult.postValue(null);
-                    }
+            spThreadPool.execute(() -> {
+                Spider sp = ApiConfig.get().getCSP(sourceBean);
+                String json = sp.playerContent(playFlag, url, ApiConfig.get().getVipParseFlags());
+                try {
+                    JSONObject result = new JSONObject(json);
+                    result.put("key", url);
+                    result.put("proKey", progressKey);
+                    result.put("subtKey", subtitleKey);
+                    if (!result.has("flag"))
+                        result.put("flag", playFlag);
+                    playResult.postValue(result);
+                } catch (Throwable th) {
+                    th.printStackTrace();
+                    playResult.postValue(null);
                 }
             });
         } else if (type == 0 || type == 1) {

@@ -28,10 +28,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentContainerView;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.base.BaseActivity;
@@ -344,28 +342,25 @@ public class DetailActivity extends BaseActivity {
                 refresh(itemView, position);
             }
         });
-        seriesAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                FastClickCheckUtil.check(view);
-                if (vodInfo != null && vodInfo.seriesMap.get(vodInfo.playFlag).size() > 0) {
-                    boolean reload = false;
-                    if (vodInfo.playIndex != position) {
-                        seriesAdapter.getData().get(vodInfo.playIndex).selected = false;
-                        seriesAdapter.notifyItemChanged(vodInfo.playIndex);
-                        seriesAdapter.getData().get(position).selected = true;
-                        seriesAdapter.notifyItemChanged(position);
-                        vodInfo.playIndex = position;
-                        reload = true;
-                    }
-                    //解决当前集不刷新的BUG
-                    if (!vodInfo.playFlag.equals(preFlag)) {
-                        reload = true;
-                    }
-                    //选集全屏 想选集不全屏的注释下面一行
-                    if (showPreview && !fullWindows) toggleFullPreview();
-                    if (reload || !showPreview) jumpToPlay();
+        seriesAdapter.setOnItemClickListener((adapter, view, position) -> {
+            FastClickCheckUtil.check(view);
+            if (vodInfo != null && vodInfo.seriesMap.get(vodInfo.playFlag).size() > 0) {
+                boolean reload = false;
+                if (vodInfo.playIndex != position) {
+                    seriesAdapter.getData().get(vodInfo.playIndex).selected = false;
+                    seriesAdapter.notifyItemChanged(vodInfo.playIndex);
+                    seriesAdapter.getData().get(position).selected = true;
+                    seriesAdapter.notifyItemChanged(position);
+                    vodInfo.playIndex = position;
+                    reload = true;
                 }
+                //解决当前集不刷新的BUG
+                if (!vodInfo.playFlag.equals(preFlag)) {
+                    reload = true;
+                }
+                //选集全屏 想选集不全屏的注释下面一行
+                if (showPreview && !fullWindows) toggleFullPreview();
+                if (reload || !showPreview) jumpToPlay();
             }
         });
         setLoadSir(llLayout);
@@ -447,12 +442,7 @@ public class DetailActivity extends BaseActivity {
         mGridViewLayoutMgr.setSpanCount(offset);
 
         seriesAdapter.setNewData(vodInfo.seriesMap.get(vodInfo.playFlag));
-        mGridView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mGridView.scrollToPosition(vodInfo.playIndex);
-            }
-        }, 100);
+        mGridView.postDelayed(() -> mGridView.scrollToPosition(vodInfo.playIndex), 100);
     }
 
     private void setTextShow(TextView view, String tag, String info) {
@@ -465,106 +455,93 @@ public class DetailActivity extends BaseActivity {
     }
 
     private String removeHtmlTag(String info) {
-        if (info == null)
-            return "";
+        if (info == null) return "";
         return info.replaceAll("\\<.*?\\>", "").replaceAll("\\s", "");
     }
 
     private void initViewModel() {
         sourceViewModel = new ViewModelProvider(this).get(SourceViewModel.class);
-        sourceViewModel.detailResult.observe(this, new Observer<AbsXml>() {
-            @Override
-            public void onChanged(AbsXml absXml) {
-                if (absXml != null && absXml.movie != null && absXml.movie.videoList != null && absXml.movie.videoList.size() > 0) {
-                    showSuccess();
-                    mVideo = absXml.movie.videoList.get(0);
-                    vodInfo = new VodInfo();
-                    vodInfo.setVideo(mVideo);
-                    vodInfo.sourceKey = mVideo.sourceKey;
+        sourceViewModel.detailResult.observe(this, absXml -> {
+            if (absXml != null && absXml.movie != null && absXml.movie.videoList != null && absXml.movie.videoList.size() > 0) {
+                showSuccess();
+                mVideo = absXml.movie.videoList.get(0);
+                vodInfo = new VodInfo();
+                vodInfo.setVideo(mVideo);
+                vodInfo.sourceKey = mVideo.sourceKey;
 
-                    tvName.setText(mVideo.name);
-                    setTextShow(tvSite, getString(R.string.det_source), ApiConfig.get().getSource(mVideo.sourceKey).getName());
-                    setTextShow(tvYear, getString(R.string.det_year), mVideo.year == 0 ? "" : String.valueOf(mVideo.year));
-                    setTextShow(tvArea, getString(R.string.det_area), mVideo.area);
-                    setTextShow(tvLang, getString(R.string.det_lang), mVideo.lang);
-                    setTextShow(tvType, getString(R.string.det_type), mVideo.type);
-                    setTextShow(tvActor, getString(R.string.det_actor), mVideo.actor);
-                    setTextShow(tvDirector, getString(R.string.det_dir), mVideo.director);
-                    setTextShow(tvDes, getString(R.string.det_des), removeHtmlTag(mVideo.des));
-                    if (!TextUtils.isEmpty(mVideo.pic)) {
-                        Picasso.get()
-                                .load(DefaultConfig.checkReplaceProxy(mVideo.pic))
-                                .transform(new RoundTransformation(MD5.string2MD5(mVideo.pic + mVideo.name))
-                                        .centerCorp(true)
-                                        .override(AutoSizeUtils.mm2px(mContext, 300), AutoSizeUtils.mm2px(mContext, 400))
-                                        .roundRadius(AutoSizeUtils.mm2px(mContext, 15), RoundTransformation.RoundType.ALL))
-                                .placeholder(R.drawable.img_loading_placeholder)
-                                .error(R.drawable.img_loading_placeholder)
-                                .into(ivThumb);
-                    } else {
-                        ivThumb.setImageResource(R.drawable.img_loading_placeholder);
-                    }
-
-                    if (vodInfo.seriesMap != null && vodInfo.seriesMap.size() > 0) {
-                        mGridViewFlag.setVisibility(View.VISIBLE);
-                        mGridView.setVisibility(View.VISIBLE);
-//                        tvPlay.setVisibility(View.VISIBLE);
-                        mEmptyPlayList.setVisibility(View.GONE);
-
-                        VodInfo vodInfoRecord = RoomDataManger.getVodInfo(sourceKey, vodId);
-                        // 读取历史记录
-                        if (vodInfoRecord != null) {
-                            vodInfo.playIndex = Math.max(vodInfoRecord.playIndex, 0);
-                            vodInfo.playFlag = vodInfoRecord.playFlag;
-                            vodInfo.playerCfg = vodInfoRecord.playerCfg;
-                            vodInfo.reverseSort = vodInfoRecord.reverseSort;
-                        } else {
-                            vodInfo.playIndex = 0;
-                            vodInfo.playFlag = null;
-                            vodInfo.playerCfg = "";
-                            vodInfo.reverseSort = false;
-                        }
-
-                        if (vodInfo.reverseSort) {
-                            vodInfo.reverse();
-                        }
-
-                        if (vodInfo.playFlag == null || !vodInfo.seriesMap.containsKey(vodInfo.playFlag))
-                            vodInfo.playFlag = (String) vodInfo.seriesMap.keySet().toArray()[0];
-
-                        int flagScrollTo = 0;
-                        for (int j = 0; j < vodInfo.seriesFlags.size(); j++) {
-                            VodInfo.VodSeriesFlag flag = vodInfo.seriesFlags.get(j);
-                            if (flag.name.equals(vodInfo.playFlag)) {
-                                flagScrollTo = j;
-                                flag.selected = true;
-                            } else
-                                flag.selected = false;
-                        }
-
-                        seriesFlagAdapter.setNewData(vodInfo.seriesFlags);
-                        mGridViewFlag.scrollToPosition(flagScrollTo);
-
-                        refreshList();
-                        if (showPreview) {
-                            jumpToPlay();
-                            llPlayerFragmentContainer.setVisibility(View.VISIBLE);
-                            llPlayerFragmentContainerBlock.setVisibility(View.VISIBLE);
-                            llPlayerFragmentContainerBlock.requestFocus();
-                            toggleSubtitleTextSize();
-                        }
-                        // startQuickSearch();
-                    } else {
-                        mGridViewFlag.setVisibility(View.GONE);
-                        mGridView.setVisibility(View.GONE);
-                        tvPlay.setVisibility(View.GONE);
-                        mEmptyPlayList.setVisibility(View.VISIBLE);
-                    }
+                tvName.setText(mVideo.name);
+                setTextShow(tvSite, getString(R.string.det_source), ApiConfig.get().getSource(mVideo.sourceKey).getName());
+                setTextShow(tvYear, getString(R.string.det_year), mVideo.year == 0 ? "" : String.valueOf(mVideo.year));
+                setTextShow(tvArea, getString(R.string.det_area), mVideo.area);
+                setTextShow(tvLang, getString(R.string.det_lang), mVideo.lang);
+                setTextShow(tvType, getString(R.string.det_type), mVideo.type);
+                setTextShow(tvActor, getString(R.string.det_actor), mVideo.actor);
+                setTextShow(tvDirector, getString(R.string.det_dir), mVideo.director);
+                setTextShow(tvDes, getString(R.string.det_des), removeHtmlTag(mVideo.des));
+                if (!TextUtils.isEmpty(mVideo.pic)) {
+                    Picasso.get().load(DefaultConfig.checkReplaceProxy(mVideo.pic)).transform(new RoundTransformation(MD5.string2MD5(mVideo.pic + mVideo.name)).centerCorp(true).override(AutoSizeUtils.mm2px(mContext, 300), AutoSizeUtils.mm2px(mContext, 400)).roundRadius(AutoSizeUtils.mm2px(mContext, 15), RoundTransformation.RoundType.ALL)).placeholder(R.drawable.img_loading_placeholder).error(R.drawable.img_loading_placeholder).into(ivThumb);
                 } else {
-                    showEmpty();
-                    llPlayerFragmentContainer.setVisibility(View.GONE);
-                    llPlayerFragmentContainerBlock.setVisibility(View.GONE);
+                    ivThumb.setImageResource(R.drawable.img_loading_placeholder);
                 }
+
+                if (vodInfo.seriesMap != null && vodInfo.seriesMap.size() > 0) {
+                    mGridViewFlag.setVisibility(View.VISIBLE);
+                    mGridView.setVisibility(View.VISIBLE);
+//                        tvPlay.setVisibility(View.VISIBLE);
+                    mEmptyPlayList.setVisibility(View.GONE);
+
+                    VodInfo vodInfoRecord = RoomDataManger.getVodInfo(sourceKey, vodId);
+                    // 读取历史记录
+                    if (vodInfoRecord != null) {
+                        vodInfo.playIndex = Math.max(vodInfoRecord.playIndex, 0);
+                        vodInfo.playFlag = vodInfoRecord.playFlag;
+                        vodInfo.playerCfg = vodInfoRecord.playerCfg;
+                        vodInfo.reverseSort = vodInfoRecord.reverseSort;
+                    } else {
+                        vodInfo.playIndex = 0;
+                        vodInfo.playFlag = null;
+                        vodInfo.playerCfg = "";
+                        vodInfo.reverseSort = false;
+                    }
+
+                    if (vodInfo.reverseSort) {
+                        vodInfo.reverse();
+                    }
+
+                    if (vodInfo.playFlag == null || !vodInfo.seriesMap.containsKey(vodInfo.playFlag))
+                        vodInfo.playFlag = (String) vodInfo.seriesMap.keySet().toArray()[0];
+
+                    int flagScrollTo = 0;
+                    for (int j = 0; j < vodInfo.seriesFlags.size(); j++) {
+                        VodInfo.VodSeriesFlag flag = vodInfo.seriesFlags.get(j);
+                        if (flag.name.equals(vodInfo.playFlag)) {
+                            flagScrollTo = j;
+                            flag.selected = true;
+                        } else flag.selected = false;
+                    }
+
+                    seriesFlagAdapter.setNewData(vodInfo.seriesFlags);
+                    mGridViewFlag.scrollToPosition(flagScrollTo);
+
+                    refreshList();
+                    if (showPreview) {
+                        jumpToPlay();
+                        llPlayerFragmentContainer.setVisibility(View.VISIBLE);
+                        llPlayerFragmentContainerBlock.setVisibility(View.VISIBLE);
+                        llPlayerFragmentContainerBlock.requestFocus();
+                        toggleSubtitleTextSize();
+                    }
+                    // startQuickSearch();
+                } else {
+                    mGridViewFlag.setVisibility(View.GONE);
+                    mGridView.setVisibility(View.GONE);
+                    tvPlay.setVisibility(View.GONE);
+                    mEmptyPlayList.setVisibility(View.VISIBLE);
+                }
+            } else {
+                showEmpty();
+                llPlayerFragmentContainer.setVisibility(View.GONE);
+                llPlayerFragmentContainerBlock.setVisibility(View.GONE);
             }
         });
     }
@@ -664,8 +641,7 @@ public class DetailActivity extends BaseActivity {
 
     private void startQuickSearch() {
         initCheckedSourcesForSearch();
-        if (hadQuickStart)
-            return;
+        if (hadQuickStart) return;
         hadQuickStart = true;
         OkGo.getInstance().cancelTag("quick_search");
         quickSearchWord.clear();
@@ -673,38 +649,36 @@ public class DetailActivity extends BaseActivity {
         quickSearchData.clear();
         quickSearchWord.add(searchTitle);
         // 分词
-        OkGo.<String>get("http://api.pullword.com/get.php?source=" + URLEncoder.encode(searchTitle) + "&param1=0&param2=0&json=1")
-                .tag("fenci")
-                .execute(new AbsCallback<String>() {
-                    @Override
-                    public String convertResponse(okhttp3.Response response) throws Throwable {
-                        if (response.body() != null) {
-                            return response.body().string();
-                        } else {
-                            throw new IllegalStateException("网络请求错误");
-                        }
-                    }
+        OkGo.<String>get("http://api.pullword.com/get.php?source=" + URLEncoder.encode(searchTitle) + "&param1=0&param2=0&json=1").tag("fenci").execute(new AbsCallback<String>() {
+            @Override
+            public String convertResponse(okhttp3.Response response) throws Throwable {
+                if (response.body() != null) {
+                    return response.body().string();
+                } else {
+                    throw new IllegalStateException("网络请求错误");
+                }
+            }
 
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        String json = response.body();
-                        quickSearchWord.clear();
-                        try {
-                            for (JsonElement je : new Gson().fromJson(json, JsonArray.class)) {
-                                quickSearchWord.add(je.getAsJsonObject().get("t").getAsString());
-                            }
-                        } catch (Throwable th) {
-                            th.printStackTrace();
-                        }
-                        quickSearchWord.add(searchTitle);
-                        EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_QUICK_SEARCH_WORD, quickSearchWord));
+            @Override
+            public void onSuccess(Response<String> response) {
+                String json = response.body();
+                quickSearchWord.clear();
+                try {
+                    for (JsonElement je : new Gson().fromJson(json, JsonArray.class)) {
+                        quickSearchWord.add(je.getAsJsonObject().get("t").getAsString());
                     }
+                } catch (Throwable th) {
+                    th.printStackTrace();
+                }
+                quickSearchWord.add(searchTitle);
+                EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_QUICK_SEARCH_WORD, quickSearchWord));
+            }
 
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                    }
-                });
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+            }
+        });
 
         searchResult();
     }
@@ -736,12 +710,7 @@ public class DetailActivity extends BaseActivity {
             siteKey.add(bean.getKey());
         }
         for (String key : siteKey) {
-            searchExecutorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    sourceViewModel.getQuickSearch(key, searchTitle);
-                }
-            });
+            searchExecutorService.execute(() -> sourceViewModel.getQuickSearch(key, searchTitle));
         }
     }
 
@@ -750,8 +719,7 @@ public class DetailActivity extends BaseActivity {
             List<Movie.Video> data = new ArrayList<>();
             for (Movie.Video video : absXml.movie.videoList) {
                 // 去除当前相同的影片
-                if (video.sourceKey.equals(sourceKey) && video.id.equals(vodId))
-                    continue;
+                if (video.sourceKey.equals(sourceKey) && video.id.equals(vodId)) continue;
                 data.add(video);
             }
             quickSearchData.addAll(data);
@@ -808,9 +776,7 @@ public class DetailActivity extends BaseActivity {
             actions.add(generateRemoteAction(android.R.drawable.ic_media_previous, PIP_BOARDCAST_ACTION_PREV, "Prev", "Play Previous"));
             actions.add(generateRemoteAction(android.R.drawable.ic_media_play, PIP_BOARDCAST_ACTION_PLAYPAUSE, "Play", "Play/Pause"));
             actions.add(generateRemoteAction(android.R.drawable.ic_media_next, PIP_BOARDCAST_ACTION_NEXT, "Next", "Play Next"));
-            PictureInPictureParams params = new PictureInPictureParams.Builder()
-                    .setAspectRatio(ratio)
-                    .setActions(actions).build();
+            PictureInPictureParams params = new PictureInPictureParams.Builder().setAspectRatio(ratio).setActions(actions).build();
             if (!fullWindows) {
                 toggleFullPreview();
             }
@@ -822,12 +788,7 @@ public class DetailActivity extends BaseActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private RemoteAction generateRemoteAction(int iconResId, int actionCode, String title, String desc) {
-        final PendingIntent intent =
-                PendingIntent.getBroadcast(
-                        DetailActivity.this,
-                        actionCode,
-                        new Intent("PIP_VOD_CONTROL").putExtra("action", actionCode),
-                        0);
+        final PendingIntent intent = PendingIntent.getBroadcast(DetailActivity.this, actionCode, new Intent("PIP_VOD_CONTROL").putExtra("action", actionCode), 0);
         final Icon icon = Icon.createWithResource(DetailActivity.this, iconResId);
         return (new RemoteAction(icon, title, desc, intent));
     }
@@ -865,8 +826,7 @@ public class DetailActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (fullWindows) {
-            if (playFragment.onBackPressed())
-                return;
+            if (playFragment.onBackPressed()) return;
             toggleFullPreview();
             mGridView.requestFocus();
             return;

@@ -71,7 +71,7 @@ public class SearchCheckboxDialog extends BaseDialog {
 
         // Multi Column Selection
         int size = mSourceList.size();
-        int spanCount = (int) Math.floor(size / 10);
+        int spanCount = (int) Math.floor(size / 10.0);
         if (spanCount <= 1) spanCount = 2;
         if (spanCount >= 3) spanCount = 3;
         mGridView.setLayoutManager(new V7GridLayoutManager(getContext(), spanCount));
@@ -82,7 +82,7 @@ public class SearchCheckboxDialog extends BaseDialog {
         mGridView.setAdapter(checkboxSearchAdapter);
         checkboxSearchAdapter.setData(mSourceList, mCheckSourcees);
         int pos = 0;
-        if (mSourceList != null && mCheckSourcees != null) {
+        if (mCheckSourcees != null) {
             for (int i = 0; i < mSourceList.size(); i++) {
                 String key = mSourceList.get(i).getKey();
                 if (mCheckSourcees.containsKey(key)) {
@@ -92,31 +92,19 @@ public class SearchCheckboxDialog extends BaseDialog {
             }
         }
         final int scrollPosition = pos;
-        mGridView.post(new Runnable() {
-            @Override
-            public void run() {
-                mGridView.smoothScrollToPosition(scrollPosition);
+        mGridView.post(() -> mGridView.smoothScrollToPosition(scrollPosition));
+        checkAll.setOnClickListener(view -> {
+            FastClickCheckUtil.check(view);
+            mCheckSourcees = new HashMap<>();
+            for (SourceBean sourceBean : mSourceList) {
+                mCheckSourcees.put(sourceBean.getKey(), "1");
             }
+            checkboxSearchAdapter.setData(mSourceList, mCheckSourcees);
         });
-        checkAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FastClickCheckUtil.check(view);
-                mCheckSourcees = new HashMap<>();
-                assert mSourceList != null;
-                for (SourceBean sourceBean : mSourceList) {
-                    mCheckSourcees.put(sourceBean.getKey(), "1");
-                }
-                checkboxSearchAdapter.setData(mSourceList, mCheckSourcees);
-            }
-        });
-        clearAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FastClickCheckUtil.check(view);
-                mCheckSourcees = new HashMap<>();
-                checkboxSearchAdapter.setData(mSourceList, mCheckSourcees);
-            }
+        clearAll.setOnClickListener(view -> {
+            FastClickCheckUtil.check(view);
+            mCheckSourcees = new HashMap<>();
+            checkboxSearchAdapter.setData(mSourceList, mCheckSourcees);
         });
     }
 }

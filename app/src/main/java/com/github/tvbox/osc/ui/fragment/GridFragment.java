@@ -6,14 +6,11 @@ import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.base.BaseLazyFragment;
-import com.github.tvbox.osc.bean.AbsXml;
 import com.github.tvbox.osc.bean.Movie;
 import com.github.tvbox.osc.bean.MovieSort;
 import com.github.tvbox.osc.bean.SourceBean;
@@ -21,7 +18,6 @@ import com.github.tvbox.osc.ui.activity.DetailActivity;
 import com.github.tvbox.osc.ui.activity.FastSearchActivity;
 import com.github.tvbox.osc.ui.adapter.GridAdapter;
 import com.github.tvbox.osc.ui.dialog.GridFilterDialog;
-import com.github.tvbox.osc.ui.tv.widget.LoadMoreView;
 import com.github.tvbox.osc.util.FastClickCheckUtil;
 import com.github.tvbox.osc.viewmodel.SourceViewModel;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
@@ -165,14 +161,8 @@ public class GridFragment extends BaseLazyFragment {
         } else {
             mGridView.setLayoutManager(new V7GridLayoutManager(this.mContext, isBaseOnWidth() ? 5 : 6));
         }
-
-        gridAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                gridAdapter.setEnableLoadMore(true);
-                sourceViewModel.getList(sortData, page);
-            }
-        }, mGridView);
+        gridAdapter.getLoadMoreModule().setEnableLoadMore(true);
+        gridAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> sourceViewModel.getList(sortData, page));
         mGridView.setOnItemListener(new TvRecyclerView.OnItemListener() {
             @Override
             public void onItemPreSelected(TvRecyclerView parent, View itemView, int position) {
@@ -189,57 +179,43 @@ public class GridFragment extends BaseLazyFragment {
 
             }
         });
-        mGridView.setOnInBorderKeyEventListener(new TvRecyclerView.OnInBorderKeyEventListener() {
-            @Override
-            public boolean onInBorderKeyEvent(int direction, View focused) {
-                if (direction == View.FOCUS_UP) {
-                }
-                return false;
-            }
-        });
-        gridAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                FastClickCheckUtil.check(view);
-                Movie.Video video = gridAdapter.getData().get(position);
-                if (video != null) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", video.id);
-                    bundle.putString("sourceKey", video.sourceKey);
-                    bundle.putString("title", video.name);
+        mGridView.setOnInBorderKeyEventListener((direction, focused) -> false);
+        gridAdapter.setOnItemClickListener((adapter, view, position) -> {
+            FastClickCheckUtil.check(view);
+            Movie.Video video = gridAdapter.getData().get(position);
+            if (video != null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("id", video.id);
+                bundle.putString("sourceKey", video.sourceKey);
+                bundle.putString("title", video.name);
 
-                    SourceBean homeSourceBean = ApiConfig.get().getHomeSourceBean();
-                    if (("12".indexOf(getUITag()) != -1) && video.tag.equals("folder")) {
-                        focusedView = view;
-                        changeView(video.id);
+                SourceBean homeSourceBean = ApiConfig.get().getHomeSourceBean();
+                if (("12".indexOf(getUITag()) != -1) && video.tag.equals("folder")) {
+                    focusedView = view;
+                    changeView(video.id);
+                } else {
+                    if (video.id == null || video.id.isEmpty() || video.id.startsWith("msearch:")) {
+                        jumpActivity(FastSearchActivity.class, bundle);
                     } else {
-                        if (video.id == null || video.id.isEmpty() || video.id.startsWith("msearch:")) {
-                            jumpActivity(FastSearchActivity.class, bundle);
-                        } else {
-                            jumpActivity(DetailActivity.class, bundle);
-                        }
+                        jumpActivity(DetailActivity.class, bundle);
                     }
-
                 }
+
             }
         });
         // takagen99 : Long Press to Fast Search
-        gridAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                FastClickCheckUtil.check(view);
-                Movie.Video video = gridAdapter.getData().get(position);
-                if (video != null) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", video.id);
-                    bundle.putString("sourceKey", video.sourceKey);
-                    bundle.putString("title", video.name);
-                    jumpActivity(FastSearchActivity.class, bundle);
-                }
-                return true;
+        gridAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            FastClickCheckUtil.check(view);
+            Movie.Video video = gridAdapter.getData().get(position);
+            if (video != null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("id", video.id);
+                bundle.putString("sourceKey", video.sourceKey);
+                bundle.putString("title", video.name);
+                jumpActivity(FastSearchActivity.class, bundle);
             }
+            return true;
         });
-        gridAdapter.setLoadMoreView(new LoadMoreView());
         setLoadSir(mGridView);
     }
 
@@ -248,39 +224,36 @@ public class GridFragment extends BaseLazyFragment {
             return;
         }
         sourceViewModel = new ViewModelProvider(this).get(SourceViewModel.class);
-        sourceViewModel.listResult.observe(this, new Observer<AbsXml>() {
-            @Override
-            public void onChanged(AbsXml absXml) {
+        sourceViewModel.listResult.observe(this, absXml -> {
 //                if(mGridView != null) mGridView.requestFocus();
-                if (absXml != null && absXml.movie != null && absXml.movie.videoList != null && absXml.movie.videoList.size() > 0) {
-                    if (page == 1) {
-                        showSuccess();
-                        isLoad = true;
-                        gridAdapter.setNewData(absXml.movie.videoList);
-                    } else {
-                        gridAdapter.addData(absXml.movie.videoList);
-                    }
-                    page++;
-                    maxPage = absXml.movie.pagecount;
-                    if (page > maxPage) {
-                        gridAdapter.loadMoreEnd();
-                        gridAdapter.setEnableLoadMore(false);
-                    } else {
-                        gridAdapter.loadMoreComplete();
-                        gridAdapter.setEnableLoadMore(true);
-                    }
+            if (absXml != null && absXml.movie != null && absXml.movie.videoList != null && absXml.movie.videoList.size() > 0) {
+                if (page == 1) {
+                    showSuccess();
+                    isLoad = true;
+                    gridAdapter.setNewData(absXml.movie.videoList);
                 } else {
-                    if (page == 1) {
-                        showEmpty();
-                    }
-                    if (page > maxPage) {
-                        Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
-                        gridAdapter.loadMoreEnd();
-                    } else {
-                        gridAdapter.loadMoreComplete();
-                    }
-                    gridAdapter.setEnableLoadMore(false);
+                    gridAdapter.addData(absXml.movie.videoList);
                 }
+                page++;
+                maxPage = absXml.movie.pagecount;
+                if (page > maxPage) {
+                    gridAdapter.getLoadMoreModule().loadMoreEnd();
+                    gridAdapter.getLoadMoreModule().setEnableLoadMore(false);
+                } else {
+                    gridAdapter.getLoadMoreModule().loadMoreComplete();
+                    gridAdapter.getLoadMoreModule().setEnableLoadMore(true);
+                }
+            } else {
+                if (page == 1) {
+                    showEmpty();
+                }
+                if (page > maxPage) {
+                    Toast.makeText(getContext(), "没有更多了", Toast.LENGTH_SHORT).show();
+                    gridAdapter.getLoadMoreModule().loadMoreEnd();
+                } else {
+                    gridAdapter.getLoadMoreModule().loadMoreComplete();
+                }
+                gridAdapter.getLoadMoreModule().setEnableLoadMore(false);
             }
         });
     }
@@ -309,16 +282,12 @@ public class GridFragment extends BaseLazyFragment {
         if (!sortData.filters.isEmpty() && gridFilterDialog == null) {
             gridFilterDialog = new GridFilterDialog(mContext);
             gridFilterDialog.setData(sortData);
-            gridFilterDialog.setOnDismiss(new GridFilterDialog.Callback() {
-                @Override
-                public void change() {
-                    page = 1;
-                    initData();
-                }
+            gridFilterDialog.setOnDismiss(() -> {
+                page = 1;
+                initData();
             });
         }
-        if (gridFilterDialog != null)
-            gridFilterDialog.show();
+        if (gridFilterDialog != null) gridFilterDialog.show();
     }
 
     public void forceRefresh() {

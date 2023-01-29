@@ -1,6 +1,5 @@
 package com.github.tvbox.osc.ui.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.base.BaseActivity;
@@ -125,12 +123,7 @@ public class SearchActivity extends BaseActivity {
         mGridViewWord.setLayoutManager(new V7LinearLayoutManager(this.mContext, 1, false));
         wordAdapter = new PinyinAdapter();
         mGridViewWord.setAdapter(wordAdapter);
-        wordAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                search(wordAdapter.getItem(position));
-            }
-        });
+        wordAdapter.setOnItemClickListener((adapter, view, position) -> search(wordAdapter.getItem(position)));
         mGridView.setHasFixedSize(true);
         // lite
         if (Hawk.get(HawkConfig.SEARCH_VIEW, 0) == 0)
@@ -140,93 +133,67 @@ public class SearchActivity extends BaseActivity {
             mGridView.setLayoutManager(new V7GridLayoutManager(this.mContext, 3));
         searchAdapter = new SearchAdapter();
         mGridView.setAdapter(searchAdapter);
-        searchAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                FastClickCheckUtil.check(view);
-                Movie.Video video = searchAdapter.getData().get(position);
-                if (video != null) {
-                    try {
-                        if (searchExecutorService != null) {
-                            pauseRunnable = searchExecutorService.shutdownNow();
-                            searchExecutorService = null;
-                            JSEngine.getInstance().stopAll();
-                        }
-                    } catch (Throwable th) {
-                        th.printStackTrace();
+        searchAdapter.setOnItemClickListener((adapter, view, position) -> {
+            FastClickCheckUtil.check(view);
+            Movie.Video video = searchAdapter.getData().get(position);
+            if (video != null) {
+                try {
+                    if (searchExecutorService != null) {
+                        pauseRunnable = searchExecutorService.shutdownNow();
+                        searchExecutorService = null;
+                        JSEngine.getInstance().stopAll();
                     }
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", video.id);
-                    bundle.putString("sourceKey", video.sourceKey);
-                    jumpActivity(DetailActivity.class, bundle);
+                } catch (Throwable th) {
+                    th.printStackTrace();
                 }
+                Bundle bundle = new Bundle();
+                bundle.putString("id", video.id);
+                bundle.putString("sourceKey", video.sourceKey);
+                jumpActivity(DetailActivity.class, bundle);
             }
         });
-        tvSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FastClickCheckUtil.check(v);
-                String wd = etSearch.getText().toString().trim();
-                if (!TextUtils.isEmpty(wd)) {
-                    search(wd);
-                } else {
-                    Toast.makeText(mContext, getString(R.string.search_input), Toast.LENGTH_SHORT).show();
-                }
-            }
+        tvSearch.setOnClickListener(v -> {
+            FastClickCheckUtil.check(v);
+            String wd = etSearch.getText().toString().trim();
+            if (!TextUtils.isEmpty(wd)) search(wd);
+            else
+                Toast.makeText(mContext, getString(R.string.search_input), Toast.LENGTH_SHORT).show();
         });
-        tvClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FastClickCheckUtil.check(v);
-                etSearch.setText("");
-            }
+        tvClear.setOnClickListener(v -> {
+            FastClickCheckUtil.check(v);
+            etSearch.setText("");
         });
-        keyboard.setOnSearchKeyListener(new SearchKeyboard.OnSearchKeyListener() {
-            @Override
-            public void onSearchKey(int pos, String key) {
-                if (pos > 1) {
-                    String text = etSearch.getText().toString().trim();
-                    text += key;
+        keyboard.setOnSearchKeyListener((pos, key) -> {
+            if (pos > 1) {
+                String text = etSearch.getText().toString().trim();
+                text += key;
+                etSearch.setText(text);
+                if (text.length() > 0) loadRec(text);
+            } else if (pos == 1) {
+                String text = etSearch.getText().toString().trim();
+                if (text.length() > 0) {
+                    text = text.substring(0, text.length() - 1);
                     etSearch.setText(text);
-                    if (text.length() > 0) {
-                        loadRec(text);
-                    }
-                } else if (pos == 1) {
-                    String text = etSearch.getText().toString().trim();
-                    if (text.length() > 0) {
-                        text = text.substring(0, text.length() - 1);
-                        etSearch.setText(text);
-                    }
-                    if (text.length() > 0) {
-                        loadRec(text);
-                    }
-                } else if (pos == 0) {
-                    RemoteDialog remoteDialog = new RemoteDialog(mContext);
-                    remoteDialog.show();
                 }
+                if (text.length() > 0) loadRec(text);
+            } else if (pos == 0) {
+                RemoteDialog remoteDialog = new RemoteDialog(mContext);
+                remoteDialog.show();
             }
         });
-        tvSearchCheckbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mSearchCheckboxDialog == null) {
-                    List<SourceBean> allSourceBean = ApiConfig.get().getSourceBeanList();
-                    List<SourceBean> searchAbleSource = new ArrayList<>();
-                    for (SourceBean sourceBean : allSourceBean) {
-                        if (sourceBean.isSearchable()) {
-                            searchAbleSource.add(sourceBean);
-                        }
+        tvSearchCheckbox.setOnClickListener(view -> {
+            if (mSearchCheckboxDialog == null) {
+                List<SourceBean> allSourceBean = ApiConfig.get().getSourceBeanList();
+                List<SourceBean> searchAbleSource = new ArrayList<>();
+                for (SourceBean sourceBean : allSourceBean) {
+                    if (sourceBean.isSearchable()) {
+                        searchAbleSource.add(sourceBean);
                     }
-                    mSearchCheckboxDialog = new SearchCheckboxDialog(SearchActivity.this, searchAbleSource, mCheckSources);
                 }
-                mSearchCheckboxDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        dialog.dismiss();
-                    }
-                });
-                mSearchCheckboxDialog.show();
+                mSearchCheckboxDialog = new SearchCheckboxDialog(SearchActivity.this, searchAbleSource, mCheckSources);
             }
+            mSearchCheckboxDialog.setOnDismissListener(dialog -> dialog.dismiss());
+            mSearchCheckboxDialog.show();
         });
         setLoadSir(llLayout);
     }
@@ -405,12 +372,7 @@ public class SearchActivity extends BaseActivity {
             return;
         }
         for (String key : siteKey) {
-            searchExecutorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    sourceViewModel.getSearch(key, searchTitle);
-                }
-            });
+            searchExecutorService.execute(() -> sourceViewModel.getSearch(key, searchTitle));
         }
     }
 

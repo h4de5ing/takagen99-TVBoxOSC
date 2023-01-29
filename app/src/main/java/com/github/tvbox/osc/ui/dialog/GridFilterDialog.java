@@ -1,7 +1,6 @@
 package com.github.tvbox.osc.ui.dialog;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.bean.MovieSort;
 import com.github.tvbox.osc.ui.adapter.GridFilterKVAdapter;
@@ -40,13 +40,8 @@ public class GridFilterDialog extends BaseDialog {
     }
 
     public void setOnDismiss(Callback callback) {
-        setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if (selectChange) {
-                    callback.change();
-                }
-            }
+        setOnDismissListener(dialogInterface -> {
+            if (selectChange) callback.change();
         });
     }
 
@@ -63,11 +58,11 @@ public class GridFilterDialog extends BaseDialog {
             String key = filter.key;
             ArrayList<String> values = new ArrayList<>(filter.values.keySet());
             ArrayList<String> keys = new ArrayList<>(filter.values.values());
-            filterKVAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            filterKVAdapter.setOnItemClickListener(new OnItemClickListener() {
                 View pre = null;
 
                 @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                     if (sortData.filterSelect.get(key) == null || !sortData.filterSelect.get(key).equals(values.get(position))) {
                         sortData.filterSelect.put(key, keys.get(position));
                         selectChange = true;

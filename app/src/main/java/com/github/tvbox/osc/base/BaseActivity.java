@@ -113,9 +113,7 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
     public static int isEdgeToEdgeEnabled(Context context) {
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("config_navBarInteractionMode", "integer", "android");
-        if (resourceId > 0) {
-            return resources.getInteger(resourceId);
-        }
+        if (resourceId > 0) return resources.getInteger(resourceId);
         return 0;
     }
 
@@ -200,10 +198,7 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
 
     protected void setLoadSir(View view) {
         if (mLoadService == null) {
-            mLoadService = LoadSir.getDefault().register(view, new Callback.OnReloadListener() {
-                @Override
-                public void onReload(View v) {
-                }
+            mLoadService = LoadSir.getDefault().register(view, (Callback.OnReloadListener) v -> {
             });
         }
     }

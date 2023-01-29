@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.ui.activity.HomeActivity;
 
@@ -80,24 +80,19 @@ public class SearchKeyboard extends FrameLayout {
         }
         final KeyboardAdapter adapter = new KeyboardAdapter(keyboardList);
         mRecyclerView.setAdapter(adapter);
-        adapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
-                if (position == 0)
-                    return 3;
-                else if (position == 1)
-                    return 3;
-                return 1;
-            }
-        });
-
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Keyboard keyboard = (Keyboard) adapter.getItem(position);
-                if (searchKeyListener != null) {
-                    searchKeyListener.onSearchKey(position, keyboard.getKey());
-                }
+        //TODO 寻找替代方法
+//        adapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
+//            @Override
+//            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
+//                if (position == 0) return 3;
+//                else if (position == 1) return 3;
+//                return 1;
+//            }
+//        });
+        adapter.setOnItemClickListener((adapter1, view1, position) -> {
+            Keyboard keyboard = (Keyboard) adapter1.getItem(position);
+            if (searchKeyListener != null) {
+                searchKeyListener.onSearchKey(position, keyboard.getKey());
             }
         });
     }
@@ -134,11 +129,7 @@ public class SearchKeyboard extends FrameLayout {
 
         @Override
         protected void convert(BaseViewHolder helper, Keyboard item) {
-            switch (helper.getItemViewType()) {
-                case 1:
-                    helper.setText(R.id.keyName, item.key);
-                    break;
-            }
+            helper.setText(R.id.keyName, item.key);
         }
     }
 

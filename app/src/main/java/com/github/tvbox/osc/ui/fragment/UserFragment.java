@@ -7,7 +7,6 @@ import android.view.animation.BounceInterpolator;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.base.BaseLazyFragment;
@@ -125,51 +124,43 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
         tvCollect.setOnFocusChangeListener(focusChangeListener);
         TvRecyclerView tvHotList = findViewById(R.id.tvHotList);
         homeHotVodAdapter = new HomeHotVodAdapter();
-        homeHotVodAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (ApiConfig.get().getSourceBeanList().isEmpty())
-                    return;
-                Movie.Video vod = ((Movie.Video) adapter.getItem(position));
-                if (vod.id != null && !vod.id.isEmpty()) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", vod.id);
-                    bundle.putString("sourceKey", vod.sourceKey);
-                    if (vod.id.startsWith("msearch:")) {
-                        bundle.putString("title", vod.name);
-                        jumpActivity(FastSearchActivity.class, bundle);
-                    } else {
-                        jumpActivity(DetailActivity.class, bundle);
-                    }
+        homeHotVodAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (ApiConfig.get().getSourceBeanList().isEmpty()) return;
+            Movie.Video vod = ((Movie.Video) adapter.getItem(position));
+            if (vod.id != null && !vod.id.isEmpty()) {
+                Bundle bundle = new Bundle();
+                bundle.putString("id", vod.id);
+                bundle.putString("sourceKey", vod.sourceKey);
+                if (vod.id.startsWith("msearch:")) {
+                    bundle.putString("title", vod.name);
+                    jumpActivity(FastSearchActivity.class, bundle);
                 } else {
-                    Intent newIntent = new Intent(mContext, SearchActivity.class);
-                    newIntent.putExtra("title", vod.name);
-                    newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    mActivity.startActivity(newIntent);
+                    jumpActivity(DetailActivity.class, bundle);
                 }
+            } else {
+                Intent newIntent = new Intent(mContext, SearchActivity.class);
+                newIntent.putExtra("title", vod.name);
+                newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mActivity.startActivity(newIntent);
             }
         });
         // takagen99 : Long press to delete VOD History on Home Page
-        homeHotVodAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                if (ApiConfig.get().getSourceBeanList().isEmpty())
-                    return false;
-                Movie.Video vod = ((Movie.Video) adapter.getItem(position));
-                // Additional Check if : Home Rec 0=豆瓣, 1=推荐, 2=历史
-                if ((vod.id != null && !vod.id.isEmpty()) && (Hawk.get(HawkConfig.HOME_REC, 0) == 2)) {
-                    homeHotVodAdapter.remove(position);
-                    VodInfo vodInfo = RoomDataManger.getVodInfo(vod.sourceKey, vod.id);
-                    RoomDataManger.deleteVodRecord(vod.sourceKey, vodInfo);
-                    Toast.makeText(mContext, getString(R.string.hm_hist_del), Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent newIntent = new Intent(mContext, FastSearchActivity.class);
-                    newIntent.putExtra("title", vod.name);
-                    newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    mActivity.startActivity(newIntent);
-                }
-                return true;
+        homeHotVodAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            if (ApiConfig.get().getSourceBeanList().isEmpty()) return false;
+            Movie.Video vod = ((Movie.Video) adapter.getItem(position));
+            // Additional Check if : Home Rec 0=豆瓣, 1=推荐, 2=历史
+            if ((vod.id != null && !vod.id.isEmpty()) && (Hawk.get(HawkConfig.HOME_REC, 0) == 2)) {
+                homeHotVodAdapter.remove(position);
+                VodInfo vodInfo = RoomDataManger.getVodInfo(vod.sourceKey, vod.id);
+                RoomDataManger.deleteVodRecord(vod.sourceKey, vodInfo);
+                Toast.makeText(mContext, getString(R.string.hm_hist_del), Toast.LENGTH_SHORT).show();
+            } else {
+                Intent newIntent = new Intent(mContext, FastSearchActivity.class);
+                newIntent.putExtra("title", vod.name);
+                newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mActivity.startActivity(newIntent);
             }
+            return true;
         });
         tvHotList.setOnItemListener(new TvRecyclerView.OnItemListener() {
             @Override
@@ -221,12 +212,7 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
                     String netJson = response.body();
                     Hawk.put("home_hot_day", today);
                     Hawk.put("home_hot", netJson);
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.setNewData(loadHots(netJson));
-                        }
-                    });
+                    mActivity.runOnUiThread(() -> adapter.setNewData(loadHots(netJson)));
                 }
 
                 @Override
@@ -252,20 +238,17 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
                 vod.pic = obj.get("cover").getAsString();
                 result.add(vod);
             }
-        } catch (Throwable th) {
+        } catch (Throwable ignored) {
 
         }
         return result;
     }
 
-    private final View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
-        @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-            if (hasFocus)
-                v.animate().scaleX(1.05f).scaleY(1.05f).setDuration(300).setInterpolator(new BounceInterpolator()).start();
-            else
-                v.animate().scaleX(1.0f).scaleY(1.0f).setDuration(300).setInterpolator(new BounceInterpolator()).start();
-        }
+    private final View.OnFocusChangeListener focusChangeListener = (v, hasFocus) -> {
+        if (hasFocus)
+            v.animate().scaleX(1.05f).scaleY(1.05f).setDuration(300).setInterpolator(new BounceInterpolator()).start();
+        else
+            v.animate().scaleX(1.0f).scaleY(1.0f).setDuration(300).setInterpolator(new BounceInterpolator()).start();
     };
 
     @Override
@@ -290,8 +273,6 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void server(ServerEvent event) {
-        if (event.type == ServerEvent.SERVER_CONNECTION) {
-        }
     }
 
     @Override

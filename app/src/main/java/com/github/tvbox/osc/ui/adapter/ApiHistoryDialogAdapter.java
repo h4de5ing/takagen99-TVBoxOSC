@@ -37,7 +37,7 @@ public class ApiHistoryDialogAdapter extends ListAdapter<String, ApiHistoryDialo
 
     private String select = "";
 
-    private SelectDialogInterface dialogInterface = null;
+    private SelectDialogInterface dialogInterface;
 
     public ApiHistoryDialogAdapter(SelectDialogInterface dialogInterface) {
         super(new DiffUtil.ItemCallback<String>() {
@@ -79,26 +79,20 @@ public class ApiHistoryDialogAdapter extends ListAdapter<String, ApiHistoryDialo
         if (select.equals(value))
             name = "√ " + name;
         ((TextView) holder.itemView.findViewById(R.id.tvName)).setText(name);
-        holder.itemView.findViewById(R.id.tvName).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (select.equals(value))
-                    return;
-                notifyItemChanged(data.indexOf(select));
-                select = value;
-                notifyItemChanged(data.indexOf(value));
-                dialogInterface.click(value);
-            }
+        holder.itemView.findViewById(R.id.tvName).setOnClickListener(v -> {
+            if (select.equals(value))
+                return;
+            notifyItemChanged(data.indexOf(select));
+            select = value;
+            notifyItemChanged(data.indexOf(value));
+            dialogInterface.click(value);
         });
-        holder.itemView.findViewById(R.id.tvDel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (select.equals(value))
-                    return;
-                notifyItemRemoved(data.indexOf(value));
-                data.remove(value);
-                dialogInterface.del(value, data);
-            }
+        holder.itemView.findViewById(R.id.tvDel).setOnClickListener(v -> {
+            if (select.equals(value))
+                return;
+            notifyItemRemoved(data.indexOf(value));
+            data.remove(value);
+            dialogInterface.del(value, data);
         });
     }
 }

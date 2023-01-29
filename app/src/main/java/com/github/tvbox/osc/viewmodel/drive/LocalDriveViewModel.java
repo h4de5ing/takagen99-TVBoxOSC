@@ -48,12 +48,9 @@ public class LocalDriveViewModel extends AbstractDriveViewModel {
     @Override
     public Runnable search(String keyword, LoadDataCallback callback) {
         //not implemented yet
-        return new Runnable() {
-            @Override
-            public void run() {
-                if (callback != null)
-                    callback.callback(null, false);
-            }
+        return () -> {
+            if (callback != null)
+                callback.callback(null, false);
         };
     }
 }

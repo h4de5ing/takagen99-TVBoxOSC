@@ -124,6 +124,7 @@ public class DefaultConfig {
                     "https.*?\\.66yk\\.cn.*|" +
                     "http((?!http).)*?netease\\.com/file/.*"
     );
+
     public static boolean isVideoFormat(String url) {
         if (url.contains("=http")) {
             return false;
@@ -141,7 +142,7 @@ public class DefaultConfig {
                 return obj.getAsJsonPrimitive(key).getAsString().trim();
             else
                 return defaultVal;
-        } catch (Throwable th) {
+        } catch (Throwable ignored) {
         }
         return defaultVal;
     }
@@ -152,7 +153,7 @@ public class DefaultConfig {
                 return obj.getAsJsonPrimitive(key).getAsInt();
             else
                 return defaultVal;
-        } catch (Throwable th) {
+        } catch (Throwable ignored) {
         }
         return defaultVal;
     }
@@ -169,7 +170,7 @@ public class DefaultConfig {
                     }
                 }
             }
-        } catch (Throwable th) {
+        } catch (Throwable ignored) {
         }
         return result;
     }

@@ -30,14 +30,11 @@ public class LivePasswordDialog extends BaseDialog {
         setOwnerActivity((Activity) context);
         setContentView(R.layout.dialog_live_password);
         inputPassword = findViewById(R.id.input);
-        findViewById(R.id.inputSubmit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String password = inputPassword.getText().toString().trim();
-                if (!password.isEmpty()) {
-                    listener.onChange(password);
-                    dismiss();
-                }
+        findViewById(R.id.inputSubmit).setOnClickListener(v -> {
+            String password = inputPassword.getText().toString().trim();
+            if (!password.isEmpty()) {
+                listener.onChange(password);
+                dismiss();
             }
         });
     }

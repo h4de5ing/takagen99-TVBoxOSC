@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.chad.library.adapter.base.listener.OnItemLongClickListener;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.base.BaseActivity;
@@ -94,40 +98,34 @@ public class CollectActivity extends BaseActivity {
 
             }
         });
-        collectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                FastClickCheckUtil.check(view);
-                VodCollect vodInfo = collectAdapter.getData().get(position);
-                if (vodInfo != null) {
-                    if (delMode) {
-                        collectAdapter.remove(position);
-                        RoomDataManger.deleteVodCollect(vodInfo.getId());
+        collectAdapter.setOnItemClickListener((adapter, view, position) -> {
+            FastClickCheckUtil.check(view);
+            VodCollect vodInfo = collectAdapter.getData().get(position);
+            if (vodInfo != null) {
+                if (delMode) {
+                    collectAdapter.remove(position);
+                    RoomDataManger.deleteVodCollect(vodInfo.getId());
+                } else {
+                    if (ApiConfig.get().getSource(vodInfo.sourceKey) != null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", vodInfo.vodId);
+                        bundle.putString("sourceKey", vodInfo.sourceKey);
+                        jumpActivity(DetailActivity.class, bundle);
                     } else {
-                        if (ApiConfig.get().getSource(vodInfo.sourceKey) != null) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("id", vodInfo.vodId);
-                            bundle.putString("sourceKey", vodInfo.sourceKey);
-                            jumpActivity(DetailActivity.class, bundle);
-                        } else {
-                            Intent newIntent = new Intent(mContext, SearchActivity.class);
-                            newIntent.putExtra("title", vodInfo.name);
-                            newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(newIntent);
-                        }
+                        Intent newIntent = new Intent(mContext, SearchActivity.class);
+                        newIntent.putExtra("title", vodInfo.name);
+                        newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(newIntent);
                     }
                 }
             }
         });
-        collectAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                FastClickCheckUtil.check(view);
-                VodCollect vodInfo = collectAdapter.getData().get(position);
-                collectAdapter.remove(position);
-                RoomDataManger.deleteVodCollect(vodInfo.getId());
-                return true;
-            }
+        collectAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            FastClickCheckUtil.check(view);
+            VodCollect vodInfo = collectAdapter.getData().get(position);
+            collectAdapter.remove(position);
+            RoomDataManger.deleteVodCollect(vodInfo.getId());
+            return true;
         });
     }
 

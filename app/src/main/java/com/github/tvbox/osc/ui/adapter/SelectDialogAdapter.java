@@ -19,7 +19,7 @@ import java.util.List;
 
 public class SelectDialogAdapter<T> extends ListAdapter<T, SelectDialogAdapter.SelectViewHolder> {
 
-    private boolean muteCheck = false;
+    private boolean muteCheck;
 
     class SelectViewHolder extends RecyclerView.ViewHolder {
 
@@ -90,16 +90,12 @@ public class SelectDialogAdapter<T> extends ListAdapter<T, SelectDialogAdapter.S
         if (!muteCheck && position == select)
             name = "√ " + name;
         ((TextView) holder.itemView.findViewById(R.id.tvName)).setText(name);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!muteCheck && position == select)
-                    return;
-                notifyItemChanged(select);
-                select = position;
-                notifyItemChanged(select);
-                dialogInterface.click(value, position);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            if (!muteCheck && position == select) return;
+            notifyItemChanged(select);
+            select = position;
+            notifyItemChanged(select);
+            dialogInterface.click(value, position);
         });
     }
 }

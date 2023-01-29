@@ -126,61 +126,58 @@ public class AlistDriveViewModel extends AbstractDriveViewModel {
                     config.has("initPath") ? config.get("initPath").getAsString() : "", false, null, null);
         }
         String targetPath = currentDriveNote.getAccessingPathStr();
-        return new Runnable() {
-            @Override
-            public void run() {
-                String webLink = config.get("url").getAsString();
-                PostRequest request = OkGo.post(webLink + "api/public/search").tag("drive");
-                try {
-                    JSONObject requestBody = new JSONObject();
-                    requestBody.put("path", targetPath.isEmpty() ? "/" : targetPath);
-                    requestBody.put("keyword", keyword);
-                    request.upJson(requestBody);
-                    setRequestHeader(request, webLink);
-                    request.execute(new AbsCallback<String>() {
+        return () -> {
+            String webLink = config.get("url").getAsString();
+            PostRequest request = OkGo.post(webLink + "api/public/search").tag("drive");
+            try {
+                JSONObject requestBody = new JSONObject();
+                requestBody.put("path", targetPath.isEmpty() ? "/" : targetPath);
+                requestBody.put("keyword", keyword);
+                request.upJson(requestBody);
+                setRequestHeader(request, webLink);
+                request.execute(new AbsCallback<String>() {
 
-                        @Override
-                        public String convertResponse(okhttp3.Response response) throws Throwable {
-                            return response.body().string();
-                        }
+                    @Override
+                    public String convertResponse(okhttp3.Response response) throws Throwable {
+                        return response.body().string();
+                    }
 
-                        @Override
-                        public void onSuccess(Response<String> response) {
-                            String respBody = response.body();
-                            try {
-                                JsonObject respData = JsonParser.parseString(respBody).getAsJsonObject();
-                                List<DriveFolderFile> items = new ArrayList<>();
-                                if (respData.get("code").getAsInt() == 200) {
-                                    StorageDrive driveData = new StorageDrive();
-                                    driveData.type = StorageDriveType.TYPE.ALISTWEB.ordinal();
-                                    for (JsonElement file : respData.get("data").getAsJsonArray()) {
-                                        JsonObject fileObj = file.getAsJsonObject();
-                                        String fileName = fileObj.get("name").getAsString();
-                                        int extNameStartIndex = fileName.lastIndexOf(".");
-                                        boolean isFile = fileObj.get("type").getAsInt() != 1;
-                                        DriveFolderFile driveFile = new DriveFolderFile(null, fileName, isFile,
-                                                isFile && extNameStartIndex >= 0 && extNameStartIndex < fileName.length() ?
-                                                        fileName.substring(extNameStartIndex + 1) : null,
-                                                null);
-                                        driveFile.setDriveData(driveData);
-                                        driveFile.setAccessingPath(fileObj.get("path").getAsString().split("\\/"));
-                                        JsonObject config = currentDrive.getConfig();
-                                        config.addProperty("initPath", fileObj.get("path").getAsString() + "/" + fileName);
-                                        driveFile.setConfig(config);
-                                        items.add(driveFile);
-                                    }
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        String respBody = response.body();
+                        try {
+                            JsonObject respData = JsonParser.parseString(respBody).getAsJsonObject();
+                            List<DriveFolderFile> items = new ArrayList<>();
+                            if (respData.get("code").getAsInt() == 200) {
+                                StorageDrive driveData = new StorageDrive();
+                                driveData.type = StorageDriveType.TYPE.ALISTWEB.ordinal();
+                                for (JsonElement file : respData.get("data").getAsJsonArray()) {
+                                    JsonObject fileObj = file.getAsJsonObject();
+                                    String fileName = fileObj.get("name").getAsString();
+                                    int extNameStartIndex = fileName.lastIndexOf(".");
+                                    boolean isFile = fileObj.get("type").getAsInt() != 1;
+                                    DriveFolderFile driveFile = new DriveFolderFile(null, fileName, isFile,
+                                            isFile && extNameStartIndex >= 0 && extNameStartIndex < fileName.length() ?
+                                                    fileName.substring(extNameStartIndex + 1) : null,
+                                            null);
+                                    driveFile.setDriveData(driveData);
+                                    driveFile.setAccessingPath(fileObj.get("path").getAsString().split("\\/"));
+                                    JsonObject config1 = currentDrive.getConfig();
+                                    config1.addProperty("initPath", fileObj.get("path").getAsString() + "/" + fileName);
+                                    driveFile.setConfig(config1);
+                                    items.add(driveFile);
                                 }
-                                if (callback != null)
-                                    callback.callback(items, false);
-                            } catch (Exception ex) {
-                                if (callback != null)
-                                    callback.fail("无法访问，请注意地址格式");
                             }
+                            if (callback != null)
+                                callback.callback(items, false);
+                        } catch (Exception ex) {
+                            if (callback != null)
+                                callback.fail("无法访问，请注意地址格式");
                         }
-                    });
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                    }
+                });
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         };
     }

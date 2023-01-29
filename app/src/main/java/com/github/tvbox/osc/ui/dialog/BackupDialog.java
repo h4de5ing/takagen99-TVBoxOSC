@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.base.App;
 import com.github.tvbox.osc.data.AppDataManager;
@@ -28,7 +26,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -41,69 +38,57 @@ public class BackupDialog extends BaseDialog {
         TvRecyclerView tvRecyclerView = findViewById(R.id.list);
         BackupAdapter adapter = new BackupAdapter();
         tvRecyclerView.setAdapter(adapter);
-        adapter.setNewData(allBackup());
-        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId() == R.id.tvName) {
-                    restore((String) adapter.getItem(position));
-                } else if (view.getId() == R.id.tvDel) {
-                    delete((String) adapter.getItem(position));
-                    adapter.setNewData(allBackup());
-                }
+        adapter.setNewInstance(allBackup());
+        adapter.setOnItemChildClickListener((adapter1, view, position) -> {
+            if (view.getId() == R.id.tvName) {
+                restore((String) adapter.getItem(position));
+            } else if (view.getId() == R.id.tvDel) {
+                delete((String) adapter.getItem(position));
+                adapter.setNewInstance(allBackup());
             }
         });
-        findViewById(R.id.backupNow).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backup();
-                adapter.setNewData(allBackup());
-            }
+        findViewById(R.id.backupNow).setOnClickListener(v -> {
+            backup();
+            adapter.setNewInstance(allBackup());
         });
-        findViewById(R.id.storagePermission).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (XXPermissions.isGranted(getContext(), Permission.Group.STORAGE)) {
-                    Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_ok), Toast.LENGTH_SHORT).show();
-                } else {
-                    XXPermissions.with(getContext())
-                            .permission(Permission.Group.STORAGE)
-                            .request(new OnPermissionCallback() {
-                                @Override
-                                public void onGranted(List<String> permissions, boolean all) {
-                                    if (all) {
-                                        adapter.setNewData(allBackup());
-                                        Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_ok), Toast.LENGTH_SHORT).show();
-                                    }
+        findViewById(R.id.storagePermission).setOnClickListener(v -> {
+            if (XXPermissions.isGranted(getContext(), Permission.Group.STORAGE)) {
+                Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_ok), Toast.LENGTH_SHORT).show();
+            } else {
+                XXPermissions.with(getContext())
+                        .permission(Permission.Group.STORAGE)
+                        .request(new OnPermissionCallback() {
+                            @Override
+                            public void onGranted(List<String> permissions, boolean all) {
+                                if (all) {
+                                    adapter.setNewInstance(allBackup());
+                                    Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_ok), Toast.LENGTH_SHORT).show();
                                 }
+                            }
 
-                                @Override
-                                public void onDenied(List<String> permissions, boolean never) {
-                                    if (never) {
-                                        Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_fail2), Toast.LENGTH_SHORT).show();
-                                        XXPermissions.startPermissionActivity((Activity) getContext(), permissions);
-                                    } else {
-                                        Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_fail1), Toast.LENGTH_SHORT).show();
-                                    }
+                            @Override
+                            public void onDenied(List<String> permissions, boolean never) {
+                                if (never) {
+                                    Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_fail2), Toast.LENGTH_SHORT).show();
+                                    XXPermissions.startPermissionActivity((Activity) getContext(), permissions);
+                                } else {
+                                    Toast.makeText(getContext(), HomeActivity.getRes().getString(R.string.set_permission_fail1), Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                }
+                            }
+                        });
             }
         });
     }
 
-    List<String> allBackup() {
+    private List<String> allBackup() {
         ArrayList<String> result = new ArrayList<>();
         try {
             String root = Environment.getExternalStorageDirectory().getAbsolutePath();
             File file = new File(root + "/tvbox_backup/");
             File[] list = file.listFiles();
-            Arrays.sort(list, new Comparator<File>() {
-                @Override
-                public int compare(File o1, File o2) {
-                    if (o1.isDirectory() && o2.isFile()) return -1;
-                    return o1.isFile() && o2.isDirectory() ? 1 : o2.getName().compareTo(o1.getName());
-                }
+            Arrays.sort(list, (o1, o2) -> {
+                if (o1.isDirectory() && o2.isFile()) return -1;
+                return o1.isFile() && o2.isDirectory() ? 1 : o2.getName().compareTo(o1.getName());
             });
             if (file.exists()) {
                 for (File f : list) {
@@ -204,5 +189,4 @@ public class BackupDialog extends BaseDialog {
             e.printStackTrace();
         }
     }
-
 }

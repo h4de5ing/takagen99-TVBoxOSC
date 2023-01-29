@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.VodInfo;
@@ -26,8 +26,8 @@ public class SeriesAdapter extends BaseQuickAdapter<VodInfo.VodSeries, BaseViewH
         TextView tvSeries = helper.getView(R.id.tvSeries);
         if (item.selected) {
             // takagen99: Added Theme Color
-//            tvSeries.setTextColor(mContext.getResources().getColor(R.color.color_theme));
-            tvSeries.setTextColor(((BaseActivity) mContext).getThemeColor());
+//            tvSeries.setTextColor(getContext().getResources().getColor(R.color.color_theme));
+            tvSeries.setTextColor(((BaseActivity) getContext()).getThemeColor());
         } else {
             tvSeries.setTextColor(Color.WHITE);
         }

@@ -48,17 +48,13 @@ class RequestUtil {
      * get请求
      */
     private void urlHttpGet(final String url, final Map<String, String> paramsMap, final Map<String, String> headerMap, final CallBackUtil callBack) {
-        mThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RealResponse response = new RealRequest().getData(getUrl(url, paramsMap), headerMap);
-                if (response.code == HttpURLConnection.HTTP_OK) {
-                    callBack.onSeccess(response);
-                } else {
-                    callBack.onError(response);
-                }
+        mThread = new Thread(() -> {
+            RealResponse response = new RealRequest().getData(getUrl(url, paramsMap), headerMap);
+            if (response.code == HttpURLConnection.HTTP_OK) {
+                callBack.onSeccess(response);
+            } else {
+                callBack.onError(response);
             }
-
         });
     }
 
@@ -66,38 +62,28 @@ class RequestUtil {
      * post请求
      */
     private void urlHttpPost(final String url, final Map<String, String> paramsMap, final String jsonStr, final Map<String, String> headerMap, final CallBackUtil callBack) {
-        mThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RealResponse response = new RealRequest().postData(url, getPostBody(paramsMap, jsonStr), getPostBodyType(paramsMap, jsonStr), headerMap);
-                if (response.code == HttpURLConnection.HTTP_OK) {
-                    callBack.onSeccess(response);
-                } else {
-                    callBack.onError(response);
-                }
-
+        mThread = new Thread(() -> {
+            RealResponse response = new RealRequest().postData(url, getPostBody(paramsMap, jsonStr), getPostBodyType(paramsMap, jsonStr), headerMap);
+            if (response.code == HttpURLConnection.HTTP_OK) {
+                callBack.onSeccess(response);
+            } else {
+                callBack.onError(response);
             }
-
         });
-
     }
 
     /**
      * 上传文件
      */
     private void urlHttpUploadFile(final String url, final File file, final List<File> fileList, final Map<String, File> fileMap, final String fileKey, final String fileType, final Map<String, String> paramsMap, final Map<String, String> headerMap, final CallBackUtil callBack) {
-        mThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RealResponse response = null;
-                response = new RealRequest().uploadFile(url, file, fileList, fileMap, fileKey, fileType, paramsMap, headerMap, callBack);
-                if (response.code == HttpURLConnection.HTTP_OK) {
-                    callBack.onSeccess(response);
-                } else {
-                    callBack.onError(response);
-                }
+        mThread = new Thread(() -> {
+            RealResponse response;
+            response = new RealRequest().uploadFile(url, file, fileList, fileMap, fileKey, fileType, paramsMap, headerMap, callBack);
+            if (response.code == HttpURLConnection.HTTP_OK) {
+                callBack.onSeccess(response);
+            } else {
+                callBack.onError(response);
             }
-
         });
     }
 
@@ -107,10 +93,11 @@ class RequestUtil {
      */
     private String getUrl(String path, Map<String, String> paramsMap) {
         if (paramsMap != null) {
-            path = path + "?";
+            StringBuilder pathBuilder = new StringBuilder(path + "?");
             for (String key : paramsMap.keySet()) {
-                path = path + key + "=" + paramsMap.get(key) + "&";
+                pathBuilder.append(key).append("=").append(paramsMap.get(key)).append("&");
             }
+            path = pathBuilder.toString();
             path = path.substring(0, path.length() - 1);
         }
         return path;
@@ -137,10 +124,8 @@ class RequestUtil {
         boolean first = true;
         try {
             for (Map.Entry<String, String> entry : params.entrySet()) {
-                if (first)
-                    first = false;
-                else
-                    result.append("&");
+                if (first) first = false;
+                else result.append("&");
                 result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
                 result.append("=");
                 result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));

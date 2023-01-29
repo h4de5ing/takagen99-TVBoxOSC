@@ -16,7 +16,7 @@ import xyz.doikki.videoplayer.ijk.IjkPlayer;
 
 public class IjkMediaPlayer extends IjkPlayer {
 
-    private IJKCode codec = null;
+    private IJKCode codec;
 
     public IjkMediaPlayer(Context context, IJKCode codec) {
         super(context);

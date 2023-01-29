@@ -61,7 +61,7 @@ public class PlayerHelper {
         } else {
             playerFactory = AndroidMediaPlayerFactory.create();
         }
-        RenderViewFactory renderViewFactory = null;
+        RenderViewFactory renderViewFactory;
         switch (renderType) {
             case 0:
             default:
@@ -87,14 +87,11 @@ public class PlayerHelper {
                 }
             };
             try {
-                tv.danmaku.ijk.media.player.IjkMediaPlayer.loadLibrariesOnce(new IjkLibLoader() {
-                    @Override
-                    public void loadLibrary(String s) throws UnsatisfiedLinkError, SecurityException {
-                        try {
-                            System.loadLibrary(s);
-                        } catch (Throwable th) {
-                            th.printStackTrace();
-                        }
+                tv.danmaku.ijk.media.player.IjkMediaPlayer.loadLibrariesOnce(s -> {
+                    try {
+                        System.loadLibrary(s);
+                    } catch (Throwable th) {
+                        th.printStackTrace();
                     }
                 });
             } catch (Throwable th) {
@@ -106,7 +103,7 @@ public class PlayerHelper {
             playerFactory = AndroidMediaPlayerFactory.create();
         }
         int renderType = Hawk.get(HawkConfig.PLAY_RENDER, 0);
-        RenderViewFactory renderViewFactory = null;
+        RenderViewFactory renderViewFactory;
         switch (renderType) {
             case 0:
             default:
@@ -123,14 +120,11 @@ public class PlayerHelper {
 
     public static void init() {
         try {
-            tv.danmaku.ijk.media.player.IjkMediaPlayer.loadLibrariesOnce(new IjkLibLoader() {
-                @Override
-                public void loadLibrary(String s) throws UnsatisfiedLinkError, SecurityException {
-                    try {
-                        System.loadLibrary(s);
-                    } catch (Throwable th) {
-                        th.printStackTrace();
-                    }
+            tv.danmaku.ijk.media.player.IjkMediaPlayer.loadLibrariesOnce(s -> {
+                try {
+                    System.loadLibrary(s);
+                } catch (Throwable th) {
+                    th.printStackTrace();
                 }
             });
         } catch (Throwable th) {

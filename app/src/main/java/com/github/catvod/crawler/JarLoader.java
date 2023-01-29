@@ -190,7 +190,7 @@ public class JarLoader {
             if (proxyFun != null) {
                 return (Object[]) proxyFun.invoke(null, params);
             }
-        } catch (Throwable th) {
+        } catch (Throwable ignored) {
 
         }
         return null;
