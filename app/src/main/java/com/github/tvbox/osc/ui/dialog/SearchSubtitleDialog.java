@@ -87,12 +87,9 @@ public class SearchSubtitleDialog extends BaseDialog {
             }
         });
         searchAdapter.getLoadMoreModule().setEnableLoadMore(true);
-        searchAdapter.getLoadMoreModule().setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                if (searchAdapter.getData().get(0).getIsZip()) {
-                    subtitleViewModel.searchResult(searchWord, page);
-                }
+        searchAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> {
+            if (searchAdapter.getData().get(0).getIsZip()) {
+                subtitleViewModel.searchResult(searchWord, page);
             }
         });
 

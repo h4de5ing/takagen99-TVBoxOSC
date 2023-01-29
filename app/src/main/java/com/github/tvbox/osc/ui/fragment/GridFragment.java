@@ -162,6 +162,7 @@ public class GridFragment extends BaseLazyFragment {
             mGridView.setLayoutManager(new V7GridLayoutManager(this.mContext, isBaseOnWidth() ? 5 : 6));
         }
         gridAdapter.getLoadMoreModule().setEnableLoadMore(true);
+        gridAdapter.getLoadMoreModule().setAutoLoadMore(true);
         gridAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> sourceViewModel.getList(sortData, page));
         mGridView.setOnItemListener(new TvRecyclerView.OnItemListener() {
             @Override

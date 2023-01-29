@@ -5,7 +5,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.module.BaseLoadMoreModule;
+import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.bean.Movie;
@@ -23,8 +27,8 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
  * @date :2020/12/21
  * @description:
  */
-public class GridAdapter extends BaseQuickAdapter<Movie.Video, BaseViewHolder> {
-    private boolean mShowList = false;
+public class GridAdapter extends BaseQuickAdapter<Movie.Video, BaseViewHolder> implements LoadMoreModule {
+    private boolean mShowList;
 
     public GridAdapter(boolean l) {
         super(l ? R.layout.item_list : R.layout.item_grid, new ArrayList<>());
@@ -100,5 +104,11 @@ public class GridAdapter extends BaseQuickAdapter<Movie.Video, BaseViewHolder> {
         } else {
             ivThumb.setImageResource(R.drawable.img_loading_placeholder);
         }
+    }
+
+    @NonNull
+    @Override
+    public BaseLoadMoreModule addLoadMoreModule(@NonNull BaseQuickAdapter<?, ?> baseQuickAdapter) {
+        return new BaseLoadMoreModule(baseQuickAdapter);
     }
 }
