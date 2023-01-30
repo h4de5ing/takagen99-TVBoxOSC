@@ -98,6 +98,9 @@
     <string name="set_permission_fail2">Failed to get Permission, please grant in Settings</string>
 
     // Activity Page //
+    <string name="act_app">Applications</string>
+    <string name="act_app_sel">Select to</string>
+    <string name="act_app_rm">Uninstall</string>
     <string name="act_fav">Favorite</string>
     <string name="act_fav_sel">Select to</string>
     <string name="act_fav_rm">Remove</string>

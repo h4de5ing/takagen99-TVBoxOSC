@@ -98,6 +98,9 @@
     <string name="set_permission_fail2">获取存储权限失败,请在系统设置中开启</string>
 
     // Activity Page //
+    <string name="act_app">我的应用</string>
+    <string name="act_app_sel">确定键删除当前选中应用</string>
+    <string name="act_app_rm">删除应用</string>
     <string name="act_fav">收藏夹</string>
     <string name="act_fav_sel">确定键删除当前选中收藏</string>
     <string name="act_fav_rm">删除收藏</string>

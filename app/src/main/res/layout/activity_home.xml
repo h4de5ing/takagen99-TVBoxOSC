@@ -58,43 +58,60 @@
 
         <ImageView
             android:id="@+id/tvWifi"
-            android:layout_width="@dimen/vs_40"
-            android:layout_height="@dimen/vs_40"
+            android:layout_width="@dimen/vs_50"
+            android:layout_height="@dimen/vs_50"
             android:layout_marginStart="@dimen/vs_15"
             android:layout_marginLeft="@dimen/vs_15"
             android:layout_marginEnd="@dimen/vs_15"
             android:layout_marginRight="@dimen/vs_15"
-            android:background="@drawable/button_home_select"
+            android:background="@drawable/button_dialog_vod"
             android:clickable="true"
             android:focusable="true"
             android:nextFocusLeft="@id/tvName"
+            android:padding="@dimen/vs_5"
             android:src="@drawable/hm_wifi_no" />
 
         <ImageView
             android:id="@+id/tvFind"
-            android:layout_width="@dimen/vs_40"
-            android:layout_height="@dimen/vs_40"
+            android:layout_width="@dimen/vs_50"
+            android:layout_height="@dimen/vs_50"
             android:layout_marginStart="@dimen/vs_15"
             android:layout_marginLeft="@dimen/vs_15"
             android:layout_marginEnd="@dimen/vs_15"
             android:layout_marginRight="@dimen/vs_15"
-            android:background="@drawable/button_home_select"
+            android:background="@drawable/button_dialog_vod"
             android:clickable="true"
             android:focusable="true"
+            android:padding="@dimen/vs_5"
             android:src="@drawable/hm_search" />
 
         <ImageView
-            android:id="@+id/tvMenu"
-            android:layout_width="@dimen/vs_40"
-            android:layout_height="@dimen/vs_40"
+            android:id="@+id/tvDrawer"
+            android:layout_width="@dimen/vs_50"
+            android:layout_height="@dimen/vs_50"
             android:layout_marginStart="@dimen/vs_15"
             android:layout_marginLeft="@dimen/vs_15"
             android:layout_marginEnd="@dimen/vs_15"
             android:layout_marginRight="@dimen/vs_15"
-            android:background="@drawable/button_home_select"
+            android:background="@drawable/button_dialog_vod"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/vs_5"
+            android:src="@drawable/hm_drawer" />
+
+        <ImageView
+            android:id="@+id/tvMenu"
+            android:layout_width="@dimen/vs_50"
+            android:layout_height="@dimen/vs_50"
+            android:layout_marginStart="@dimen/vs_15"
+            android:layout_marginLeft="@dimen/vs_15"
+            android:layout_marginEnd="@dimen/vs_15"
+            android:layout_marginRight="@dimen/vs_15"
+            android:background="@drawable/button_dialog_vod"
             android:clickable="true"
             android:focusable="true"
             android:nextFocusDown="@id/tvDrive"
+            android:padding="@dimen/vs_5"
             android:src="@drawable/hm_settings" />
 
         <TextView

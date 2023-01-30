@@ -56,4 +56,5 @@ public class HawkConfig {
     public static boolean isDebug() {
         return Hawk.get(DEBUG_OPEN, false);
     }
+    public static boolean hotVodDelete;
 }

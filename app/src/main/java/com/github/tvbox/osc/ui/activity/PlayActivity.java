@@ -727,6 +727,35 @@ public class PlayActivity extends BaseActivity {
         mController.setPlayerConfig(mVodPlayerCfg);
     }
 
+    void initPlayerDrive() {
+        try {
+            if (!mVodPlayerCfg.has("pl")) {
+                mVodPlayerCfg.put("pl", Hawk.get(HawkConfig.PLAY_TYPE, 1));
+            }
+            if (!mVodPlayerCfg.has("pr")) {
+                mVodPlayerCfg.put("pr", Hawk.get(HawkConfig.PLAY_RENDER, 0));
+            }
+            if (!mVodPlayerCfg.has("ijk")) {
+                mVodPlayerCfg.put("ijk", Hawk.get(HawkConfig.IJK_CODEC, ""));
+            }
+            if (!mVodPlayerCfg.has("sc")) {
+                mVodPlayerCfg.put("sc", Hawk.get(HawkConfig.PLAY_SCALE, 0));
+            }
+            if (!mVodPlayerCfg.has("sp")) {
+                mVodPlayerCfg.put("sp", 1.0f);
+            }
+            if (!mVodPlayerCfg.has("st")) {
+                mVodPlayerCfg.put("st", 0);
+            }
+            if (!mVodPlayerCfg.has("et")) {
+                mVodPlayerCfg.put("et", 0);
+            }
+        } catch (Throwable th) {
+
+        }
+        mController.setPlayerConfig(mVodPlayerCfg);
+    }
+
     // takagen99 : Add check for external players not enter PIP
     private boolean extPlay = false;
     boolean PiPON = Hawk.get(HawkConfig.PIC_IN_PIC, false);
@@ -958,6 +987,8 @@ public class PlayActivity extends BaseActivity {
             CacheManager.delete(MD5.string2MD5(subtitleCacheKey), "");
         }
         if (vs.url.startsWith("tvbox-drive://")) {
+            // takagen99: Quick Fix for Media Options in Drive playback
+            initPlayerDrive();
             mController.showParse(false);
             HashMap<String, String> headers = null;
             if (mVodInfo.playerCfg != null && mVodInfo.playerCfg.length() > 0) {

@@ -86,6 +86,7 @@ public class HomeActivity extends BaseActivity {
     private TextView tvName;
     private ImageView tvWifi;
     private ImageView tvFind;
+    private ImageView tvDraw;
     private ImageView tvMenu;
     private TextView tvDate;
     private TvRecyclerView mGridView;
@@ -148,6 +149,7 @@ public class HomeActivity extends BaseActivity {
         this.tvName = findViewById(R.id.tvName);
         this.tvWifi = findViewById(R.id.tvWifi);
         this.tvFind = findViewById(R.id.tvFind);
+        this.tvDraw = findViewById(R.id.tvDrawer);
         this.tvMenu = findViewById(R.id.tvMenu);
         this.tvDate = findViewById(R.id.tvDate);
         this.contentLayout = findViewById(R.id.contentLayout);
@@ -253,6 +255,13 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 jumpActivity(SearchActivity.class);
+            }
+        });
+        // Button : Drawer >> To go into App Drawer -------------------
+        tvDraw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpActivity(AppsActivity.class);
             }
         });
         // Button : Settings >> To go into Settings --------------------
@@ -500,27 +509,34 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        int i;
-        if (this.fragments.size() <= 0 || this.sortFocused >= this.fragments.size() || (i = this.sortFocused) < 0) {
-            exit();
-            return;
-        }
-        BaseLazyFragment baseLazyFragment = this.fragments.get(i);
-        if (baseLazyFragment instanceof GridFragment) {
-            View view = this.sortFocusView;
-            GridFragment grid = (GridFragment) baseLazyFragment;
-            if (grid.restoreView()) {
+
+        // takagen99: Add check for VOD Delete Mode
+        if (HawkConfig.hotVodDelete) {
+            HawkConfig.hotVodDelete = false;
+            UserFragment.homeHotVodAdapter.notifyDataSetChanged();
+        } else {
+            int i;
+            if (this.fragments.size() <= 0 || this.sortFocused >= this.fragments.size() || (i = this.sortFocused) < 0) {
+                exit();
                 return;
-            }// 还原上次保存的UI内容
-            if (view != null && !view.isFocused()) {
-                this.sortFocusView.requestFocus();
-            } else if (this.sortFocused != 0) {
-                this.mGridView.setSelection(0);
+            }
+            BaseLazyFragment baseLazyFragment = this.fragments.get(i);
+            if (baseLazyFragment instanceof GridFragment) {
+                View view = this.sortFocusView;
+                GridFragment grid = (GridFragment) baseLazyFragment;
+                if (grid.restoreView()) {
+                    return;
+                }// 还原上次保存的UI内容
+                if (view != null && !view.isFocused()) {
+                    this.sortFocusView.requestFocus();
+                } else if (this.sortFocused != 0) {
+                    this.mGridView.setSelection(0);
+                } else {
+                    exit();
+                }
             } else {
                 exit();
             }
-        } else {
-            exit();
         }
     }
 
@@ -631,6 +647,7 @@ public class HomeActivity extends BaseActivity {
             tvName.setFocusable(false);
             tvWifi.setFocusable(false);
             tvFind.setFocusable(false);
+            tvDraw.setFocusable(false);
             tvMenu.setFocusable(false);
             return;
         }
@@ -648,6 +665,7 @@ public class HomeActivity extends BaseActivity {
             tvName.setFocusable(true);
             tvWifi.setFocusable(true);
             tvFind.setFocusable(true);
+            tvDraw.setFocusable(true);
             tvMenu.setFocusable(true);
             return;
         }
