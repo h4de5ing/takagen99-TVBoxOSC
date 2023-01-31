@@ -6,10 +6,8 @@
             <corners android:radius="10mm" />
         </shape>
     </item>
-    <item>
-        <bitmap
-            android:antialias="true"
-            android:gravity="center"
-            android:src="@drawable/icon_img_placeholder" />
-    </item>
+    <item
+        android:antialias="true"
+        android:gravity="center"
+        android:drawable="@drawable/icon_img_placeholder" />
 </layer-list>

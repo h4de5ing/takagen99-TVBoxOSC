@@ -251,6 +251,12 @@ public class HomeActivity extends BaseActivity {
             }
         });
         // Button : Search --------------------------------------------
+        boolean search_pos = Hawk.get(HawkConfig.HOME_SEARCH_POSITION, true);
+        if (search_pos) {
+            tvFind.setVisibility(View.VISIBLE);
+        } else {
+            tvFind.setVisibility(View.GONE);
+        }
         tvFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -265,6 +271,12 @@ public class HomeActivity extends BaseActivity {
             }
         });
         // Button : Settings >> To go into Settings --------------------
+        boolean menu_pos = Hawk.get(HawkConfig.HOME_MENU_POSITION, true);
+        if (menu_pos) {
+            tvMenu.setVisibility(View.VISIBLE);
+        } else {
+            tvMenu.setVisibility(View.GONE);
+        }
         tvMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -165,7 +165,7 @@
                     android:background="@drawable/subtitle_circle"
                     android:focusable="true"
                     android:padding="@dimen/vs_8"
-                    app:srcCompat="@drawable/scrollview" />
+                    app:srcCompat="@drawable/scrollviewright" />
 
             </LinearLayout>
 
@@ -290,7 +290,7 @@
                     android:background="@drawable/subtitle_circle"
                     android:focusable="true"
                     android:padding="@dimen/vs_8"
-                    app:srcCompat="@drawable/scrollview" />
+                    app:srcCompat="@drawable/scrollviewright" />
 
             </LinearLayout>
 

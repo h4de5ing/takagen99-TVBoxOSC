@@ -25,6 +25,7 @@ import com.github.tvbox.osc.ui.dialog.AboutDialog;
 import com.github.tvbox.osc.ui.dialog.ApiDialog;
 import com.github.tvbox.osc.ui.dialog.ApiHistoryDialog;
 import com.github.tvbox.osc.ui.dialog.BackupDialog;
+import com.github.tvbox.osc.ui.dialog.HomeIconDialog;
 import com.github.tvbox.osc.ui.dialog.SelectDialog;
 import com.github.tvbox.osc.ui.dialog.XWalkInitDialog;
 import com.github.tvbox.osc.util.FastClickCheckUtil;
@@ -58,22 +59,28 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  */
 public class ModelSettingFragment extends BaseLazyFragment {
     private TextView tvDebugOpen;
-    private TextView tvMediaCodec;
-    private TextView tvParseWebView;
-    private TextView tvPlay;
-    private TextView tvRender;
-    private TextView tvScale;
     private TextView tvApi;
+    // Home Section
     private TextView tvHomeApi;
-    private TextView tvDns;
+    private TextView tvHomeShow;
+    private TextView tvHomeIcon;
     private TextView tvHomeRec;
     private TextView tvHomeNum;
-    private TextView tvSearchView;
+
+    // Player Section
     private TextView tvShowPreviewText;
-    private TextView tvHomeShow;
-    private TextView tvLocale;
+    private TextView tvScale;
     private TextView tvPIP;
+    private TextView tvPlay;
+    private TextView tvMediaCodec;
+
+    // System Section
+    private TextView tvLocale;
     private TextView tvTheme;
+    private TextView tvRender;
+    private TextView tvParseWebView;
+    private TextView tvSearchView;
+    private TextView tvDns;
 
     public static ModelSettingFragment newInstance() {
         return new ModelSettingFragment().setArguments();
@@ -90,40 +97,43 @@ public class ModelSettingFragment extends BaseLazyFragment {
 
     @Override
     protected void init() {
-        tvPIP = findViewById(R.id.tvPIP);
-        tvPIP.setText(Hawk.get(HawkConfig.PIC_IN_PIC, false) ? "开启" : "关闭");
-        tvLocale = findViewById(R.id.tvLocale);
-        tvLocale.setText(getLocaleView(Hawk.get(HawkConfig.HOME_LOCALE, 0)));
+        tvDebugOpen = findViewById(R.id.tvDebugOpen);
+        tvDebugOpen.setText(Hawk.get(HawkConfig.DEBUG_OPEN, false) ? "开启" : "关闭");
+        tvApi = findViewById(R.id.tvApi);
+        tvApi.setText(Hawk.get(HawkConfig.API_URL, ""));
+        // Home Section
+        tvHomeApi = findViewById(R.id.tvHomeApi);
+        tvHomeApi.setText(ApiConfig.get().getHomeSourceBean().getName());
         tvHomeShow = findViewById(R.id.tvHomeShow);
         tvHomeShow.setText(Hawk.get(HawkConfig.HOME_SHOW_SOURCE, false) ? "开启" : "关闭");
+        tvHomeRec = findViewById(R.id.tvHomeRec);
+        tvHomeRec.setText(getHomeRecName(Hawk.get(HawkConfig.HOME_REC, 0)));
+        tvHomeNum = findViewById(R.id.tvHomeNum);
+        tvHomeNum.setText(HistoryHelper.getHomeRecName(Hawk.get(HawkConfig.HOME_NUM, 0)));
+        // Player Section
         tvShowPreviewText = findViewById(R.id.showPreviewText);
         tvShowPreviewText.setText(Hawk.get(HawkConfig.SHOW_PREVIEW, true) ? "开启" : "关闭");
-        tvDebugOpen = findViewById(R.id.tvDebugOpen);
-        tvParseWebView = findViewById(R.id.tvParseWebView);
-        tvMediaCodec = findViewById(R.id.tvMediaCodec);
-        tvPlay = findViewById(R.id.tvPlay);
-        tvRender = findViewById(R.id.tvRenderType);
         tvScale = findViewById(R.id.tvScaleType);
-        tvApi = findViewById(R.id.tvApi);
-        tvHomeApi = findViewById(R.id.tvHomeApi);
-        tvDns = findViewById(R.id.tvDns);
-        tvHomeRec = findViewById(R.id.tvHomeRec);
-        tvHomeNum = findViewById(R.id.tvHomeNum);
-        tvSearchView = findViewById(R.id.tvSearchView);
-        tvMediaCodec.setText(Hawk.get(HawkConfig.IJK_CODEC, ""));
-        tvDebugOpen.setText(Hawk.get(HawkConfig.DEBUG_OPEN, false) ? "开启" : "关闭");
-        tvParseWebView.setText(Hawk.get(HawkConfig.PARSE_WEBVIEW, true) ? "系统自带" : "XWalkView");
-        tvApi.setText(Hawk.get(HawkConfig.API_URL, ""));
-        tvDns.setText(OkGoHelper.dnsHttpsList.get(Hawk.get(HawkConfig.DOH_URL, 0)));
-        tvHomeRec.setText(getHomeRecName(Hawk.get(HawkConfig.HOME_REC, 0)));
-        tvHomeNum.setText(HistoryHelper.getHomeRecName(Hawk.get(HawkConfig.HOME_NUM, 0)));
-        tvSearchView.setText(getSearchView(Hawk.get(HawkConfig.SEARCH_VIEW, 0)));
-        tvHomeApi.setText(ApiConfig.get().getHomeSourceBean().getName());
         tvScale.setText(PlayerHelper.getScaleName(Hawk.get(HawkConfig.PLAY_SCALE, 0)));
+        tvPIP = findViewById(R.id.tvPIP);
+        tvPIP.setText(Hawk.get(HawkConfig.PIC_IN_PIC, false) ? "开启" : "关闭");
+        tvPlay = findViewById(R.id.tvPlay);
         tvPlay.setText(PlayerHelper.getPlayerName(Hawk.get(HawkConfig.PLAY_TYPE, 0)));
-        tvRender.setText(PlayerHelper.getRenderName(Hawk.get(HawkConfig.PLAY_RENDER, 0)));
+        tvMediaCodec = findViewById(R.id.tvMediaCodec);
+        tvMediaCodec.setText(Hawk.get(HawkConfig.IJK_CODEC, ""));
+        // System Section
+        tvLocale = findViewById(R.id.tvLocale);
+        tvLocale.setText(getLocaleView(Hawk.get(HawkConfig.HOME_LOCALE, 0)));
         tvTheme = findViewById(R.id.tvTheme);
         tvTheme.setText(getThemeView(Hawk.get(HawkConfig.THEME_SELECT, 0)));
+        tvRender = findViewById(R.id.tvRenderType);
+        tvRender.setText(PlayerHelper.getRenderName(Hawk.get(HawkConfig.PLAY_RENDER, 0)));
+        tvParseWebView = findViewById(R.id.tvParseWebView);
+        tvParseWebView.setText(Hawk.get(HawkConfig.PARSE_WEBVIEW, true) ? "系统自带" : "XWalkView");
+        tvSearchView = findViewById(R.id.tvSearchView);
+        tvSearchView.setText(getSearchView(Hawk.get(HawkConfig.SEARCH_VIEW, 0)));
+        tvDns = findViewById(R.id.tvDns);
+        tvDns.setText(OkGoHelper.dnsHttpsList.get(Hawk.get(HawkConfig.DOH_URL, 0)));
 
         //takagen99 : Set HomeApi as default
         findViewById(R.id.llHomeApi).requestFocus();
@@ -136,7 +146,6 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 tvDebugOpen.setText(Hawk.get(HawkConfig.DEBUG_OPEN, false) ? "开启" : "关闭");
             }
         });
-
         // Input Source URL ------------------------------------------------------------------------
         findViewById(R.id.llApi).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,6 +255,24 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 FastClickCheckUtil.check(v);
                 Hawk.put(HawkConfig.HOME_SHOW_SOURCE, !Hawk.get(HawkConfig.HOME_SHOW_SOURCE, false));
                 tvHomeShow.setText(Hawk.get(HawkConfig.HOME_SHOW_SOURCE, true) ? "开启" : "关闭");
+            }
+        });
+        findViewById(R.id.llHomeIcon).setOnClickListener(new View.OnClickListener() {
+            private final boolean oriSearch = Hawk.get(HawkConfig.HOME_SEARCH_POSITION, true);
+            private final boolean oriMenu = Hawk.get(HawkConfig.HOME_MENU_POSITION, true);
+            @Override
+            public void onClick(View v) {
+                FastClickCheckUtil.check(v);
+                HomeIconDialog dialog = new HomeIconDialog(mActivity);
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if ((oriSearch != Hawk.get(HawkConfig.HOME_SEARCH_POSITION, true)) || (oriMenu != Hawk.get(HawkConfig.HOME_MENU_POSITION, true))) {
+                            reloadActivity();
+                        }
+                    }
+                });
+                dialog.show();
             }
         });
         // Select Home Display Type : Douban / Recommended / History -----
@@ -684,15 +711,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         if (chkLang != Hawk.get(HawkConfig.HOME_LOCALE, 0)) {
-                            Intent intent = getActivity().getApplicationContext().getPackageManager().getLaunchIntentForPackage(getActivity().getApplication().getPackageName());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            Bundle bundle = new Bundle();
-                            bundle.putBoolean("useCache", true);
-                            intent.putExtras(bundle);
-                            getActivity().getApplicationContext().startActivity(intent);
-                            //  android.os.Process.killProcess(android.os.Process.myPid());
-                            //  System.exit(0);
+                            reloadActivity();
                         }
                     }
                 });
@@ -743,15 +762,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         if (chkTheme != Hawk.get(HawkConfig.THEME_SELECT, 0)) {
-                            Intent intent = getActivity().getApplicationContext().getPackageManager().getLaunchIntentForPackage(getActivity().getApplication().getPackageName());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            Bundle bundle = new Bundle();
-                            bundle.putBoolean("useCache", true);
-                            intent.putExtras(bundle);
-                            getActivity().getApplicationContext().startActivity(intent);
-                            //  android.os.Process.killProcess(android.os.Process.myPid());
-                            //  System.exit(0);
+                            reloadActivity();
                         }
                     }
                 });
@@ -825,6 +836,18 @@ public class ModelSettingFragment extends BaseLazyFragment {
         } else {
             return "樱花";
         }
+    }
+
+    void reloadActivity() {
+        Intent intent = getActivity().getApplicationContext().getPackageManager().getLaunchIntentForPackage(getActivity().getApplication().getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("useCache", true);
+        intent.putExtras(bundle);
+        getActivity().getApplicationContext().startActivity(intent);
+        //  android.os.Process.killProcess(android.os.Process.myPid());
+        //  System.exit(0);
     }
 
 }

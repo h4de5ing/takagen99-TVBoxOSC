@@ -152,7 +152,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:padding="@dimen/vs_4"
-                android:src="@drawable/scrollview" />
+                android:src="@drawable/scrollviewright" />
 
             <TextView
                 android:id="@+id/tv_arrow2"

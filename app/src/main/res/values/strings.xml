@@ -46,8 +46,9 @@
     // Settings Menu Page //
     <string name="mn_config">Configuration Address</string>
     <string name="mn_home">Source</string>
-    <string name="mn_home_show">Source Display</string>
+    <string name="mn_home_show">Show Source</string>
     <string name="mn_home_type">Type</string>
+    <string name="mn_icon">Button</string>
     <string name="mn_history_num">History</string>
     <string name="mn_wall_change">Wallpaper</string>
     <string name="mn_wall_load">Loading Wallpaper</string>
@@ -69,6 +70,7 @@
     // Settings Dialog Pop-Up //
     <string name="dia_source">Select Source</string>
     <string name="dia_hm_type">Select Display Type</string>
+    <string name="dia_hm_icon">Home Icon Placement</string>
     <string name="dia_history">Select History to Keep</string>
     <string name="dia_history_list">Configuration History List</string>
     <string name="dia_history_live">Live History List</string>
