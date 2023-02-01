@@ -16,6 +16,7 @@ import com.github.tvbox.osc.cache.VodCollect;
 import com.github.tvbox.osc.event.RefreshEvent;
 import com.github.tvbox.osc.ui.adapter.CollectAdapter;
 import com.github.tvbox.osc.util.FastClickCheckUtil;
+import com.github.tvbox.osc.util.HawkConfig;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
 
@@ -45,6 +46,10 @@ public class CollectActivity extends BaseActivity {
     }
 
     private void toggleDelMode() {
+        // takagen99: Toggle Delete Mode
+        HawkConfig.hotVodDelete =  !HawkConfig.hotVodDelete;
+        collectAdapter.notifyDataSetChanged();
+
         delMode = !delMode;
         tvDelTip.setVisibility(delMode ? View.VISIBLE : View.GONE);
 
@@ -122,10 +127,12 @@ public class CollectActivity extends BaseActivity {
         collectAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                FastClickCheckUtil.check(view);
-                VodCollect vodInfo = collectAdapter.getData().get(position);
-                collectAdapter.remove(position);
-                RoomDataManger.deleteVodCollect(vodInfo.getId());
+//                FastClickCheckUtil.check(view);
+//                VodCollect vodInfo = collectAdapter.getData().get(position);
+//                collectAdapter.remove(position);
+//                RoomDataManger.deleteVodCollect(vodInfo.getId());
+                tvDel.setFocusable(true);
+                toggleDelMode();
                 return true;
             }
         });

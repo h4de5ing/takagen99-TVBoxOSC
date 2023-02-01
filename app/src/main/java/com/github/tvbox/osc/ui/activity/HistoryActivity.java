@@ -14,6 +14,7 @@ import com.github.tvbox.osc.cache.RoomDataManger;
 import com.github.tvbox.osc.event.RefreshEvent;
 import com.github.tvbox.osc.ui.adapter.HistoryAdapter;
 import com.github.tvbox.osc.util.FastClickCheckUtil;
+import com.github.tvbox.osc.util.HawkConfig;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
 
@@ -48,6 +49,10 @@ public class HistoryActivity extends BaseActivity {
     }
 
     private void toggleDelMode() {
+        // takagen99: Toggle Delete Mode
+        HawkConfig.hotVodDelete =  !HawkConfig.hotVodDelete;
+        historyAdapter.notifyDataSetChanged();
+
         delMode = !delMode;
         tvDelTip.setVisibility(delMode ? View.VISIBLE : View.GONE);
 
@@ -145,10 +150,12 @@ public class HistoryActivity extends BaseActivity {
         historyAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                FastClickCheckUtil.check(view);
-                VodInfo vodInfo = historyAdapter.getData().get(position);
-                historyAdapter.remove(position);
-                RoomDataManger.deleteVodRecord(vodInfo.sourceKey, vodInfo);
+//                FastClickCheckUtil.check(view);
+//                VodInfo vodInfo = historyAdapter.getData().get(position);
+//                historyAdapter.remove(position);
+//                RoomDataManger.deleteVodRecord(vodInfo.sourceKey, vodInfo);
+                tvDel.setFocusable(true);
+                toggleDelMode();
                 return true;
             }
         });

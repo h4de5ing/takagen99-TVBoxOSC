@@ -77,9 +77,11 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_thumb_bottom_name"
                 android:ellipsize="marquee"
+                android:gravity="center"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:padding="@dimen/vs_5"
                 android:singleLine="true"
+                android:text="Title"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ts_22" />
         </LinearLayout>
@@ -88,8 +90,8 @@
             android:id="@+id/delFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/shape_user_pause"
             android:layout_gravity="center"
+            android:background="@drawable/shape_user_delete"
             android:visibility="gone">
 
             <ImageView

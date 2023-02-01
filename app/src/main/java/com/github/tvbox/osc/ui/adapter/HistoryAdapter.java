@@ -1,6 +1,8 @@
 package com.github.tvbox.osc.ui.adapter;
 
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.bean.VodInfo;
 import com.github.tvbox.osc.picasso.RoundTransformation;
 import com.github.tvbox.osc.util.DefaultConfig;
+import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.MD5;
 import com.squareup.picasso.Picasso;
 
@@ -30,14 +33,22 @@ public class HistoryAdapter extends BaseQuickAdapter<VodInfo, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, VodInfo item) {
+        // takagen99: Add Delete Mode
+        FrameLayout tvDel = helper.getView(R.id.delFrameLayout);
+        if (HawkConfig.hotVodDelete) {
+            tvDel.setVisibility(View.VISIBLE);
+        } else {
+            tvDel.setVisibility(View.GONE);
+        }
+
         TextView tvYear = helper.getView(R.id.tvYear);
+        tvYear.setText(ApiConfig.get().getSource(item.sourceKey).getName());
         /*if (item.year <= 0) {
             tvYear.setVisibility(View.GONE);
         } else {
             tvYear.setText(String.valueOf(item.year));
             tvYear.setVisibility(View.VISIBLE);
         }*/
-        tvYear.setText(ApiConfig.get().getSource(item.sourceKey).getName());
         /*TextView tvLang = helper.getView(R.id.tvLang);
         if (TextUtils.isEmpty(item.lang)) {
             tvLang.setVisibility(View.GONE);
@@ -52,7 +63,6 @@ public class HistoryAdapter extends BaseQuickAdapter<VodInfo, BaseViewHolder> {
             tvArea.setText(item.area);
             tvArea.setVisibility(View.VISIBLE);
         }
-
         TextView tvNote = helper.getView(R.id.tvNote);
         if (TextUtils.isEmpty(item.note)) {
             tvNote.setVisibility(View.GONE);
@@ -60,6 +70,7 @@ public class HistoryAdapter extends BaseQuickAdapter<VodInfo, BaseViewHolder> {
             tvNote.setText(item.note);
             tvNote.setVisibility(View.VISIBLE);
         }*/
+
         helper.setVisible(R.id.tvLang, false);
         helper.setVisible(R.id.tvArea, false);
         if (item.note == null || item.note.isEmpty()) {

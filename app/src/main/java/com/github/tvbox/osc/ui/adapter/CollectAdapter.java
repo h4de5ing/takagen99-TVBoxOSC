@@ -1,6 +1,8 @@
 package com.github.tvbox.osc.ui.adapter;
 
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.cache.VodCollect;
 import com.github.tvbox.osc.picasso.RoundTransformation;
 import com.github.tvbox.osc.util.DefaultConfig;
+import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.MD5;
 import com.squareup.picasso.Picasso;
 
@@ -25,6 +28,14 @@ public class CollectAdapter extends BaseQuickAdapter<VodCollect, BaseViewHolder>
 
     @Override
     protected void convert(BaseViewHolder helper, VodCollect item) {
+        // takagen99: Add Delete Mode
+        FrameLayout tvDel = helper.getView(R.id.delFrameLayout);
+        if (HawkConfig.hotVodDelete) {
+            tvDel.setVisibility(View.VISIBLE);
+        } else {
+            tvDel.setVisibility(View.GONE);
+        }
+
 //        helper.setVisible(R.id.tvYear, false);
         helper.setVisible(R.id.tvLang, false);
         helper.setVisible(R.id.tvArea, false);

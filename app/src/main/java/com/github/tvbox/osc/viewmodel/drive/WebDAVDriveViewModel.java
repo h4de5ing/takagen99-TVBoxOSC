@@ -64,7 +64,7 @@ public class WebDAVDriveViewModel extends AbstractDriveViewModel {
                     List<DriveFolderFile> items = new ArrayList<>();
                     if (files != null) {
                         for (DavResource file : files) {
-                            if (targetPath != null && file.getPath().toUpperCase(Locale.ROOT).endsWith(targetPath.toUpperCase(Locale.ROOT) + "/"))
+                            if (targetPath != "" && file.getPath().toUpperCase(Locale.ROOT).endsWith(targetPath.toUpperCase(Locale.ROOT) + "/"))
                                 continue;
                             int extNameStartIndex = file.getName().lastIndexOf(".");
                             items.add(new DriveFolderFile(currentDriveNote, file.getName(), !file.isDirectory(),
