@@ -131,7 +131,10 @@ function listFile(path) {
             }
         });
         $('#loadingToast').hide();
-    })
+    }).fail(function () {
+        warnToast('读取本地文件失败，可能没有存储权限');
+        $('#loadingToast').hide();
+    });
 }
 
 function warnToast(msg) {
@@ -143,6 +146,7 @@ function warnToast(msg) {
 }
 
 function uploadFile() {
+    $('#file_uploader').val("");
     $('#file_uploader').click();
 }
 
