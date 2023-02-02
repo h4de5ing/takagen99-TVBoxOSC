@@ -47,6 +47,7 @@
     <string name="mn_config">Configuration Address</string>
     <string name="mn_home">Source</string>
     <string name="mn_home_show">Show Source</string>
+    <string name="mn_home_rec_style">Multiline Display</string>
     <string name="mn_home_type">Type</string>
     <string name="mn_icon">Button</string>
     <string name="mn_history_num">History</string>

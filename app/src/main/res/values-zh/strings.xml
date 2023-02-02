@@ -47,6 +47,7 @@
     <string name="mn_config">配置地址</string>
     <string name="mn_home">数据源</string>
     <string name="mn_home_show">数据源显示</string>
+    <string name="mn_home_rec_style">多行显示</string>
     <string name="mn_home_type">推荐</string>
     <string name="mn_icon">按钮位置</string>
     <string name="mn_history_num">历史条数</string>

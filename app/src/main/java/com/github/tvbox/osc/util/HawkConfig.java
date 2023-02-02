@@ -20,6 +20,7 @@ public class HawkConfig {
     public static final String DEBUG_OPEN = "debug_open";
     public static final String HOME_API = "home_api";
     public static final String HOME_REC = "home_rec"; // 0 豆瓣热播 1 数据源推荐 2 历史
+    public static final String HOME_REC_STYLE = "home_rec_style";
     public static final String HOME_NUM = "home_num"; // No. of History
     public static final String HOME_SHOW_SOURCE = "show_source";
     public static final String HOME_LOCALE = "language"; // 0 中文 1 英文
