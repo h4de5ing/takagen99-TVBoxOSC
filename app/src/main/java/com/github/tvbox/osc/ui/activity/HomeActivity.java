@@ -263,8 +263,6 @@ public class HomeActivity extends BaseActivity {
                     if (Hawk.get(HawkConfig.HOME_REC_STYLE, false)) {
                         UserFragment.tvHotListForGrid.setVisibility(View.VISIBLE);
                         UserFragment.tvHotListForLine.setVisibility(View.GONE);
-                        UserFragment.tvHotListForGrid.setHasFixedSize(true);
-                        UserFragment.tvHotListForGrid.setLayoutManager(new V7GridLayoutManager(mContext, 5));
                         Toast.makeText(HomeActivity.this, getString(R.string.hm_style_grid), Toast.LENGTH_SHORT).show();
                         tvStyle.setImageResource(R.drawable.hm_up_down);
                     } else {

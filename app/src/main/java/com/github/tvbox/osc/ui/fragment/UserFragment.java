@@ -91,16 +91,7 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
         } else {
             tvSetting.setVisibility(View.GONE);
         }
-        // Swifly: Home Style
-        if (Hawk.get(HawkConfig.HOME_REC_STYLE, false)) {
-            tvHotListForGrid.setVisibility(View.VISIBLE);
-            tvHotListForLine.setVisibility(View.GONE);
-            tvHotListForGrid.setHasFixedSize(true);
-            tvHotListForGrid.setLayoutManager(new V7GridLayoutManager(this.mContext, 5));
-        } else {
-            tvHotListForGrid.setVisibility(View.GONE);
-            tvHotListForLine.setVisibility(View.VISIBLE);
-        }
+
         super.onFragmentResume();
         if (Hawk.get(HawkConfig.HOME_REC, 0) == 2) {
             List<VodInfo> allVodRecord = RoomDataManger.getAllVodRecord(20);
@@ -148,8 +139,10 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
         tvHistory.setOnFocusChangeListener(focusChangeListener);
         tvPush.setOnFocusChangeListener(focusChangeListener);
         tvCollect.setOnFocusChangeListener(focusChangeListener);
-        tvHotListForGrid = findViewById(R.id.tvHotListForGrid);
         tvHotListForLine = findViewById(R.id.tvHotListForLine);
+        tvHotListForGrid = findViewById(R.id.tvHotListForGrid);
+        tvHotListForGrid.setHasFixedSize(true);
+        tvHotListForGrid.setLayoutManager(new V7GridLayoutManager(this.mContext, 5));
         homeHotVodAdapter = new HomeHotVodAdapter();
         homeHotVodAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -240,6 +233,15 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
         tvHotListForLine.setAdapter(homeHotVodAdapter);
 
         initHomeHotVod(homeHotVodAdapter);
+
+        // Swifly: Home Style
+        if (Hawk.get(HawkConfig.HOME_REC_STYLE, false)) {
+            tvHotListForGrid.setVisibility(View.VISIBLE);
+            tvHotListForLine.setVisibility(View.GONE);
+        } else {
+            tvHotListForGrid.setVisibility(View.GONE);
+            tvHotListForLine.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initHomeHotVod(HomeHotVodAdapter adapter) {
