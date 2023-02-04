@@ -65,7 +65,6 @@ public class ModelSettingFragment extends BaseLazyFragment {
     private TextView tvHomeShow;
     private TextView tvHomeIcon;
     private TextView tvHomeRec;
-    private TextView tvRecStyleText;
     private TextView tvHomeNum;
 
     // Player Section
@@ -109,8 +108,6 @@ public class ModelSettingFragment extends BaseLazyFragment {
         tvHomeShow.setText(Hawk.get(HawkConfig.HOME_SHOW_SOURCE, false) ? "开启" : "关闭");
         tvHomeRec = findViewById(R.id.tvHomeRec);
         tvHomeRec.setText(getHomeRecName(Hawk.get(HawkConfig.HOME_REC, 0)));
-        tvRecStyleText = findViewById(R.id.showRecStyleText);
-        tvRecStyleText.setText(Hawk.get(HawkConfig.HOME_REC_STYLE, false) ? "是" : "否");
         tvHomeNum = findViewById(R.id.tvHomeNum);
         tvHomeNum.setText(HistoryHelper.getHomeRecName(Hawk.get(HawkConfig.HOME_NUM, 0)));
         // Player Section
@@ -261,20 +258,10 @@ public class ModelSettingFragment extends BaseLazyFragment {
             }
         });
         findViewById(R.id.llHomeIcon).setOnClickListener(new View.OnClickListener() {
-            private final boolean oriSearch = Hawk.get(HawkConfig.HOME_SEARCH_POSITION, true);
-            private final boolean oriMenu = Hawk.get(HawkConfig.HOME_MENU_POSITION, true);
             @Override
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
                 HomeIconDialog dialog = new HomeIconDialog(mActivity);
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        if ((oriSearch != Hawk.get(HawkConfig.HOME_SEARCH_POSITION, true)) || (oriMenu != Hawk.get(HawkConfig.HOME_MENU_POSITION, true))) {
-                            reloadActivity();
-                        }
-                    }
-                });
                 dialog.show();
             }
         });
@@ -313,15 +300,6 @@ public class ModelSettingFragment extends BaseLazyFragment {
                     }
                 }, types, defaultPos);
                 dialog.show();
-            }
-        });
-        // 是否多行显示  -----
-        findViewById(R.id.llHomeRecStyle).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FastClickCheckUtil.check(v);
-                Hawk.put(HawkConfig.HOME_REC_STYLE, !Hawk.get(HawkConfig.HOME_REC_STYLE, false));
-                tvRecStyleText.setText(Hawk.get(HawkConfig.HOME_REC_STYLE, false) ? "是" : "否");
             }
         });
         // History to Keep ------------------------------------------

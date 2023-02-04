@@ -86,6 +86,20 @@
             android:src="@drawable/hm_search" />
 
         <ImageView
+            android:id="@+id/tvStyle"
+            android:layout_width="@dimen/vs_50"
+            android:layout_height="@dimen/vs_50"
+            android:layout_marginStart="@dimen/vs_15"
+            android:layout_marginLeft="@dimen/vs_15"
+            android:layout_marginEnd="@dimen/vs_15"
+            android:layout_marginRight="@dimen/vs_15"
+            android:background="@drawable/button_dialog_vod"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/vs_10"
+            android:src="@drawable/hm_left_right" />
+
+        <ImageView
             android:id="@+id/tvDrawer"
             android:layout_width="@dimen/vs_50"
             android:layout_height="@dimen/vs_50"

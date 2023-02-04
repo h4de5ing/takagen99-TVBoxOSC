@@ -20,6 +20,8 @@
     <string name="hm_file">Drives</string>
     <string name="hm_fav">Favorite</string>
     <string name="hm_setting">Menu</string>
+    <string name="hm_style_line">Line View</string>
+    <string name="hm_style_grid">Grid View</string>
     <string name="hm_hist_del">Removed from History</string>
     <string name="hm_cache_del">Cache Cleared</string>
 
@@ -47,7 +49,6 @@
     <string name="mn_config">Configuration Address</string>
     <string name="mn_home">Source</string>
     <string name="mn_home_show">Show Source</string>
-    <string name="mn_home_rec_style">Multiline Display</string>
     <string name="mn_home_type">Type</string>
     <string name="mn_icon">Button</string>
     <string name="mn_history_num">History</string>
