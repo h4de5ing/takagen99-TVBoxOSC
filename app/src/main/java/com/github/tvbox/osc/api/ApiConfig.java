@@ -173,7 +173,6 @@ public class ApiConfig {
                     public void onSuccess(Response<String> response) {
                         try {
                             String json = response.body();
-                            json = FindResult(json, configKey);
                             parseJson(apiUrl, json);
                             try {
                                 File cacheDir = cache.getParentFile();
@@ -215,7 +214,7 @@ public class ApiConfig {
                         if (response.body() == null) {
                             result = "";
                         } else {
-                            result = response.body().string();
+                            result = FindResult(response.body().string(), configKey);
                         }
                         if (apiUrl.startsWith("clan")) {
                             result = clanContentFix(clanToAddress(apiUrl), result);
