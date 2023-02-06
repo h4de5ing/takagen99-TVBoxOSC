@@ -68,9 +68,10 @@ public class GridFilterDialog extends BaseDialog {
 
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    if (sortData.filterSelect.get(key) == null || !sortData.filterSelect.get(key).equals(values.get(position))) {
+                    selectChange = true;
+                    String filterSelect = sortData.filterSelect.get(key);
+                    if (filterSelect == null || !filterSelect.equals(keys.get(position))) {
                         sortData.filterSelect.put(key, keys.get(position));
-                        selectChange = true;
                         if (pre != null) {
                             TextView val = pre.findViewById(R.id.filterValue);
                             val.getPaint().setFakeBoldText(false);
@@ -84,6 +85,12 @@ public class GridFilterDialog extends BaseDialog {
                         int themeColor = a.getColor(R.styleable.themeColor_color_theme, 0);
                         val.setTextColor(themeColor);
                         pre = view;
+                    } else {
+                        sortData.filterSelect.remove(key);
+                        TextView val = pre.findViewById(R.id.filterValue);
+                        val.getPaint().setFakeBoldText(false);
+                        val.setTextColor(getContext().getResources().getColor(R.color.color_FFFFFF));
+                        pre = null;
                     }
                 }
             });

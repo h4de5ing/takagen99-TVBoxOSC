@@ -42,6 +42,18 @@ public class MovieSort implements Serializable {
             this.name = name;
         }
 
+        public int filterSelectCount() {
+            if (filterSelect == null) {
+                return 0;
+            }
+            int count = 0;
+            for (String filter : filterSelect.values()) {
+                if (filter != null) {
+                    count++;
+                }
+            }
+            return count;
+        }
 
         @Override
         public int compareTo(SortData o) {
