@@ -17,6 +17,7 @@ import com.github.tvbox.osc.bean.AbsXml;
 import com.github.tvbox.osc.bean.Movie;
 import com.github.tvbox.osc.bean.MovieSort;
 import com.github.tvbox.osc.bean.SourceBean;
+import com.github.tvbox.osc.event.RefreshEvent;
 import com.github.tvbox.osc.ui.activity.DetailActivity;
 import com.github.tvbox.osc.ui.activity.FastSearchActivity;
 import com.github.tvbox.osc.ui.adapter.GridAdapter;
@@ -27,6 +28,8 @@ import com.github.tvbox.osc.viewmodel.SourceViewModel;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Stack;
 
@@ -293,7 +296,15 @@ public class GridFragment extends BaseLazyFragment {
         showLoading();
         isLoad = false;
         scrollTop();
+        toggleFilterStatus();
         sourceViewModel.getList(sortData, page);
+    }
+
+    private void toggleFilterStatus() {
+        if (sortData.filters != null && !sortData.filters.isEmpty()) {
+            int count = sortData.filterSelectCount();
+            EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_FILTER_CHANGE, count));
+        }
     }
 
     public boolean isTop() {
