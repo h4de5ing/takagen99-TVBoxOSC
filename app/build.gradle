@@ -11,8 +11,8 @@ android {
         applicationId 'com.github.tvbox.osc.tk'
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0.".concat(buildTime())
+        versionCode 20001
+        versionName "2.0.1_".concat(buildTime())
         multiDexEnabled true
         //设置room的Schema的位置
         javaCompileOptions {
@@ -25,7 +25,14 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
     }
-
+    signingConfigs {
+        sign {
+            storeFile file("../hello_android.jks")
+            storePassword('android')
+            keyAlias('android')
+            keyPassword('android')
+        }
+    }
     buildTypes {
         debug {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -34,14 +41,16 @@ android {
             ndk {
                 abiFilters 'armeabi-v7a'
             }
+            signingConfig signingConfigs.sign
         }
         release {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            minifyEnabled true
+            minifyEnabled false
 
             ndk {
                 abiFilters 'armeabi-v7a'
             }
+            signingConfig signingConfigs.sign
         }
     }
 
@@ -74,7 +83,22 @@ android {
 //            universalApk true //generate an additional APK that contains all the ABIs
 //        }
 //    }
-
+    applicationVariants.all { variant ->
+        def buildType = variant.buildType.name
+        def prefix = "TVBOX"
+        if (buildType == "release") {
+            variant.outputs.each {
+                def fromFile = it.outputFile
+                def intoFile = "D:/test/${prefix}/"
+                copy {
+                    from fromFile
+                    into intoFile
+                    include('*release.apk')
+                    rename('app-', "tvbox_v${android.defaultConfig.versionName}_")
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -102,7 +126,8 @@ dependencies {
     implementation 'com.kingja.loadsir:loadsir:1.3.8'
     implementation 'com.google.code.gson:gson:2.8.7'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'me.jessyan:autosize:1.2.1'
+//    implementation 'me.jessyan:autosize:1.2.1'
+    implementation 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
     implementation('com.thoughtworks.xstream:xstream:1.4.15') {
         exclude group: 'xmlpull', module: 'xmlpull'
     }
